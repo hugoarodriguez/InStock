@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">InStock</string>
+
+    <!-- MainActivity(Login) -->
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="email">Correo</string>
+    <string name="password">Contraseña</string>
+    <string name="recuperar_cuenta"><u>¿Has olvidado tu contraseña?</u></string>
+    <string name="sin_cuenta">¿No tienes cuenta?</string>
+    <string name="registrate"><u>Registrate</u></string>
+
+    <!-- nav_header -->
+    <string name="user_icon">User image</string>
+
+    <!-- nav_menu -->
+    <string name="menu_inicio">Inicio</string>
+    <string name="menu_agg_productos">Agregar Productos</string>
+    <string name="menu_productos">Productos</string>
+    <string name="menu_ventas">Ventas</string>
+    <string name="menu_reservas">Reservas</string>
+    <string name="menu_categorias">Categorías</string>
+    <string name="menu_agg_clientes">Agregar Clientes</string>
+    <string name="menu_clientes">Clientes</string>
+    <string name="menu_cerrar_sesion">Cerrar Sesión</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
