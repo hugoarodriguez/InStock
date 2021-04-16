@@ -115,7 +115,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="19dp"
         android:layout_marginRight="19dp"
-        android:text="@string/registrate"
+        android:text="@string/registrate_u"
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
