@@ -20,13 +20,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void iniciarSesion(View v){
-        Intent intent = new Intent(this, MainMenu.class);
+    public void crearCuenta(View v) {
+        Intent intent = new Intent(this, CrearCuenta.class);
         startActivity(intent);
     }
 
-    public void crearCuenta(View v){
-        Intent intent = new Intent(this, CrearCuenta.class);
+    public void iniciarSesion(View v){
+        Intent intent = new Intent(this, MainMenu.class);
         startActivity(intent);
     }
 
