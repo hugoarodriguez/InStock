@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void iniciarSesion(View v){
-        Intent intent = new Intent(this, CrearCuenta.class);
+        Intent intent = new Intent(this, MainMenu.class); // Por defecto debe ser CrearCuenta.class
         startActivity(intent);
     }
 }

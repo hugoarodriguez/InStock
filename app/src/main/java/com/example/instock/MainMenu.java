@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -77,7 +78,11 @@ public class MainMenu extends AppCompatActivity {
                     drawerLayout.closeDrawers();
                     transaction.commit();
                     break;
-
+                case R.id.opc_categorias:
+                    // Caso para abrir la actividad Categorias
+                    Intent i = new Intent(this, Categorias.class);
+                    startActivity(i);
+                    break;
                 case R.id.opc_cerrar_sesion:
                     drawerLayout.closeDrawers();
                     finish();
