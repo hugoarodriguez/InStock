@@ -9,8 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.InStock">
+<<<<<<< Updated upstream
         <activity android:name=".RecuperarCuenta"></activity>
         <activity android:name=".Categorias"></activity>
+=======
+<!--<<<<<<< HEAD-->
+        <activity android:name=".RecuperarCuenta"></activity>
+<!--=======-->
+        <activity android:name=".Categorias"></activity>
+<!--&gt;>>>>>> be669523b899c4f36a016b7095b0e7f233b8b9bd-->
+>>>>>>> Stashed changes
         <activity android:name=".CrearCuenta" />
         <activity android:name=".MainMenu" />
         <activity

@@ -28,8 +28,24 @@
     <!-- CrearCuenta -->
     <string name="registrate">Registrate</string>
     <string name="registrarme">Registrarme</string>
-    <string name="nombres">Nombres</string>
-    <string name="apellidos">Apellidos</string>
     <string name="nombre_empresa">Nombre de tu empresa/negocio</string>
     <string name="confirmar_password">Confirmar contraseña</string>
+
+    <!--Global -->
+    <string name="nombres">Nombres</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="numTel">Número de teléfono</string>
+    <string name="correo">Correo electrónico</string>
+    <string name="btnAgregar">Agregar</string>
+    <string name="btnCancelar">Cancelar</string>
+
+    <!-- Categorias -->
+    <string name="ingCategoria">Ingrese categoría</string>
+
+    <!-- AgregarCliente -->
+    <array name="agregarCliente">
+        <item>Sexo</item>
+        <item>Masculino</item>
+        <item>Femenino</item>
+    </array>
 </resources>

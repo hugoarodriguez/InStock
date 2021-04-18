@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AgregarClienteFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/edtNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:ems="10"
+            android:hint="@string/nombres"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/edtApellido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edtNombre"
+            android:layout_alignStart="@+id/edtNombre"
+            android:layout_alignLeft="@+id/edtNombre"
+            android:layout_alignEnd="@+id/edtNombre"
+            android:layout_alignRight="@+id/edtNombre"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="@string/apellidos"
+            android:inputType="textPersonName" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edtApellido"
+            android:layout_alignStart="@+id/edtApellido"
+            android:layout_alignLeft="@+id/edtApellido"
+            android:layout_alignEnd="@+id/edtApellido"
+            android:layout_alignRight="@+id/edtApellido"
+            android:layout_marginTop="10dp"
+            android:entries="@array/agregarCliente" />
+
+        <EditText
+            android:id="@+id/edtTelefono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spinner"
+            android:layout_alignStart="@+id/spinner"
+            android:layout_alignLeft="@+id/spinner"
+            android:layout_alignEnd="@+id/spinner"
+            android:layout_alignRight="@+id/spinner"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="@string/numTel"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/edtCorreo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edtTelefono"
+            android:layout_alignStart="@+id/edtTelefono"
+            android:layout_alignLeft="@+id/edtTelefono"
+            android:layout_alignEnd="@+id/edtTelefono"
+            android:layout_alignRight="@+id/edtTelefono"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="@string/correo"
+            android:inputType="textEmailAddress" />
+
+        <Button
+            android:id="@+id/btnAgregarC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edtCorreo"
+            android:layout_alignStart="@+id/edtCorreo"
+            android:layout_alignLeft="@+id/edtCorreo"
+            android:layout_marginTop="10dp"
+            android:text="@string/btnAgregar"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/botones" />
+
+        <Button
+            android:id="@+id/btnCancelarC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edtCorreo"
+            android:layout_alignEnd="@+id/edtCorreo"
+            android:layout_alignRight="@+id/edtCorreo"
+            android:layout_marginTop="10dp"
+            android:text="@string/btnCancelar"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/botones" />
+    </RelativeLayout>
+</FrameLayout>
