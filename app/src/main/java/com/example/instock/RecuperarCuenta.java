@@ -7,15 +7,13 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
-public class CrearCuenta extends AppCompatActivity {
+public class RecuperarCuenta extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crear_cuenta);
-
+        setContentView(R.layout.activity_recuperar_cuenta);
         //Habilitamos el ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

@@ -20,12 +20,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void recuperarCuenta(View v){
-        Toast.makeText(this, "Funciona", Toast.LENGTH_SHORT).show();
+    public void iniciarSesion(View v){
+        Intent intent = new Intent(this, MainMenu.class);
+        startActivity(intent);
     }
 
-    public void iniciarSesion(View v){
+    public void crearCuenta(View v){
         Intent intent = new Intent(this, CrearCuenta.class);
+        startActivity(intent);
+    }
+
+    public void recuperarCuenta(View v){
+        Intent intent = new Intent(this, RecuperarCuenta.class);
         startActivity(intent);
     }
 }
