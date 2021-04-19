@@ -48,4 +48,12 @@
         <item>Masculino</item>
         <item>Femenino</item>
     </array>
+
+    <!-- RecuperarCuenta -->
+    <string name="recuperar_cuenta_titulo">Recuperar tu cuenta</string>
+    <string name="indicacion1_rc">Favor indicar su email.\nUn código para recuperar su cuenta será enviado a su correo electrónico.</string>
+    <string name="indicacion2_rc">Ingresa el código de seguridad enviado a tu correo electrónico</string>
+    <string name="ingresa_codigo">Ingresa el código</string>
+    <string name="btnEnviar">Enviar</string>
+    <string name="btnComprobar">Comprobar</string>
 </resources>
