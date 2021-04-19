@@ -38,6 +38,7 @@
     <string name="correo">Correo electrónico</string>
     <string name="btnAgregar">Agregar</string>
     <string name="btnCancelar">Cancelar</string>
+    <string name="btnConfirmar">Confirmar</string>
 
     <!-- Categorias -->
     <string name="ingCategoria">Ingrese categoría</string>
@@ -56,4 +57,9 @@
     <string name="ingresa_codigo">Ingresa el código</string>
     <string name="btnEnviar">Enviar</string>
     <string name="btnComprobar">Comprobar</string>
+
+    <!-- CambiarPassword -->
+    <string name="cambia_password">Cambia tu contraseña</string>
+    <string name="nueva_password">Nueva contraseña</string>
+    <string name="repita_password">Repita la contraseña</string>
 </resources>
