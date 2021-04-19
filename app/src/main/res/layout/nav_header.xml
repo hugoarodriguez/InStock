@@ -37,7 +37,7 @@
                 android:id="@+id/tvUserName"
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
-                android:text="Nombre Apellido"
+                android:text="@string/nombre_ejemplo"
                 android:onClick="actualizarPassword"
                 style="@style/tvAsLink2"
                 android:textSize="20sp" />
@@ -46,7 +46,7 @@
                 android:id="@+id/tvUserEmail"
                 android:layout_width="match_parent"
                 android:layout_height="21dp"
-                android:text="micorreo@mail.com"
+                android:text="@string/correo_ejemplo"
                 android:textSize="16sp"/>
         </LinearLayout>
 

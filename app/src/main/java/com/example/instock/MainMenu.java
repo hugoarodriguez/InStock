@@ -59,8 +59,12 @@ public class MainMenu extends AppCompatActivity {
     //Método para actualizar contraseña
     //Se ejecuta al hacer click en el tvUserName del NavHeader
     public void actualizarPassword(View v){
-
-
+        Fragment fActualizarPassword = new ActualizarPasswordFragment();
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container_view, fActualizarPassword);
+        transaction.addToBackStack(null);
+        drawerLayout.closeDrawers();
+        transaction.commit();
         drawerLayout.closeDrawers();
 
     }

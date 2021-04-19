@@ -39,6 +39,9 @@
     <string name="btnAgregar">Agregar</string>
     <string name="btnCancelar">Cancelar</string>
     <string name="btnConfirmar">Confirmar</string>
+    <string name="imageViewText">Imagen</string>
+    <string name="nombre_ejemplo">Nombre Apellido</string>
+    <string name="correo_ejemplo">micorreo@mail.com</string>
 
     <!-- Categorias -->
     <string name="ingCategoria">Ingrese categoría</string>
@@ -60,6 +63,9 @@
 
     <!-- CambiarPassword -->
     <string name="cambia_password">Cambia tu contraseña</string>
-    <string name="nueva_password">Nueva contraseña</string>
-    <string name="repita_password">Repita la contraseña</string>
+    <string name="nueva_password">Contraseña nueva</string>
+    <string name="repita_password">Repita la nueva contraseña</string>
+
+    <!-- ActualizarPassword -->
+    <string name="anterior_password">Contraseña anterior</string>
 </resources>
