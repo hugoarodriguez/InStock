@@ -45,7 +45,7 @@ public class Categorias extends AppCompatActivity {
         List<ListCategorias> categoriasList = new ArrayList<>();
         categoriasList.add(new ListCategorias(cat.getText().toString()));
         categoriasAdaptador = new CategoriasAdaptador(categoriasList, this);
-
+    // comentario
         recyclerCategorias.setAdapter(categoriasAdaptador);
     }
 }

@@ -18,7 +18,7 @@ public class MainMenu extends AppCompatActivity {
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-    Fragment fAgregarProductos, fInicio;
+    Fragment fAgregarProductos, fInicio,fProductos;
     // Fragment de agregar_cliente
     Fragment fAgregarCliente;
     FragmentTransaction transaction;
@@ -44,6 +44,7 @@ public class MainMenu extends AppCompatActivity {
         fInicio = new InicioFragment();
         //Intancia de fragmento agregar_cliente
         fAgregarCliente = new AgregarClienteFragment();
+        fProductos = new ModificarProductosFragment() ;
 
         //Agregamos el Fragment que se presentará en la pantalla principal
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, fInicio).commit();
@@ -82,6 +83,14 @@ public class MainMenu extends AppCompatActivity {
                     drawerLayout.closeDrawers();
                     transaction.commit();
                     break;
+
+                case R.id.opc_productos:
+                    transaction.replace(R.id.fragment_container_view, fProductos);
+                    transaction.addToBackStack(null);
+                    drawerLayout.closeDrawers();
+                    transaction.commit();
+                    break;
+
                 case R.id.opc_categorias:
                     // Caso para abrir la actividad Categorias
                     Intent i = new Intent(this, Categorias.class);
@@ -94,6 +103,7 @@ public class MainMenu extends AppCompatActivity {
                     drawerLayout.closeDrawers();
                     transaction.commit();
                     break;
+
                 case R.id.opc_cerrar_sesion:
                     drawerLayout.closeDrawers();
                     finish();

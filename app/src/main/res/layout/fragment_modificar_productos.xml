@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AgregarProductosFragment">
+    tools:context=".ModificarProductosFragment">
+
 
     <TextView
         android:id="@+id/textView3"
@@ -42,8 +43,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="32dp"
-        android:text="Seleccionar Imagen"
         android:onClick="SelectIMG"
+        android:text="Seleccionar Imagen"
         app:backgroundTint="#3F51B5"
         app:layout_constraintBottom_toTopOf="@+id/edtNombrePro"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,7 +99,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="18dp"
-        android:text="Agregar"
+        android:text="Actualizar"
         app:backgroundTint="#44B846"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button3"
@@ -153,24 +154,6 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextNumber3" />
 
     <TextView
-        android:id="@+id/textView10"
-        android:layout_width="27dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:background="#00FFFFFF"
-        android:text="  *"
-        android:textColor="#FF0000"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/edtPrecioPoducto"
-        app:layout_constraintTop_toBottomOf="@+id/sprCategoria" />
-
-    <TextView
         android:id="@+id/textView9"
         android:layout_width="27dp"
         android:layout_height="27dp"
@@ -209,5 +192,36 @@
         android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sprCategoria" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="#00FFFFFF"
+        android:text="  *"
+        android:textColor="#FF0000"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/edtPrecioPoducto"
+        app:layout_constraintTop_toBottomOf="@+id/sprCategoria" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="339dp"
+        android:layout_marginRight="339dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
