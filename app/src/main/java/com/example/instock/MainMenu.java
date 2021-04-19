@@ -8,8 +8,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -54,6 +57,18 @@ public class MainMenu extends AppCompatActivity {
         navegacionDeFragments();
     }
 
+    //Método para actualizar contraseña
+    //Se ejecuta al hacer click en el tvUserName del NavHeader
+    public void actualizarPassword(View v){
+        Fragment fActualizarPassword = new ActualizarPasswordFragment();
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container_view, fActualizarPassword);
+        transaction.addToBackStack(null);
+        drawerLayout.closeDrawers();
+        transaction.commit();
+        drawerLayout.closeDrawers();
+
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

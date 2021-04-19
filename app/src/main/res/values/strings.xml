@@ -38,6 +38,10 @@
     <string name="correo">Correo electrónico</string>
     <string name="btnAgregar">Agregar</string>
     <string name="btnCancelar">Cancelar</string>
+    <string name="btnConfirmar">Confirmar</string>
+    <string name="imageViewText">Imagen</string>
+    <string name="nombre_ejemplo">Nombre Apellido</string>
+    <string name="correo_ejemplo">micorreo@mail.com</string>
 
     <!-- Categorias -->
     <string name="ingCategoria">Ingrese categoría</string>
@@ -48,4 +52,20 @@
         <item>Masculino</item>
         <item>Femenino</item>
     </array>
+
+    <!-- RecuperarCuenta -->
+    <string name="recuperar_cuenta_titulo">Recuperar tu cuenta</string>
+    <string name="indicacion1_rc">Favor indicar su email.\nUn código para recuperar su cuenta será enviado a su correo electrónico.</string>
+    <string name="indicacion2_rc">Ingresa el código de seguridad enviado a tu correo electrónico</string>
+    <string name="ingresa_codigo">Ingresa el código</string>
+    <string name="btnEnviar">Enviar</string>
+    <string name="btnComprobar">Comprobar</string>
+
+    <!-- CambiarPassword -->
+    <string name="cambia_password">Cambia tu contraseña</string>
+    <string name="nueva_password">Contraseña nueva</string>
+    <string name="repita_password">Repita la nueva contraseña</string>
+
+    <!-- ActualizarPassword -->
+    <string name="anterior_password">Contraseña anterior</string>
 </resources>

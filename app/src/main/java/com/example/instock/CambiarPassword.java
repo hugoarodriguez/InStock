@@ -2,21 +2,18 @@ package com.example.instock;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
-public class RecuperarCuenta extends AppCompatActivity {
+public class CambiarPassword extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recuperar_cuenta);
+        setContentView(R.layout.activity_cambiar_password);
 
         //Habilitamos el ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -37,10 +34,5 @@ public class RecuperarCuenta extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void cambiarPassword(View v){
-        Intent intent = new Intent(this, CambiarPassword.class);
-        startActivity(intent);
     }
 }
