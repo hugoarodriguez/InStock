@@ -56,21 +56,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-        <EditText
-            android:id="@+id/etEmail"
-            android:layout_width="0dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@id/tilEmail"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="30dp"
             android:layout_marginRight="30dp"
             android:ems="10"
-            android:hint="@string/correo"
-            android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvIndicacion1" />
+            app:layout_constraintTop_toBottomOf="@+id/tvIndicacion1"
+            app:startIconDrawable="@drawable/ic_baseline_alternate_email_24">
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/correo"
+                android:inputType="textEmailAddress"
+                android:background="@color/white"/>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tvIndicacion2"
@@ -87,11 +97,11 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+            app:layout_constraintTop_toBottomOf="@+id/tilEmail" />
 
-        <EditText
-            android:id="@+id/etIngresarCodigo"
-            android:layout_width="0dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilCodigo"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginLeft="30dp"
@@ -99,11 +109,19 @@
             android:layout_marginEnd="30dp"
             android:layout_marginRight="30dp"
             android:ems="10"
-            android:hint="@string/ingresa_codigo"
-            android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvIndicacion2" />
+            app:layout_constraintTop_toBottomOf="@+id/tvIndicacion2">
+
+            <EditText
+                android:id="@+id/etIngresarCodigo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/ingresa_codigo"
+                android:inputType="text"
+                android:background="@color/white"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnComprobar"
@@ -114,7 +132,7 @@
             android:onClick="cambiarPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etIngresarCodigo" />
+            app:layout_constraintTop_toBottomOf="@+id/tilCodigo" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
