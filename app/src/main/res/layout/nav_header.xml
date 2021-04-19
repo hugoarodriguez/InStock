@@ -38,6 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
                 android:text="Nombre Apellido"
+                android:onClick="actualizarPassword"
+                style="@style/tvAsLink2"
                 android:textSize="20sp" />
 
             <TextView
