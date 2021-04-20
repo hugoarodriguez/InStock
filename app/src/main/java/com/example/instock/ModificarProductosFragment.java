@@ -17,7 +17,7 @@ import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ModificarProductosFragment#newInstance} factory method to
+ * Use the {@link ModificarProductosFragment#//newInstance} factory method to
  * create an instance of this fragment.
  */
 public class ModificarProductosFragment extends Fragment {
