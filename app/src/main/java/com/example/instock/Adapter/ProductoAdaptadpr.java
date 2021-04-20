@@ -21,10 +21,8 @@ import java.util.List;
 public class ProductoAdaptadpr extends  RecyclerView.Adapter<ProductoAdaptadpr.ViewHolder>{
 
 
-   private List<Producto> ProductoList;
+    private List<Producto> ProductoList;
     private Context context;
-
-
 
     public ProductoAdaptadpr(List<Producto> productoList, Context context) {
         ProductoList = productoList;
@@ -35,28 +33,16 @@ public class ProductoAdaptadpr extends  RecyclerView.Adapter<ProductoAdaptadpr.V
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tarjeta_producto,parent,false);
-
         return new ViewHolder(view);
-
-
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-
         holder.txtProducto.setText(ProductoList.get(position).getNomProducto());
         holder.txtCategoria.setText(ProductoList.get(position).getCategoria());
         holder.txtCantidad.setText(ProductoList.get(position).getCantidad());
         holder.txtPrecio.setText(ProductoList.get(position).getPrecio());
-
-
-
     }
-
-
-
-
     @Override
     public int getItemCount() {
         return ProductoList.size();
@@ -70,8 +56,6 @@ public class ProductoAdaptadpr extends  RecyclerView.Adapter<ProductoAdaptadpr.V
         private TextView txtCategoria;
         private TextView txtCantidad;
         private TextView txtPrecio;
-
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgFoto = itemView.findViewById(R.id.imgproc);
@@ -79,8 +63,6 @@ public class ProductoAdaptadpr extends  RecyclerView.Adapter<ProductoAdaptadpr.V
             txtCategoria = itemView.findViewById(R.id.txtCategoria);
             txtCantidad = itemView.findViewById(R.id.txtCantidad);
             txtPrecio = itemView.findViewById(R.id.txtPrecio);
-
-
         }
     }
 }
