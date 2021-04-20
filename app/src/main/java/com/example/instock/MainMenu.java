@@ -24,8 +24,6 @@ public class MainMenu extends AppCompatActivity {
     Fragment fAgregarProductos, fInicio,fProductos;
     // Fragment de agregar_cliente
     Fragment fAgregarCliente;
-    // Fragment de Gestionar categorias
-    Fragment fCategorias;
     FragmentTransaction transaction;
 
     @Override
@@ -49,8 +47,6 @@ public class MainMenu extends AppCompatActivity {
         fInicio = new InicioFragment();
         //Intancia de fragmento agregar_cliente
         fAgregarCliente = new AgregarClienteFragment();
-        //Instancia de Gestionar categorias
-        fCategorias = new CategoriasFragment();
         fProductos = new ConsultaProductosFragment() ;
 
         //Agregamos el Fragment que se presentará en la pantalla principal
@@ -112,12 +108,8 @@ public class MainMenu extends AppCompatActivity {
 
                 case R.id.opc_categorias:
                     // Caso para abrir la actividad Categorias
-                    // Intent i = new Intent(this, Categorias.class);
-                    // startActivity(i);
-                    transaction.replace(R.id.fragment_container_view, fCategorias);
-                    transaction.addToBackStack(null);
-                    drawerLayout.closeDrawers();
-                    transaction.commit();
+                    Intent i = new Intent(this, Categorias.class);
+                    startActivity(i);
                     break;
                 case R.id.opc_agg_clientes:
                     // Caso para abrir el fragment Agregar_cliente
