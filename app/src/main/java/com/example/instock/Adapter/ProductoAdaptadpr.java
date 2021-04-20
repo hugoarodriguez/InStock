@@ -23,7 +23,7 @@ public class ProductoAdaptadpr extends  RecyclerView.Adapter<ProductoAdaptadpr.V
 
    private List<Producto> ProductoList;
     private Context context;
-    Button btnModifi ;
+
 
 
     public ProductoAdaptadpr(List<Producto> productoList, Context context) {
