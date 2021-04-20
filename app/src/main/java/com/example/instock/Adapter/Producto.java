@@ -5,16 +5,29 @@ public class Producto {
 
     private String NomProducto;
     private String Categoria;
+    private String Cantidad;
+    private String Precio;
 
 
-    public Producto( String nomProducto, String categoria) {
+
+
+    public Producto(String nomProducto, String categoria, String Cantidads, String Precios) {
 
         NomProducto = nomProducto;
         Categoria = categoria;
+        Cantidad = Cantidads;
+        Precio = Precios;
 
     }
 
 
+    public String getPrecio() {
+        return Precio;
+    }
+
+    public void setPrecio(String precio) {
+        Precio = precio;
+    }
 
     public String getNomProducto() {
         return NomProducto;
@@ -32,15 +45,17 @@ public class Producto {
         Categoria = categoria;
     }
 
+    public String getCantidad() {  return Cantidad;  }
 
+    public void setCantidad(String cantidad) {  Cantidad = cantidad; }
 
     @Override
     public String toString() {
         return "Producto{" +
-
-                ", NomProducto='" + NomProducto + '\'' +
+                "NomProducto='" + NomProducto + '\'' +
                 ", Categoria='" + Categoria + '\'' +
-
+                ", Cantidad='" + Cantidad + '\'' +
+                ", Precio='" + Precio + '\'' +
                 '}';
     }
 }

@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.instock.Adapter.Producto;
 import com.example.instock.Adapter.ProductoAdaptadpr;
@@ -22,6 +24,8 @@ public class ConsultaProductosFragment extends Fragment {
     RecyclerView recyclerProducto;
     ProductoAdaptadpr productoAdaptador;
     ArrayList<Producto> ProductoList;
+    Button btnm;
+
 
 
 
@@ -41,6 +45,7 @@ public class ConsultaProductosFragment extends Fragment {
 
 
         ProductoList = new ArrayList<>();
+        btnm = view.findViewById(R.id.btnModifica);
         RecyclerView recyclerProducto =view.findViewById(R.id.recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerProducto.setLayoutManager(layoutManager);
@@ -53,14 +58,16 @@ public class ConsultaProductosFragment extends Fragment {
 
 
     private void cargarDatos() {
-        {
-            for (int i =0; i<100;i++) {
-                ProductoList.add(new Producto("Producto: Camisa verde", "Categoria: Camisas"));
-            }
+
+                ProductoList.add(new Producto("Producto: Camisa verde", "Categoria: Camisas","Cantidad: 25 Unidades","Precio $13.50"));
+                ProductoList.add(new Producto("Producto: Short Azul", "Categoria: Short","Cantidad: 25 Unidades","Precio $8.50"));
+                ProductoList.add(new Producto("Producto: Zapatos de vestir", "Categoria: Zapatos","Cantidad: 12 Unidades","Precio $25.75"));
+                ProductoList.add(new Producto("Producto: Collar", "Categoria: Joyeria","Cantidad: 5 Unidades","Precio $2.50"));
+                ProductoList.add(new Producto("Producto: Audifonos", "Categoria: Auriculares","Cantidad: 12 Unidades","Precio 7.00"));
 
 
 
-        }
+
 
     }
 }
