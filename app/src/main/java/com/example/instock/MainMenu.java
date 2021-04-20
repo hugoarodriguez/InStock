@@ -47,7 +47,7 @@ public class MainMenu extends AppCompatActivity {
         fInicio = new InicioFragment();
         //Intancia de fragmento agregar_cliente
         fAgregarCliente = new AgregarClienteFragment();
-        fProductos = new ModificarProductosFragment() ;
+        fProductos = new ConsultaProductosFragment() ;
 
         //Agregamos el Fragment que se presentará en la pantalla principal
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, fInicio).commit();

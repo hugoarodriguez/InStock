@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    app:cardBackgroundColor="#00FF0303">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:background="#FFFFFF"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/imgproc"
+            android:layout_width="126dp"
+            android:layout_height="137dp"
+            android:background="#00FFFFFF"
+            app:srcCompat="@drawable/no" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Producto:" />
+
+        <LinearLayout
+            android:layout_width="287dp"
+            android:layout_height="171dp"
+            android:background="#00F3F2F2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtNombreProducto"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="Camisas Strech para señorita"
+                android:textColor="#423F3F" />
+
+            <TextView
+                android:id="@+id/txtCategoria"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="Categoria"
+                android:textColor="#423F3F" />
+
+            <TextView
+                android:id="@+id/txtCantidad"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:text="Cantidadhjjjjjjjjj"
+                android:textColor="#423F3F" />
+
+            <TextView
+                android:id="@+id/txtPrecio"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:text="Precio"
+                android:textColor="#423F3F" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imageButton11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_weight="1"
+                    android:background="#00FFFFFF"
+                    app:srcCompat="@drawable/ic_edit"
+                    tools:ignore="VectorDrawableCompat" />
+
+                <ImageButton
+                    android:id="@+id/imageButton10"
+                    android:layout_width="74dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#00FFFFFF"
+                    app:srcCompat="@drawable/ic_delete"
+                    tools:ignore="VectorDrawableCompat" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
