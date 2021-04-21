@@ -17,43 +17,40 @@ import com.example.instock.Adapter.Producto;
 import com.example.instock.Adapter.ProductoAdaptadpr;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class VerClientesFragment extends Fragment {
 
-    RecyclerView recyclerCliente;
     ClientesAdaptador clienteAdaptador;
-    ArrayList<ListaClientes> ClientesList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ver_clientes, container, false);
+        View view  =  inflater.inflate(R.layout.fragment_ver_clientes, container, false);;
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ClientesList = new ArrayList<>();
-        RecyclerView recyclerCliente = view.findViewById(R.id.recycler);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerCliente.setLayoutManager(layoutManager);
-
-        clienteAdaptador = new ClientesAdaptador( ClientesList, getActivity());
-        recyclerCliente.setAdapter(clienteAdaptador);
         cargarDatos();
+
     }
 
     private void cargarDatos() {
+        List<ListaClientes> ClientesList = new ArrayList<>();
         ClientesList.add(new ListaClientes("Nombre: AMILTON ABRAHAM", "Teléfono: 7859-8598","Correo: algo@gmail.com","Sexo: Masculino"));
         ClientesList.add(new ListaClientes("Nombre: AMILTON ABRAHAM", "Teléfono: 7859-8598","Correo: algo@gmail.com","Sexo: Masculino"));
         ClientesList.add(new ListaClientes("Nombre: AMILTON ABRAHAM", "Teléfono: 7859-8598","Correo: algo@gmail.com","Sexo: Masculino"));
         ClientesList.add(new ListaClientes("Nombre: AMILTON ABRAHAM", "Teléfono: 7859-8598","Correo: algo@gmail.com","Sexo: Masculino"));
         ClientesList.add(new ListaClientes("Nombre: AMILTON ABRAHAM", "Teléfono: 7859-8598","Correo: algo@gmail.com","Sexo: Masculino"));
+
+        RecyclerView recyclerCliente = getView().findViewById(R.id.recyclerClientes);
+        recyclerCliente.setLayoutManager(new LinearLayoutManager(getActivity()));
+        clienteAdaptador = new ClientesAdaptador( ClientesList, getActivity());
+        recyclerCliente.setAdapter(clienteAdaptador);
     }
-
-
-
 }
