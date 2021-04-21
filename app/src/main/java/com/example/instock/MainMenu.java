@@ -133,6 +133,7 @@ public class MainMenu extends AppCompatActivity {
                     transaction.addToBackStack(null);
                     drawerLayout.closeDrawers();
                     transaction.commit();
+                    break;
 
                 case R.id.opc_cerrar_sesion:
                     drawerLayout.closeDrawers();

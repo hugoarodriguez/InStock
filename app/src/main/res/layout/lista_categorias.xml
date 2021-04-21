@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cvCategoria"
-    android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     app:cardUseCompatPadding="true">
     <!-- app:cardCornerRadius="10dp" -->
     <!--    app:cardElevation="4dp"-->
@@ -38,15 +38,17 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/ic_delete" />
+
             <LinearLayout
                 android:id="@+id/LinearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="2dp"
                 android:layout_marginLeft="4dp"
+                android:layout_marginTop="2dp"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/tvCategoria"
                     android:layout_width="match_parent"
@@ -54,7 +56,7 @@
                     android:layout_marginBottom="2dp"
                     android:text="Categoría"
                     android:textColor="@color/black"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
