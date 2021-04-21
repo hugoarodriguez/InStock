@@ -64,10 +64,5 @@ public class ConsultaProductosFragment extends Fragment {
                 ProductoList.add(new Producto("Producto: Zapatos de vestir", "Categoria: Zapatos","Cantidad: 12 Unidades","Precio $25.75"));
                 ProductoList.add(new Producto("Producto: Collar", "Categoria: Joyeria","Cantidad: 5 Unidades","Precio $2.50"));
                 ProductoList.add(new Producto("Producto: Audifonos", "Categoria: Auriculares","Cantidad: 12 Unidades","Precio 7.00"));
-
-
-
-
-
     }
 }

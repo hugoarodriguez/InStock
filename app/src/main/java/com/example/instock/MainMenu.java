@@ -27,6 +27,8 @@ public class MainMenu extends AppCompatActivity {
     // Fragment de gestionar categorias
     Fragment fCategorias;
     FragmentTransaction transaction;
+    //FRAGMENT PARA LISTADO DE CLIENTES
+    Fragment fClientes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class MainMenu extends AppCompatActivity {
         //Instancia de fragmento Categorias
         fCategorias = new CategoriasFragment();
         fProductos = new ConsultaProductosFragment() ;
+        fClientes = new VerClientesFragment();
 
         //Agregamos el Fragment que se presentará en la pantalla principal
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, fInicio).commit();
@@ -126,7 +129,10 @@ public class MainMenu extends AppCompatActivity {
                     break;
                 case R.id.opc_clientes:
                     // Caso para abrir el fragment Clientes
-
+                    transaction.replace(R.id.fragment_container_view, fClientes);
+                    transaction.addToBackStack(null);
+                    drawerLayout.closeDrawers();
+                    transaction.commit();
 
                 case R.id.opc_cerrar_sesion:
                     drawerLayout.closeDrawers();
