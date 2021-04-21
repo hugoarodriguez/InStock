@@ -7,10 +7,22 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.instock.Adapter.CategoriasAdaptador;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -18,7 +30,8 @@ import static android.app.Activity.RESULT_OK;
 public class AgregarProductosFragment extends Fragment {
 
     public AgregarProductosFragment(){}
-    ImageView Imagen;
+    ImageView imgProducto;
+    Button btnImage;
 
 
 
@@ -33,37 +46,48 @@ public class AgregarProductosFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View vista = inflater.inflate(R.layout.fragment_agregar_productos, container, false);
-        Imagen = (ImageView) vista.findViewById(R.id.imgProducto);
+        imgProducto = (ImageView) vista.findViewById(R.id.imgProducto);
+        btnImage = (Button)vista.findViewById(R.id.btnImage);
 
-        return inflater.inflate(R.layout.fragment_agregar_productos, container, false);
-    }
+        //Método para seleccionar imagen
+        SelectIMG();
 
-    public void SelectIMG(View view)
-    {
-        cargarImagen();
-
-    }
-
-    private void cargarImagen() {
-
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("Image/");
-        Fragment fragment = this;
-        startActivityForResult(intent.createChooser(intent,"Seleccione la puta aplicacion"),10);
-
+        return vista;
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        Fragment fragment = this;
-        this.onActivityResult(requestCode, resultCode, data);
-        // super.onActivityResult();
-        if(resultCode== RESULT_OK)
-        {
-            Uri path = data.getData();
-            Imagen.setImageURI(path);
-        }
 
+    }
+
+    //Objeto que permite seleccionar archivos y por medio del cual se asigna la imagen al objeto imProducto
+    ActivityResultLauncher<String> gcSeleccionarImagen = registerForActivityResult(new ActivityResultContracts.GetContent(),
+            new ActivityResultCallback<Uri>() {
+                @Override
+                public void onActivityResult(Uri uri) {
+
+                    if(uri != null){
+                        System.out.println(uri.getPath());
+                        imgProducto.setImageURI(uri);
+                    }
+                    else{
+                        Toast.makeText(getContext(), "¡No seleccionaste ninguna imagen!", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
+
+
+    private void SelectIMG()
+    {
+        btnImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Abrimos la galería de imágenes
+                gcSeleccionarImagen.launch("image/*");
+            }
+        });
     }
 }
