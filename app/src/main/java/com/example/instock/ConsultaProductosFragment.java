@@ -50,10 +50,11 @@ public class ConsultaProductosFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerProducto.setLayoutManager(layoutManager);
 
-
-        productoAdaptador = new ProductoAdaptadpr( ProductoList, getActivity());
-        recyclerProducto.setAdapter(productoAdaptador);
         cargarDatos();
+        productoAdaptador = new ProductoAdaptadpr( ProductoList, getActivity());
+
+        recyclerProducto.setAdapter(productoAdaptador);
+
     }
 
 
