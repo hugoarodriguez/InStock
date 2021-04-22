@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -50,6 +51,9 @@ public class MainMenu extends AppCompatActivity {
 
         //Habilitamos el ActionBar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //Cambiamos el color del Título del ActionBar
+        //getSupportActionBar().setTitle((Html.fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.app_name) + "</font>")));
 
         //Instancia de los fragments
         fAgregarProductos = new AgregarProductosFragment();

@@ -14,6 +14,26 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
+
         <!-- Customize your theme here. -->
+        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar2</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+    </style>
+
+    <!-- Estilo personalizado para el ToolBar -->
+    <style name="Widget.MaterialComponents.Toolbar2" parent="Widget.AppCompat.Toolbar">
+        <item name="titleTextAppearance">?attr/textAppearanceHeadline6</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="subtitleTextAppearance">?attr/textAppearanceSubtitle1</item>
+        <item name="subtitleTextColor">?android:attr/textColorSecondary</item>
+        <!-- Overrides minimum height in landscape to avoid headline6 and subtitle1 height concerns. -->
+        <item name="android:minHeight">@dimen/mtrl_toolbar_default_height</item>
+        <item name="maxButtonHeight">@dimen/mtrl_toolbar_default_height</item>
+    </style>
+
+    <!-- Estilo personalidazo para el hamburger (ícono del Menú lateral) -->
+    <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
     </style>
 </resources>

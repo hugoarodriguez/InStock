@@ -31,22 +31,33 @@ tools:context=".CategoriasFragment">
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/edtCategoria">
+    app:layout_constraintTop_toBottomOf="@+id/tilCategoria">
 
 </androidx.recyclerview.widget.RecyclerView>
 
-<EditText
-    android:id="@+id/edtCategoria"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="20dp"
-    android:layout_marginLeft="20dp"
-    android:layout_marginTop="20dp"
-    android:ems="10"
-    android:hint="@string/ingCategoria"
-    android:inputType="textPersonName"
-    app:layout_constraintEnd_toStartOf="@+id/btnAgregar"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilCategoria"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toStartOf="@+id/btnAgregar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/edtCategoria"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/ingCategoria"
+            android:inputType="textPersonName"
+            android:background="@color/white" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
