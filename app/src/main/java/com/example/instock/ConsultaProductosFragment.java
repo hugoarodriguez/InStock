@@ -50,9 +50,11 @@ public class ConsultaProductosFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerProducto.setLayoutManager(layoutManager);
 
-
+        cargarDatos();
         productoAdaptador = new ProductoAdaptadpr( ProductoList, getActivity());
+
         recyclerProducto.setAdapter(productoAdaptador);
+
         cargarDatos();
 
         //Enlazamos el simpleItemTouchCallback con el recyclerProducto
@@ -65,6 +67,7 @@ public class ConsultaProductosFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
     }
 
 
