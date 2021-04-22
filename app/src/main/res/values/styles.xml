@@ -15,7 +15,4 @@
     </style>
 
     <!-- Efecto 2 al hacer click en un TextView-->
-    <style name="ActionBarTitleStyle">
-        <item name="android:color">@color/white</item>
-    </style>
 </resources>
