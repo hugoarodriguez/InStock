@@ -61,7 +61,7 @@ public class MainMenu extends AppCompatActivity {
         //Intancia de fragmento ver ventas
         fVerVentas = new VerVentasFragment();
         //Intancia de fragmento ver reservas
-        fAgregarCliente = new VerReservasFragment();
+        fVerReservas = new VerReservasFragment();
         //Intancia de fragmento agregar_cliente
         fAgregarCliente = new AgregarClienteFragment();
         //Instancia de fragmento Categorias

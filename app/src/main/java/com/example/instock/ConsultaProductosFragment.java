@@ -1,9 +1,7 @@
 package com.example.instock;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -46,7 +44,7 @@ public class ConsultaProductosFragment extends Fragment {
         //Agregado
         ProductoList = new ArrayList<>();
         //btnm = vista.findViewById(R.id.btnModifica);
-        RecyclerView recyclerProducto = vista.findViewById(R.id.recycler);
+        RecyclerView recyclerProducto = vista.findViewById(R.id.recyclerReservas);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerProducto.setLayoutManager(layoutManager);
 
