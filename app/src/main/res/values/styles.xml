@@ -13,4 +13,9 @@
         <item name="android:focusable">true</item>
         <item name="android:textColor">@color/mi_selector</item>
     </style>
+
+    <!-- Efecto 2 al hacer click en un TextView-->
+    <style name="ActionBarTitleStyle">
+        <item name="android:color">@color/white</item>
+    </style>
 </resources>
