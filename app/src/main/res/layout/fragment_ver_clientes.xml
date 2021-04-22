@@ -6,22 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".VerClientesFragment">
 
-    <EditText
-        android:id="@+id/edtBuscarNombre"
-        android:layout_width="364dp"
-        android:layout_height="38dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilBuscarNombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="1dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Nombre"
         app:layout_constraintBottom_toTopOf="@+id/recyclerClientes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <EditText
+            android:id="@+id/edtBuscarNombre"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPersonName"
+            android:hint="Nombre"
+            android:background="@color/white"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerClientes"
@@ -32,6 +40,6 @@
         android:layout_marginBottom="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtBuscarNombre" />
+        app:layout_constraintTop_toBottomOf="@+id/tilBuscarNombre" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -42,6 +42,7 @@
     <string name="imageViewText">Imagen</string>
     <string name="nombre_ejemplo">Nombre Apellido</string>
     <string name="correo_ejemplo">micorreo@mail.com</string>
+    <string name="saludo">¡Hola User!\nBienvenido a InStock</string>
 
     <!-- Categorias -->
     <string name="ingCategoria">Ingrese categoría</string>
