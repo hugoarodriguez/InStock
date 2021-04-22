@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VerVentasFragment">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="318dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="36dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTotal"
+        app:layout_constraintEnd_toEndOf="@+id/rgOpciones"
+        app:layout_constraintStart_toEndOf="@+id/rgOpciones"
+        app:layout_constraintTop_toBottomOf="@+id/rgOpciones">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </HorizontalScrollView>
+        </ScrollView>
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/rgOpciones"
+        android:layout_width="0dp"
+        android:layout_height="142dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginRight="13dp"
+        app:layout_constraintEnd_toStartOf="@+id/spinner2"
+        app:layout_constraintStart_toStartOf="@+id/tvBuscarPor"
+        app:layout_constraintTop_toBottomOf="@+id/tvBuscarPor">
+
+        <RadioButton
+            android:id="@+id/rdbSemana"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rdbSemana" />
+
+        <RadioButton
+            android:id="@+id/rdbMes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rdbMes" />
+
+        <RadioButton
+            android:id="@+id/rdbAnnio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rdbAnnio" />
+    </RadioGroup>
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="141dp"
+        android:layout_height="63dp"
+        android:layout_marginEnd="51dp"
+        android:layout_marginRight="51dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rgOpciones" />
+
+    <TextView
+        android:id="@+id/tvTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="89dp"
+        android:text="@string/tvTotal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout" />
+
+    <TextView
+        android:id="@+id/tvBuscarPor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="102dp"
+        android:text="@string/tvBuscarPor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvFiltrarPor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/tvFiltrarPor"
+        app:layout_constraintBottom_toTopOf="@+id/spinner2"
+        app:layout_constraintStart_toStartOf="@+id/spinner2" />
+</androidx.constraintlayout.widget.ConstraintLayout>

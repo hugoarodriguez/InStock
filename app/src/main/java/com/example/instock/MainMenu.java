@@ -22,6 +22,10 @@ public class MainMenu extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Fragment fAgregarProductos, fInicio,fProductos;
+    //Fragment Ver Ventas
+    Fragment fVerVentas;
+    //Fragment Ver Resevas
+    Fragment fVerReservas;
     // Fragment de agregar_cliente
     Fragment fAgregarCliente;
     // Fragment de gestionar categorias
@@ -49,6 +53,10 @@ public class MainMenu extends AppCompatActivity {
         //Instancia de los fragments
         fAgregarProductos = new AgregarProductosFragment();
         fInicio = new InicioFragment();
+        //Intancia de fragmento ver ventas
+        fVerVentas = new VerVentasFragment();
+        //Intancia de fragmento ver reservas
+        fAgregarCliente = new VerReservasFragment();
         //Intancia de fragmento agregar_cliente
         fAgregarCliente = new AgregarClienteFragment();
         //Instancia de fragmento Categorias
@@ -112,7 +120,18 @@ public class MainMenu extends AppCompatActivity {
                     drawerLayout.closeDrawers();
                     transaction.commit();
                     break;
-
+                case R.id.opc_ventas:
+                    transaction.replace(R.id.fragment_container_view, fVerVentas);
+                    transaction.addToBackStack(null);
+                    drawerLayout.closeDrawers();
+                    transaction.commit();
+                    break;
+                case R.id.opc_reservas:
+                    transaction.replace(R.id.fragment_container_view, fVerReservas);
+                    transaction.addToBackStack(null);
+                    drawerLayout.closeDrawers();
+                    transaction.commit();
+                    break;
                 case R.id.opc_categorias:
                     // Caso para abrir el fragmento Categorias
                     transaction.replace(R.id.fragment_container_view, fCategorias);
