@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/edtNombre"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilNombre"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
@@ -25,38 +25,56 @@
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:ems="10"
-            android:hint="@string/nombres"
-            android:inputType="textPersonName" />
+            app:errorEnabled="true">
 
-        <EditText
-            android:id="@+id/edtApellido"
-            android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/edtNombre"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/nombres"
+                android:inputType="textPersonName"
+                android:background="@color/white"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilApellido"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edtNombre"
-            android:layout_alignStart="@+id/edtNombre"
-            android:layout_alignLeft="@+id/edtNombre"
-            android:layout_alignEnd="@+id/edtNombre"
-            android:layout_alignRight="@+id/edtNombre"
+            android:layout_below="@+id/tilNombre"
+            android:layout_alignStart="@+id/tilNombre"
+            android:layout_alignLeft="@+id/tilNombre"
+            android:layout_alignEnd="@+id/tilNombre"
+            android:layout_alignRight="@+id/tilNombre"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="@string/apellidos"
-            android:inputType="textPersonName" />
+            app:errorEnabled="true">
+
+            <EditText
+                android:id="@+id/edtApellido"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/apellidos"
+                android:inputType="textPersonName"
+                android:background="@color/white"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edtApellido"
-            android:layout_alignStart="@+id/edtApellido"
-            android:layout_alignLeft="@+id/edtApellido"
-            android:layout_alignEnd="@+id/edtApellido"
-            android:layout_alignRight="@+id/edtApellido"
+            android:layout_below="@+id/tilApellido"
+            android:layout_alignStart="@+id/tilApellido"
+            android:layout_alignLeft="@+id/tilApellido"
+            android:layout_alignEnd="@+id/tilApellido"
+            android:layout_alignRight="@+id/tilApellido"
             android:layout_marginTop="10dp"
             android:entries="@array/agregarCliente" />
 
-        <EditText
-            android:id="@+id/edtTelefono"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilTelefono"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/spinner"
             android:layout_alignStart="@+id/spinner"
@@ -65,30 +83,50 @@
             android:layout_alignRight="@+id/spinner"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="@string/numTel"
-            android:inputType="phone" />
+            app:errorEnabled="true"
+            app:startIconDrawable="@drawable/ic_baseline_phone_24">
 
-        <EditText
-            android:id="@+id/edtCorreo"
-            android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/edtTelefono"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/numTel"
+                android:inputType="phone"
+                android:background="@color/white"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilCorreo"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edtTelefono"
-            android:layout_alignStart="@+id/edtTelefono"
-            android:layout_alignLeft="@+id/edtTelefono"
-            android:layout_alignEnd="@+id/edtTelefono"
-            android:layout_alignRight="@+id/edtTelefono"
+            android:layout_below="@+id/tilTelefono"
+            android:layout_alignStart="@+id/tilTelefono"
+            android:layout_alignLeft="@+id/tilTelefono"
+            android:layout_alignEnd="@+id/tilTelefono"
+            android:layout_alignRight="@+id/tilTelefono"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="@string/correo"
-            android:inputType="textEmailAddress" />
+            app:errorEnabled="true"
+            app:startIconDrawable="@drawable/ic_baseline_alternate_email_24">
+
+            <EditText
+                android:id="@+id/edtCorreo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/correo"
+                android:inputType="textEmailAddress"
+                android:background="@color/white"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnAgregarC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edtCorreo"
-            android:layout_alignStart="@+id/edtCorreo"
-            android:layout_alignLeft="@+id/edtCorreo"
+            android:layout_below="@+id/tilCorreo"
+            android:layout_alignStart="@+id/tilCorreo"
+            android:layout_alignLeft="@+id/tilCorreo"
             android:layout_marginTop="10dp"
             android:text="@string/btnAgregar"
             android:textAllCaps="false"
@@ -99,9 +137,9 @@
             android:id="@+id/btnCancelarC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edtCorreo"
-            android:layout_alignEnd="@+id/edtCorreo"
-            android:layout_alignRight="@+id/edtCorreo"
+            android:layout_below="@+id/tilCorreo"
+            android:layout_alignEnd="@+id/tilCorreo"
+            android:layout_alignRight="@+id/tilCorreo"
             android:layout_marginTop="10dp"
             android:text="@string/btnCancelar"
             android:textAllCaps="false"
