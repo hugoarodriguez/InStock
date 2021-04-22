@@ -61,6 +61,12 @@
     <string name="rdbAnnio">Año</string>
     <string name="tvTotal">Total Ventas: $</string>
 
+    <!-- Ver Reservas-->
+    <string name="tvProducto">Producto: </string>
+    <string name="tvCliente">Cliente:</string>
+    <string name="tvPrecio">Precio</string>
+    <string name="imgProdu">Imagen del producto</string>
+
     <!-- RecuperarCuenta -->
     <string name="recuperar_cuenta_titulo">Recuperar tu cuenta</string>
     <string name="indicacion1_rc">Favor indicar su email.\nUn código para recuperar su cuenta será enviado a su correo electrónico.</string>
