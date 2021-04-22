@@ -46,14 +46,12 @@
     <string name="btnConfirmar">Confirmar</string>
     <string name="imageViewText">Imagen</string>
     <string name="nombre_ejemplo">Nombre Apellido</string>
-<<<<<<< HEAD
     <string name="correo_ejemplo">micorreo@mail.com</string>
     <string name="saludo">¡Hola User!\nBienvenido a InStock</string>
-=======
->>>>>>> 3dfba2d1bba18d64734d9ae303e7b706f519da3a
+
 
     <!-- Categorias -->
-    <string name="correo_ejemplo">micorreo@mail.com</string>
+
 
     <!-- AgregarCliente -->
     <string name="ingCategoria">Ingrese categoría</string>
