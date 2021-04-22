@@ -19,13 +19,13 @@
             tools:srcCompat="@drawable/ic_outline_account_circle_24" />
 
         <LinearLayout
-            android:layout_width="152dp"
+            android:layout_width="299dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtNombre"
-                android:layout_width="match_parent"
+                android:layout_width="299dp"
                 android:layout_height="35dp"
                 android:text="Nombre" />
 
@@ -47,23 +47,6 @@
                 android:layout_height="35dp"
                 android:text="Sexo" />
         </LinearLayout>
-
-        <ImageButton
-            android:id="@+id/btnEliminar"
-            android:layout_width="79dp"
-            android:layout_height="65dp"
-            android:layout_marginTop="35dp"
-            app:srcCompat="@drawable/ic_delete"
-            tools:ignore="VectorDrawableCompat" />
-
-        <ImageButton
-            android:id="@+id/btnEditar"
-            android:layout_width="wrap_content"
-            android:layout_height="69dp"
-            android:layout_marginTop="35dp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_arrow_forward"
-            tools:ignore="VectorDrawableCompat" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
