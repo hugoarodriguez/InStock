@@ -44,7 +44,7 @@ public class ConsultaProductosFragment extends Fragment {
         //Agregado
         ProductoList = new ArrayList<>();
         //btnm = vista.findViewById(R.id.btnModifica);
-        RecyclerView recyclerProducto = vista.findViewById(R.id.recyclerReservas);
+        RecyclerView recyclerProducto = vista.findViewById(R.id.recyclerProductos);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerProducto.setLayoutManager(layoutManager);
 
