@@ -1,18 +1,23 @@
 <resources>
-    <string name="app_name">InStock</string>
+    <array name="agregarCliente">
+        <item>Sexo</item>
+        <item>Masculino</item>
+        <item>Femenino</item>
+    </array>
 
     <!-- MainActivity(Login) -->
+    <string name="app_name">InStock</string>
     <string name="iniciar_sesion">Iniciar Sesión</string>
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
     <string name="recuperar_cuenta"><u>¿Has olvidado tu contraseña?</u></string>
     <string name="sin_cuenta">¿No tienes cuenta?</string>
-    <string name="registrate_u"><u>Registrate</u></string>
 
     <!-- nav_header -->
-    <string name="user_icon">User image</string>
+    <string name="registrate_u"><u>Registrate</u></string>
 
     <!-- nav_menu -->
+    <string name="user_icon">User image</string>
     <string name="menu_inicio">Inicio</string>
     <string name="menu_agg_productos">Agregar Productos</string>
     <string name="menu_productos">Productos</string>
@@ -21,17 +26,17 @@
     <string name="menu_categorias">Categorías</string>
     <string name="menu_agg_clientes">Agregar Clientes</string>
     <string name="menu_clientes">Clientes</string>
-    <string name="menu_cerrar_sesion">Cerrar Sesión</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_cerrar_sesion">Cerrar Sesión</string>
 
     <!-- CrearCuenta -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="registrate">Registrate</string>
     <string name="registrarme">Registrarme</string>
     <string name="nombre_empresa">Nombre de tu empresa/negocio</string>
-    <string name="confirmar_password">Confirmar contraseña</string>
 
     <!--Global -->
+    <string name="confirmar_password">Confirmar contraseña</string>
     <string name="nombres">Nombres</string>
     <string name="apellidos">Apellidos</string>
     <string name="numTel">Número de teléfono</string>
@@ -41,18 +46,31 @@
     <string name="btnConfirmar">Confirmar</string>
     <string name="imageViewText">Imagen</string>
     <string name="nombre_ejemplo">Nombre Apellido</string>
+<<<<<<< HEAD
     <string name="correo_ejemplo">micorreo@mail.com</string>
     <string name="saludo">¡Hola User!\nBienvenido a InStock</string>
+=======
+>>>>>>> 3dfba2d1bba18d64734d9ae303e7b706f519da3a
 
     <!-- Categorias -->
-    <string name="ingCategoria">Ingrese categoría</string>
+    <string name="correo_ejemplo">micorreo@mail.com</string>
 
     <!-- AgregarCliente -->
-    <array name="agregarCliente">
-        <item>Sexo</item>
-        <item>Masculino</item>
-        <item>Femenino</item>
-    </array>
+    <string name="ingCategoria">Ingrese categoría</string>
+
+    <!-- Ver Ventas -->
+    <string name="tvBuscarPor">Buscar por:</string>
+    <string name="tvFiltrarPor">Filtrar por:</string>
+    <string name="rdbMes">Mes</string>
+    <string name="rdbSemana">Semana</string>
+    <string name="rdbAnnio">Año</string>
+    <string name="tvTotal">Total Ventas: $</string>
+
+    <!-- Ver Reservas-->
+    <string name="tvProducto">Producto: </string>
+    <string name="tvCliente">Cliente:</string>
+    <string name="tvPrecio">Precio</string>
+    <string name="imgProdu">Imagen del producto</string>
 
     <!-- RecuperarCuenta -->
     <string name="recuperar_cuenta_titulo">Recuperar tu cuenta</string>
