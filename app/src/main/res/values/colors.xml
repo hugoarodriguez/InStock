@@ -9,4 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="botones">#C1BBBB</color>
     <color name="transparent">#00000000</color>
+
+    <color name="azul_marino">#3B8183</color>
+    <color name="rojo">#ED303C</color>
+    <color name="salmon">#F5634A</color>
+    <color name="naranja">#FF9C5B</color>
+    <color name="cafe_claro">#FAD089</color>
+
 </resources>
