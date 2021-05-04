@@ -1,6 +1,7 @@
 package com.example.instock;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
@@ -35,6 +37,9 @@ public class MainMenu extends AppCompatActivity {
     FragmentTransaction transaction;
     //FRAGMENT PARA LISTADO DE CLIENTES
     Fragment fClientes;
+
+    //Variable que almacena el id del fragment anterior
+    Fragment fragmentDelete = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,7 @@ public class MainMenu extends AppCompatActivity {
         fClientes = new VerClientesFragment();
 
         //Agregamos el Fragment que se presentará en la pantalla principal
+        fragmentDelete = fInicio;
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, fInicio).commit();
         //Instanciamos el NavigationView
         navigationView = (NavigationView)findViewById(R.id.nav_view);
@@ -103,9 +109,12 @@ public class MainMenu extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
 
             transaction = getSupportFragmentManager().beginTransaction();
-            switch (item.getItemId()){
+            int itemID = item.getItemId();
+            switch (itemID){
 
                 case R.id.opc_inicio:
+                    transaction.remove(fragmentDelete);
+                    fragmentDelete = fInicio;
                     transaction.replace(R.id.fragment_container_view, fInicio);
                     transaction.addToBackStack(null);
                     drawerLayout.closeDrawers();
@@ -113,10 +122,13 @@ public class MainMenu extends AppCompatActivity {
                     break;
 
                 case R.id.opc_agg_productos:
+                    transaction.remove(fragmentDelete);
+                    fragmentDelete = fAgregarProductos;
                     transaction.replace(R.id.fragment_container_view, fAgregarProductos);
                     transaction.addToBackStack(null);
                     drawerLayout.closeDrawers();
                     transaction.commit();
+
                     break;
 
                 case R.id.opc_productos:
@@ -164,7 +176,14 @@ public class MainMenu extends AppCompatActivity {
                     finish();
                     break;
             }
+
             return true;
         });
+    }
+
+    //Método para desactivar el botón de retroceso del dispositivo
+    @Override
+    public void onBackPressed() {
+
     }
 }
