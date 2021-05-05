@@ -38,9 +38,6 @@ public class MainMenu extends AppCompatActivity {
     //FRAGMENT PARA LISTADO DE CLIENTES
     Fragment fClientes;
 
-    //Variable que almacena el id del fragment anterior
-    Fragment fragmentDelete = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +71,6 @@ public class MainMenu extends AppCompatActivity {
         fProductos = new ConsultaProductosFragment() ;
         fClientes = new VerClientesFragment();
 
-        //Agregamos el Fragment que se presentará en la pantalla principal
-        fragmentDelete = fInicio;
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, fInicio).commit();
         //Instanciamos el NavigationView
         navigationView = (NavigationView)findViewById(R.id.nav_view);
@@ -113,8 +108,6 @@ public class MainMenu extends AppCompatActivity {
             switch (itemID){
 
                 case R.id.opc_inicio:
-                    transaction.remove(fragmentDelete);
-                    fragmentDelete = fInicio;
                     transaction.replace(R.id.fragment_container_view, fInicio);
                     transaction.addToBackStack(null);
                     drawerLayout.closeDrawers();
@@ -122,8 +115,6 @@ public class MainMenu extends AppCompatActivity {
                     break;
 
                 case R.id.opc_agg_productos:
-                    transaction.remove(fragmentDelete);
-                    fragmentDelete = fAgregarProductos;
                     transaction.replace(R.id.fragment_container_view, fAgregarProductos);
                     transaction.addToBackStack(null);
                     drawerLayout.closeDrawers();

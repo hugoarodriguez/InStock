@@ -31,10 +31,6 @@ public class ConsultaProductosFragment extends Fragment {
     ArrayList<Producto> ProductoList;
     Button btnm;
 
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,11 +67,11 @@ public class ConsultaProductosFragment extends Fragment {
 
     private void cargarDatos() {
 
-                ProductoList.add(new Producto("Producto: Camisa verde", "Categoria: Camisas","Cantidad: 25 Unidades","Precio $13.50"));
-                ProductoList.add(new Producto("Producto: Short Azul", "Categoria: Short","Cantidad: 25 Unidades","Precio $8.50"));
-                ProductoList.add(new Producto("Producto: Zapatos de vestir", "Categoria: Zapatos","Cantidad: 12 Unidades","Precio $25.75"));
-                ProductoList.add(new Producto("Producto: Collar", "Categoria: Joyeria","Cantidad: 5 Unidades","Precio $2.50"));
-                ProductoList.add(new Producto("Producto: Audifonos", "Categoria: Auriculares","Cantidad: 12 Unidades","Precio 7.00"));
+                ProductoList.add(new Producto("Camisa verde", "Camisas","25 Unidades","$13.50"));
+                ProductoList.add(new Producto("Short Azul", "Short","25 Unidades","$8.50"));
+                ProductoList.add(new Producto("Zapatos de vestir", "Zapatos","12 Unidades","$25.75"));
+                ProductoList.add(new Producto("Producto: Collar", "Joyeria","5 Unidades","$2.50"));
+                ProductoList.add(new Producto("Audifonos", "Auriculares","12 Unidades","7.00"));
     }
 
     //Objeto de tipo ItemTouchHelper que permite realizar el swipe

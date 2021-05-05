@@ -38,10 +38,10 @@ public class ProductoAdaptadpr extends  RecyclerView.Adapter<ProductoAdaptadpr.V
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtProducto.setText(ProductoList.get(position).getNomProducto());
-        holder.txtCategoria.setText(ProductoList.get(position).getCategoria());
-        holder.txtCantidad.setText(ProductoList.get(position).getCantidad());
-        holder.txtPrecio.setText(ProductoList.get(position).getPrecio());
+        holder.tvProducto.setText(ProductoList.get(position).getNomProducto());
+        holder.tvCategoria.setText(ProductoList.get(position).getCategoria());
+        holder.tvCantidad.setText(ProductoList.get(position).getCantidad());
+        holder.tvPrecio.setText(ProductoList.get(position).getPrecio());
     }
     @Override
     public int getItemCount() {
@@ -52,17 +52,17 @@ public class ProductoAdaptadpr extends  RecyclerView.Adapter<ProductoAdaptadpr.V
 
 
         private ImageView imgFoto;
-        private TextView txtProducto;
-        private TextView txtCategoria;
-        private TextView txtCantidad;
-        private TextView txtPrecio;
+        private TextView tvProducto;
+        private TextView tvCategoria;
+        private TextView tvCantidad;
+        private TextView tvPrecio;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imgFoto = itemView.findViewById(R.id.imgproc);
-            txtProducto = itemView.findViewById(R.id.txtNombreProducto);
-            txtCategoria = itemView.findViewById(R.id.txtCategoria);
-            txtCantidad = itemView.findViewById(R.id.txtCantidad);
-            txtPrecio = itemView.findViewById(R.id.txtPrecio);
+            imgFoto = itemView.findViewById(R.id.imgProd);
+            tvProducto = itemView.findViewById(R.id.tvNombreProductoVal);
+            tvCategoria = itemView.findViewById(R.id.tvCategoriaVal);
+            tvCantidad = itemView.findViewById(R.id.tvCantidadVal);
+            tvPrecio = itemView.findViewById(R.id.tvPrecioVal);
         }
     }
 }

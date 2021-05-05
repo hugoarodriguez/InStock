@@ -53,9 +53,9 @@ public class ReservasAdaptador extends RecyclerView.Adapter<ReservasAdaptador.Vi
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgFoto = itemView.findViewById(R.id.imgProdu);
-            txtProducto = itemView.findViewById(R.id.tvProducto);
-            txtPrecio = itemView.findViewById(R.id.tvPrecio);
-            txtCliente = itemView.findViewById(R.id.tvCliente);
+            txtProducto = itemView.findViewById(R.id.tvProductoVal);
+            txtPrecio = itemView.findViewById(R.id.tvPrecioVal);
+            txtCliente = itemView.findViewById(R.id.tvClienteVal);
         }
     }
 }

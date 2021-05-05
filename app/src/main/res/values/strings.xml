@@ -67,7 +67,7 @@
     <!-- Ver Reservas-->
     <string name="tvProducto">Producto: </string>
     <string name="tvCliente">Cliente:</string>
-    <string name="tvPrecio">Precio</string>
+    <string name="tvPrecio">Precio:</string>
     <string name="imgProdu">Imagen del producto</string>
 
     <!-- RecuperarCuenta -->
