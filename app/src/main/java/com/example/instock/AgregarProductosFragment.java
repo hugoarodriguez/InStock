@@ -46,7 +46,7 @@ public class AgregarProductosFragment extends Fragment {
     TextInputLayout tilNombrePro, tilCantPro, tilPrecioPro, tilDetallesPro;
     EditText edtNombrePro, edtCantPro, edtPrecioPro, edtDetallesPro;
 
-    String mensajeAlerta = "Daro requerido";
+    String mensajeAlerta = "Dato requerido";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

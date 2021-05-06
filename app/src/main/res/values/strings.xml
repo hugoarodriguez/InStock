@@ -13,6 +13,10 @@
     <string name="recuperar_cuenta"><u>¿Has olvidado tu contraseña?</u></string>
     <string name="sin_cuenta">¿No tienes cuenta?</string>
 
+    <!-- Strings para drawer menu -->
+    <string name="drawer_open">Menu Abierto</string>
+    <string name="drawer_close">Menu Cerrado</string>
+
     <!-- nav_header -->
     <string name="registrate_u"><u>Registrate</u></string>
 

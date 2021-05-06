@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".ModificarProductosFragment">
-
+    tools:context=".AgregarProductosFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,27 +13,13 @@
 
         <ImageView
             android:id="@+id/imgProducto"
-            android:layout_width="188dp"
-            android:layout_height="114dp"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop"
             android:scrollbarTrackVertical="@drawable/sin_imagen"
             android:src="@drawable/sin_imagen"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="15dp"
-            app:layout_constraintBottom_toTopOf="@id/tilNombrePro"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/btnImage"
-
-            android:layout_width="188dp"
-            android:layout_height="58dp"
-            android:text="Seleccionar"
-            app:backgroundTint="#3F51B5"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tilNombrePro"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilNombrePro"
@@ -42,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:layout_marginRight="30dp"
             android:ems="10"
@@ -67,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="30dp"
             android:layout_marginRight="30dp"
             android:ems="10"
@@ -106,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="30dp"
             android:layout_marginRight="30dp"
             android:ems="10"
@@ -131,7 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="30dp"
             android:layout_marginRight="30dp"
             android:ems="10"
