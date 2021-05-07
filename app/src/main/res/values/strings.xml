@@ -89,4 +89,5 @@
 
     <!-- ActualizarPassword -->
     <string name="anterior_password">Contraseña anterior</string>
+    <string name="logo">Logo</string>
 </resources>
