@@ -31,7 +31,7 @@ public class CrearCuenta extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        //Habilitamos el ActionBar y establecemos el ícono de la hamburguesa
+        //Habilitamos el ActionBar y establecemos el ícono de "Atrás"
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_new_24);
 
