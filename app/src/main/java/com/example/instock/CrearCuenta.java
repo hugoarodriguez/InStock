@@ -1,7 +1,10 @@
 package com.example.instock;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -16,24 +19,27 @@ public class CrearCuenta extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_cuenta);
 
-        //Habilitamos el ActionBar
+        //Instancia del DrawerLayout
+        DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.dl_main_menu);
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+
+        //Enlazamos el ActionBar con el DrawerLayout
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open,
+                R.string.drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        //Habilitamos el ActionBar y establecemos el ícono de la hamburguesa
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_new_24);
 
-        //Hace el ActionBar transparente
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        //Quitamos el texto del ActionBar
-        getSupportActionBar().setTitle("");
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 finish();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
+            }
+        });
     }
 }
