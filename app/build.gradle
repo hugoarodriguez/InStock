@@ -43,4 +43,7 @@ dependencies {
     //Agregado
     implementation "androidx.fragment:fragment:1.3.2"
     implementation 'com.google.android.material:material:<version>'
+
+    //noinspection GradleCompatible
+    implementation "androidx.exifinterface:exifinterface:1.3.1"
 }
