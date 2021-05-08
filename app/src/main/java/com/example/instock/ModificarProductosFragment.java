@@ -167,6 +167,13 @@ public class ModificarProductosFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.productos_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    //TODO: Sustituir gcSeleccionarImagen por gcObtenerFoto
     //Objeto que permite seleccionar archivos y por medio del cual se asigna la imagen al objeto imProducto
     ActivityResultLauncher<String> gcSeleccionarImagen = registerForActivityResult(new ActivityResultContracts.GetContent(),
             new ActivityResultCallback<Uri>() {
@@ -185,12 +192,6 @@ public class ModificarProductosFragment extends Fragment {
             });
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.productos_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.home:
@@ -199,13 +200,13 @@ public class ModificarProductosFragment extends Fragment {
 
             case R.id.btnSelectImage:
 
-                // Not implemented here
+                //TODO: Cambiar a como está en AgregarProductosFragment
                 gcSeleccionarImagen.launch("image/*");
 
-                return false;
+                return true;
             case R.id.btnTakePhoto:
 
-                // Do Fragment menu item stuff here
+                //TODO: Cambiar a como está en AgregarProductosFragment
                 return true;
 
             default:

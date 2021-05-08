@@ -14,7 +14,7 @@
         <ImageView
             android:id="@+id/imgProducto"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="300dp"
             android:scaleType="centerCrop"
             android:scrollbarTrackVertical="@drawable/sin_imagen"
             android:src="@drawable/sin_imagen"
