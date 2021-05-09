@@ -3,6 +3,7 @@ package com.example.instock;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -16,9 +17,10 @@ public class CambiarPassword extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cambiar_password);
+       super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_cambiar_password);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         //Instancia del DrawerLayout
         DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.dl_main_menu);
 
