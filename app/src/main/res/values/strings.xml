@@ -63,6 +63,12 @@
     <string name="rdbSemana">Semana</string>
     <string name="rdbAnnio">Año</string>
     <string name="tvTotal">Total Ventas: $</string>
+    <string name="tvCod"> Codigo:</string>
+    <string name="tvCate">Categoria:</string>
+    <string name="tvNombrePro">Producto:</string>
+    <string name="tvCantPro">Cantidad:</string>
+    <string name="tvPrecioPro">Precio: $</string>
+    <string name="tvClientePro">Cliente:</string>
 
     <!-- Ver Reservas-->
     <string name="tvProducto">Producto: </string>
