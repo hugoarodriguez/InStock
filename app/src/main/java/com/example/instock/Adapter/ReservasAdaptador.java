@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.instock.R;
+import com.example.instock.models.Reserva;
 
 import java.util.List;
 

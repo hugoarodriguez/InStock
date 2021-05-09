@@ -18,8 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.instock.Adapter.ClientesAdaptador;
-import com.example.instock.Adapter.Producto;
-import com.example.instock.Adapter.ProductoAdaptadpr;
+import com.example.instock.models.ListaClientes;
 
 import java.util.ArrayList;
 import java.util.List;
