@@ -1,68 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="5dp"
+    app:cardUseCompatPadding="true">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="0dp"
-        android:layout_height="169dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imgProdu"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:adjustViewBounds="false"
+            android:contentDescription="@string/imgProdu"
+            android:cropToPadding="false"
+            android:scaleType="centerCrop"
+            android:src="@drawable/no" />
 
         <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/imgProdu"
-                android:layout_width="133dp"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="false"
-                android:contentDescription="@string/imgProdu"
-                android:cropToPadding="false"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/clothes_hanger" />
+            android:paddingTop="10dp"
+            android:paddingHorizontal="10dp"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="275dp"
-                android:layout_height="170dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView12"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tvProducto"
-                    android:layout_width="match_parent"
-                    android:layout_height="47dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:textStyle="bold"
                     android:text="@string/tvProducto"
                     android:textColor="#423F3F" />
 
                 <TextView
-                    android:id="@+id/tvPrecio"
+                    android:id="@+id/tvProductoVal"
                     android:layout_width="match_parent"
-                    android:layout_height="47dp"
+                    android:layout_height="35dp"
+                    android:paddingLeft="5dp"
+                    android:text=""
+                    android:textColor="#423F3F" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvPrecio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:textStyle="bold"
                     android:text="@string/tvPrecio"
                     android:textColor="#423F3F" />
 
                 <TextView
-                    android:id="@+id/tvCliente"
+                    android:id="@+id/tvPrecioVal"
                     android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:text="@string/tvCliente"
+                    android:layout_height="35dp"
+                    android:paddingLeft="5dp"
+                    android:text=""
                     android:textColor="#423F3F" />
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvCliente"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:textStyle="bold"
+                    android:text="@string/tvCliente"
+                    android:textColor="#423F3F" />
+
+                <TextView
+                    android:id="@+id/tvClienteVal"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:paddingLeft="5dp"
+                    android:text=""
+                    android:textColor="#423F3F" />
+
+            </LinearLayout>
+
         </LinearLayout>
+    </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

@@ -33,11 +33,11 @@ public class VerReservasFragment extends Fragment {
 
     private void cargarDatos() {
 
-        ReservaList.add(new Reserva("Producto: Camisa verde","Precio $13.50", "Cliente: Maria Martinez"));
-        ReservaList.add(new Reserva("Producto: Short Azul","Precio $8.50", "Cliente: Maria Martinez"));
-        ReservaList.add(new Reserva("Producto: Zapatos de vestir","Precio $25.75", "Cliente: Maria Martinez"));
-        ReservaList.add(new Reserva("Producto: Collar","Precio $2.50", "Cliente: Maria Martinez"));
-        ReservaList.add(new Reserva("Producto: Audifonos","Precio $7.00", "Cliente: Maria Martinez"));
+        ReservaList.add(new Reserva("Camisa verde","$13.50", "Maria Martinez"));
+        ReservaList.add(new Reserva("Short Azul","$8.50", "Mario Gonzáles"));
+        ReservaList.add(new Reserva("Zapatos de vestir","$25.75", "Rosa Rivera"));
+        ReservaList.add(new Reserva("Collar","$2.50", "CR7 \"El Bicho\""));
+        ReservaList.add(new Reserva("Audifonos","$7.00", "Juan Pérez"));
     }
 
 
