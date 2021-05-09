@@ -42,7 +42,8 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
             fCategorias, fClientes;
     FragmentTransaction transaction;
 
-    Utils utils;
+    Utils utils = new Utils();
+    private ModalDialogValues modalDialogValues = ModalDialogValues.getInstance();
 
     /*Variable que permite determinar el método a ejecutar en los métodos
       onDialogPositiveClick y onDialogNegativeClick*/
@@ -54,8 +55,6 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_main_menu);
-
-        utils = new Utils();
 
         //Instancia del DrawerLayout
         drawerLayout = (DrawerLayout)findViewById(R.id.dl_main_menu);
@@ -221,7 +220,6 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
 
     //dialogOptionDisplay = 1
     public void cerrarSesionDialog(){
-        ModalDialogValues modalDialogValues = ModalDialogValues.getInstance();
         modalDialogValues.modalDialogValues("Cerrar Sesión",
                 "¿Estás seguro que deseas cerrar sesión?");
 
@@ -231,7 +229,6 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
 
     //dialogOptionDisplay = 2
     public void backButtonDialog(){
-        ModalDialogValues modalDialogValues = ModalDialogValues.getInstance();
         modalDialogValues.modalDialogValues("Se descartarán los cambios",
                 "Se descartarán todos los cambios que no hayas guardado.");
 
