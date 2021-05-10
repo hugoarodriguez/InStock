@@ -5,21 +5,24 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import android.content.Context;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.instock.models.ModalDialogValues;
+import com.example.instock.utils.NoticeDialogFragment;
+import com.example.instock.utils.Utils;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainMenu extends AppCompatActivity {
+public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
     public boolean isFragmentActivo() {
         return fragmentActivo;
@@ -38,6 +41,13 @@ public class MainMenu extends AppCompatActivity {
     Fragment fAgregarProductos, fInicio,fProductos, fVerVentas, fVerReservas, fAgregarCliente,
             fCategorias, fClientes;
     FragmentTransaction transaction;
+
+    Utils utils = new Utils();
+    private ModalDialogValues modalDialogValues = ModalDialogValues.getInstance();
+
+    /*Variable que permite determinar el método a ejecutar en los métodos
+      onDialogPositiveClick y onDialogNegativeClick*/
+    private int dialogOptionDisplay = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +92,7 @@ public class MainMenu extends AppCompatActivity {
     //Método para actualizar contraseña
     //Se ejecuta al hacer click en el tvUserName del NavHeader
     public void actualizarPassword(View v){
-        changeTitle("Actualizar Contraseña");
+        utils.changeActionBarTitle("Actualizar Contraseña", getSupportActionBar());
         Fragment fActualizarPassword = new ActualizarPasswordFragment();
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container_view, fActualizarPassword);
@@ -109,7 +119,7 @@ public class MainMenu extends AppCompatActivity {
             switch (itemID){
 
                 case R.id.opc_inicio:
-                    changeTitle("Inicio");
+                    utils.changeActionBarTitle("Inicio", getSupportActionBar());
                     transaction.replace(R.id.fragment_container_view, fInicio);
                     transaction.addToBackStack(null);
                     drawerLayout.closeDrawers();
@@ -117,7 +127,7 @@ public class MainMenu extends AppCompatActivity {
                     break;
 
                 case R.id.opc_agg_productos:
-                    changeTitle("Agregar Productos");
+                    utils.changeActionBarTitle("Agregar Productos", getSupportActionBar());
                     transaction.replace(R.id.fragment_container_view, fAgregarProductos);
                     transaction.addToBackStack(null);
                     drawerLayout.closeDrawers();
@@ -126,42 +136,42 @@ public class MainMenu extends AppCompatActivity {
                     break;
 
                 case R.id.opc_productos:
-                    changeTitle("Ver Productos");
+                    utils.changeActionBarTitle("Ver Productos", getSupportActionBar());
                     transaction.replace(R.id.fragment_container_view, fProductos);
                     transaction.addToBackStack(null);
                     drawerLayout.closeDrawers();
                     transaction.commit();
                     break;
                 case R.id.opc_ventas:
-                    changeTitle("Ver Ventas");
+                    utils.changeActionBarTitle("Ver Ventas", getSupportActionBar());
                     transaction.replace(R.id.fragment_container_view, fVerVentas);
                     transaction.addToBackStack(null);
                     drawerLayout.closeDrawers();
                     transaction.commit();
                     break;
                 case R.id.opc_reservas:
-                    changeTitle("Ver Reservas");
+                    utils.changeActionBarTitle("Ver Reservas", getSupportActionBar());
                     transaction.replace(R.id.fragment_container_view, fVerReservas);
                     transaction.addToBackStack(null);
                     drawerLayout.closeDrawers();
                     transaction.commit();
                     break;
                 case R.id.opc_categorias:
-                    changeTitle("Categorías");
+                    utils.changeActionBarTitle("Categorías", getSupportActionBar());
                     transaction.replace(R.id.fragment_container_view, fCategorias);
                     transaction.addToBackStack(null);
                     drawerLayout.closeDrawers();
                     transaction.commit();
                     break;
                 case R.id.opc_agg_clientes:
-                    changeTitle("Agregar Cliente");
+                    utils.changeActionBarTitle("Agregar Cliente", getSupportActionBar());
                     transaction.replace(R.id.fragment_container_view, fAgregarCliente);
                     transaction.addToBackStack(null);
                     drawerLayout.closeDrawers();
                     transaction.commit();
                     break;
                 case R.id.opc_clientes:
-                    changeTitle("Ver Clientes");
+                    utils.changeActionBarTitle("Ver Clientes", getSupportActionBar());
                     transaction.replace(R.id.fragment_container_view, fClientes);
                     transaction.addToBackStack(null);
                     drawerLayout.closeDrawers();
@@ -170,7 +180,8 @@ public class MainMenu extends AppCompatActivity {
 
                 case R.id.opc_cerrar_sesion:
                     drawerLayout.closeDrawers();
-                    finish();
+                    dialogOptionDisplay = 1;
+                    cerrarSesionDialog();
                     break;
             }
 
@@ -186,7 +197,7 @@ public class MainMenu extends AppCompatActivity {
     }
 
     //Método que se invoca en el OnCreate de las pantallas de Editar/Modificar
-    public void displayBackArrowOrHamburger(){
+    public void displayBackArrowOrHamburger(Context context){
 
         if(fragmentActivo){
             //Cambiamos la hamburguesa por la flecha de "regresar"
@@ -199,37 +210,44 @@ public class MainMenu extends AppCompatActivity {
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println("Click en Back Button 2");
-                    Toast.makeText(getApplicationContext(), "¿Quiere salir?", Toast.LENGTH_SHORT).show();
-                    getSupportFragmentManager().popBackStackImmediate();//Ceeramos el fragment abierto
-                    displayBackArrowOrHamburger();//Invocamos el método
+                    dialogOptionDisplay = 2;
+                    backButtonDialog();
                 }
             });
             setFragmentActivo(false);//Indicamos que se salió del Fragment
-
-        } else {
-            //Desbloqueamos el Menú
-            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-
-            //Mostramos la hamburguesa
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24);
-
-            //Asignamos las funciones de moestrar y ocultar el Memú
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (drawerLayout.isDrawerOpen(GravityCompat.START)){
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                    } else {
-                        drawerLayout.openDrawer(GravityCompat.START);
-                    }
-                }
-            });
         }
     }
 
-    //Método para cambiar el título del ActionBar/ToolBar
-    public void changeTitle(String titulo){
-        getSupportActionBar().setTitle((Html.fromHtml("<font color=\"#FFFFFF\">" + titulo + "</font>")));
+    //dialogOptionDisplay = 1
+    public void cerrarSesionDialog(){
+        modalDialogValues.modalDialogValues("Cerrar Sesión",
+                "¿Estás seguro que deseas cerrar sesión?");
+
+        DialogFragment dialogFragment = new NoticeDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), "NoticeDialogFramgent");
+    }
+
+    //dialogOptionDisplay = 2
+    public void backButtonDialog(){
+        modalDialogValues.modalDialogValues("Se descartarán los cambios",
+                "Se descartarán todos los cambios que no hayas guardado.");
+
+        DialogFragment dialogFragment = new NoticeDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), "NoticeDialogFramgent");
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        if(dialogOptionDisplay == 1){
+            finish();
+        } else if(dialogOptionDisplay == 2){
+            getSupportFragmentManager().popBackStackImmediate();//Cerramos el Fragment
+            utils.displayHamburger(drawerLayout, getSupportActionBar(), toolbar);
+        }
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        Toast.makeText(this, "Negative", Toast.LENGTH_SHORT).show();
     }
 }

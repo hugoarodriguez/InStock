@@ -1,5 +1,6 @@
 package com.example.instock.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -7,8 +8,19 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Html;
+import android.view.View;
+import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.exifinterface.media.ExifInterface;
+import androidx.fragment.app.FragmentManager;
+
+import com.example.instock.R;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -80,5 +92,31 @@ public class Utils {
         Bitmap adjustedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 
         return  adjustedBitmap;
+    }
+
+    //Colocar el ícono de hamburguesa y desbloquear el menú lateral
+    public void displayHamburger(DrawerLayout drawerLayout, ActionBar actionBar, Toolbar toolbar){
+        //Desbloqueamos el Menú
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
+        //Mostramos la hamburguesa
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24);
+
+        //Asignamos las funciones de moestrar y ocultar el Memú
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
+    }
+
+    //Método para cambiar el título del ActionBar/ToolBar
+    public void changeActionBarTitle(String titulo, ActionBar actionBar){
+        actionBar.setTitle((Html.fromHtml("<font color=\"#FFFFFF\">" + titulo + "</font>")));
     }
 }

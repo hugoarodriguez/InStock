@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.instock.Adapter.CategoriasAdaptador;
+import com.example.instock.models.ListCategorias;
 
 import java.util.ArrayList;
 import java.util.List;

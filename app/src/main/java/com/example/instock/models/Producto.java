@@ -1,4 +1,4 @@
-package com.example.instock.Adapter;
+package com.example.instock.models;
 
 public class Producto {
 

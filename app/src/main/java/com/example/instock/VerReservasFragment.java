@@ -15,7 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import com.example.instock.Adapter.Reserva;
+import com.example.instock.models.Reserva;
 import com.example.instock.Adapter.ReservasAdaptador;
 
 import java.util.ArrayList;
