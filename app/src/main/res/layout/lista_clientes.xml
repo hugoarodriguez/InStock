@@ -15,7 +15,7 @@
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="129dp"
+            android:layout_width="@dimen/image_view_width1"
             android:layout_height="match_parent"
             android:src="@drawable/ic_outline_account_circle_24" />
 

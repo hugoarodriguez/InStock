@@ -35,12 +35,12 @@ public class VentasAdaptador extends RecyclerView.Adapter<VentasAdaptador.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull VentasAdaptador.ViewHolder holder, int position) {
-        holder.txtCodigo.setText(ventasList.get(position).getCodigo());
-        holder.txtCategoria.setText(ventasList.get(position).getCategoria());
-        holder.txtNombrePro.setText(ventasList.get(position).getNombrePro());
-        holder.txtCantidadPro.setText(ventasList.get(position).getCantidadPro());
-        holder.txtPrecioPro.setText(ventasList.get(position).getPrecioPro());
-        holder.txtCliente.setText(ventasList.get(position).getCliente());
+        holder.tvCodVal.setText(ventasList.get(position).getCodigo());
+        holder.tvCateVal.setText(ventasList.get(position).getCategoria());
+        holder.tvNomProVal.setText(ventasList.get(position).getNombrePro());
+        holder.tvCantProVal.setText(ventasList.get(position).getCantidadPro());
+        holder.tvPrecioProVal.setText(ventasList.get(position).getPrecioPro());
+        holder.tvClienteProVal.setText(ventasList.get(position).getCliente());
 
     }
     @Override
@@ -50,22 +50,22 @@ public class VentasAdaptador extends RecyclerView.Adapter<VentasAdaptador.ViewHo
     public  static class ViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView imgFoto;
-        private TextView txtCodigo;
-        private TextView txtCategoria;
-        private TextView txtNombrePro;
-        private TextView txtCantidadPro;
-        private TextView txtPrecioPro;
-        private TextView txtCliente;
+        private TextView tvCodVal;
+        private TextView tvCateVal;
+        private TextView tvNomProVal;
+        private TextView tvCantProVal;
+        private TextView tvPrecioProVal;
+        private TextView tvClienteProVal;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgFoto = itemView.findViewById(R.id.imgProd);
-            txtCodigo = itemView.findViewById(R.id.tvCod);
-            txtCategoria = itemView.findViewById(R.id.tvCate);
-            txtNombrePro = itemView.findViewById(R.id.tvNomPro);
-            txtCantidadPro = itemView.findViewById(R.id.tvCantPro);
-            txtPrecioPro = itemView.findViewById(R.id.tvPrecioPro);
-            txtCliente = itemView.findViewById(R.id.tvClientePro);
+            tvCodVal = itemView.findViewById(R.id.tvCodVal);
+            tvCateVal = itemView.findViewById(R.id.tvCateVal);
+            tvNomProVal = itemView.findViewById(R.id.tvNomProVal);
+            tvCantProVal = itemView.findViewById(R.id.tvCantProVal);
+            tvPrecioProVal = itemView.findViewById(R.id.tvPrecioProVal);
+            tvClienteProVal = itemView.findViewById(R.id.tvClienteProVal);
         }
     }
 }

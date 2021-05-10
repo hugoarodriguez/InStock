@@ -45,11 +45,11 @@ public class VerVentasFragment extends Fragment {
 
     public void cargarDatos()
     {
-        VentasList.add(new ListaVentas("Código: 01", "Categoria: Ropa", "Producto: Camiseta", "Cantidad: 1", "Precio: $10.0", "Cliente: María Gutierrez"));
-        VentasList.add(new ListaVentas("Código: 02", "Categoria: Accesorios", "Producto: Collar", "Cantidad: 2", "Precio: $5.0", "Cliente: José Gonzales"));
-        VentasList.add(new ListaVentas("Código: 03", "Categoria: Zapatos", "Producto: Botas", "Cantidad: 1","Precio: $20.0", "Cliente: Alejandro García"));
-        VentasList.add(new ListaVentas("Código: 04", "Categoria: Ropa", "Producto: Vestido","Cantidad: 1", "Precio: $9.0", "Cliente: Lucia Molina"));
-        VentasList.add(new ListaVentas("Código: 05", "Categoria: Zapatos", "Producto: Sandalias", "Cantidad: 1", "Precio: $25.0", "Cliente: Monica Alfaro"));
+        VentasList.add(new ListaVentas("01", "Ropa", "Camiseta", "1", "$10.0", "María Gutierrez"));
+        VentasList.add(new ListaVentas("02", "Accesorios", "Collar", "2",  "$5.0", "José Gonzales"));
+        VentasList.add(new ListaVentas("03", "Zapatos", "Botas", "1","$20.0", "Alejandro García"));
+        VentasList.add(new ListaVentas("04", "Ropa", "Vestido","1", "$9.0", "Lucia Molina"));
+        VentasList.add(new ListaVentas("05", "Zapatos", "Sandalias", "1", "$25.0", "Monica Alfaro"));
 
         recyclerVentas = getView().findViewById(R.id.recyclerVentas);
         recyclerVentas.setLayoutManager(new LinearLayoutManager(getActivity()));

@@ -4,61 +4,163 @@
     android:id="@+id/cvVentas"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardCornerRadius="5dp"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="140dp"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imgProd"
-            android:layout_width="191dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="@dimen/image_view_width1"
+            android:layout_height="match_parent"
             app:srcCompat="@drawable/clothes_hanger1" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="10dp">
 
-            <TextView
-                android:id="@+id/tvCod"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tvCod" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvCate"
+                <TextView
+                    android:id="@+id/tvCod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:text="@string/tvCodigo" />
+
+                <TextView
+                    android:id="@+id/tvCodVal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:textSize="17sp"
+                    style="@style/tvLarger"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tvCate" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvNomPro"
+                <TextView
+                    android:id="@+id/tvCate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:text="@string/tvCategoria" />
+
+                <TextView
+                    android:id="@+id/tvCateVal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:textSize="17sp"
+                    style="@style/tvLarger"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tvNombrePro" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvCantPro"
+                <TextView
+                    android:id="@+id/tvNomPro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:text="@string/tvProducto" />
+
+                <TextView
+                    android:id="@+id/tvNomProVal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:textSize="17sp"
+                    style="@style/tvLarger"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tvCantPro" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvPrecioPro"
+                <TextView
+                    android:id="@+id/tvCantPro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:text="@string/tvCantidad" />
+
+                <TextView
+                    android:id="@+id/tvCantProVal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:textSize="17sp"
+                    style="@style/tvLarger"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tvPrecioPro" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvClientePro"
+                <TextView
+                    android:id="@+id/tvPrecioPro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:text="@string/tvPrecio" />
+
+                <TextView
+                    android:id="@+id/tvPrecioProVal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:textSize="17sp"
+                    style="@style/tvLarger"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tvCliente" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvClientePro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:text="@string/tvCliente"/>
+
+                <TextView
+                    android:id="@+id/tvClienteProVal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:textSize="17sp"
+                    style="@style/tvLarger"/>
+
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

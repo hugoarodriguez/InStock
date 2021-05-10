@@ -38,16 +38,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:textStyle="bold"
-                    android:text="Producto:"
-                    android:textColor="#423F3F" />
+                    android:text="@string/tvProducto"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/tvNombreProductoVal"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:paddingLeft="5dp"
-                    android:text="Hola"
-                    android:textColor="#423F3F" />
+                    style="@style/tvLarger"
+                    android:textColor="@color/black"/>
 
             </LinearLayout>
 
@@ -61,16 +61,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:textStyle="bold"
-                    android:text="Categoria:"
-                    android:textColor="#423F3F" />
+                    android:text="@string/tvCategoria"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/tvCategoriaVal"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:paddingLeft="5dp"
-                    android:text="Categoria"
-                    android:textColor="#423F3F" />
+                    style="@style/tvLarger"
+                    android:textColor="@color/black"/>
 
             </LinearLayout>
 
@@ -84,16 +84,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:textStyle="bold"
-                    android:text="Cantidad:"
-                    android:textColor="#423F3F" />
+                    android:text="@string/tvCantidad"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/tvCantidadVal"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:paddingLeft="5dp"
-                    android:text="Cantidad"
-                    android:textColor="#423F3F" />
+                    style="@style/tvLarger"
+                    android:textColor="@color/black"/>
 
             </LinearLayout>
 
@@ -107,16 +107,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:textStyle="bold"
-                    android:text="Precio:"
-                    android:textColor="#423F3F" />
+                    android:text="@string/tvPrecio"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/tvPrecioVal"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:paddingLeft="5dp"
-                    android:text="Precio"
-                    android:textColor="#423F3F" />
+                    style="@style/tvLarger"
+                    android:textColor="@color/black"/>
 
             </LinearLayout>
 

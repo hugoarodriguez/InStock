@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Efecto 1 al hacer click en un TextView-->
+    <!-- Efecto 1 al hacer click en un TextView -->
     <style name="tvAsLink">
         <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:clickable">true</item>
     </style>
 
-    <!-- Efecto 2 al hacer click en un TextView-->
+    <!-- Efecto 2 al hacer click en un TextView -->
     <style name="tvAsLink2">
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
         <item name="android:clickable">true</item>
@@ -14,5 +14,17 @@
         <item name="android:textColor">@color/mi_selector</item>
     </style>
 
-    <!-- Efecto 2 al hacer click en un TextView-->
+    <!-- Estilo para TextView utilizado para títulos -->
+    <style name="tvTitleBold">
+        <item name="android:textSize">20dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/salmon</item>
+    </style>
+
+    <!-- Estilo para TextView que contengan texto demasiado extenso (añade puntos suspensivos
+    al texto si este no cabe en una sola línea) -->
+    <style name="tvLarger">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
 </resources>

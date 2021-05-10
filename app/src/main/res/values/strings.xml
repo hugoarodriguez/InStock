@@ -53,7 +53,6 @@
     <string name="correo_ejemplo">micorreo@mail.com</string>
     <string name="saludo">¡Hola User!\nBienvenido a InStock</string>
 
-
     <!-- Categorias -->
 
 
@@ -67,14 +66,11 @@
     <string name="rdbSemana">Semana</string>
     <string name="rdbAnnio">Año</string>
     <string name="tvTotal">Total Ventas: $</string>
-    <string name="tvCod"> Codigo:</string>
-    <string name="tvCate">Categoria:</string>
-    <string name="tvNombrePro">Producto:</string>
-    <string name="tvCantPro">Cantidad:</string>
-    <string name="tvPrecioPro">Precio: $</string>
-    <string name="tvClientePro">Cliente:</string>
 
-    <!-- Ver Reservas-->
+    <!-- Strings para datos dr Producto -->
+    <string name="tvCodigo"> Código:</string>
+    <string name="tvCategoria">Categoría:</string>
+    <string name="tvCantidad">Cantidad:</string>
     <string name="tvProducto">Producto: </string>
     <string name="tvCliente">Cliente:</string>
     <string name="tvPrecio">Precio:</string>
