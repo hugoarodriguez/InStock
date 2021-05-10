@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 
 import com.example.instock.Adapter.VentasAdaptador;
+import com.example.instock.models.ListaVentas;
+
 import java.util.ArrayList;
 import java.util.List;
 

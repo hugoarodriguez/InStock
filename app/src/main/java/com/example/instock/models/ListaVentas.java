@@ -1,4 +1,4 @@
-package com.example.instock;
+package com.example.instock.models;
 
 public class ListaVentas {
     private String codigo;

@@ -10,8 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.instock.ListaClientes;
-import com.example.instock.ListaVentas;
+import com.example.instock.models.ListaVentas;
 import com.example.instock.R;
 
 import java.util.List;
