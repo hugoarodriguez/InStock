@@ -180,7 +180,6 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
 
                 case R.id.opc_cerrar_sesion:
                     drawerLayout.closeDrawers();
-                    dialogOptionDisplay = 1;
                     cerrarSesionDialog();
                     break;
             }
@@ -210,7 +209,6 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    dialogOptionDisplay = 2;
                     backButtonDialog();
                 }
             });
@@ -219,7 +217,8 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
     }
 
     //dialogOptionDisplay = 1
-    public void cerrarSesionDialog(){
+    private void cerrarSesionDialog(){
+        dialogOptionDisplay = 1;
         modalDialogValues.modalDialogValues("Cerrar Sesión",
                 "¿Estás seguro que deseas cerrar sesión?");
 
@@ -228,7 +227,8 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
     }
 
     //dialogOptionDisplay = 2
-    public void backButtonDialog(){
+    private void backButtonDialog(){
+        dialogOptionDisplay = 2;
         modalDialogValues.modalDialogValues("Se descartarán los cambios",
                 "Se descartarán todos los cambios que no hayas guardado.");
 
@@ -239,7 +239,7 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         if(dialogOptionDisplay == 1){
-            finish();
+            finish();//Cerrar sesión
         } else if(dialogOptionDisplay == 2){
             getSupportFragmentManager().popBackStackImmediate();//Cerramos el Fragment
             utils.displayHamburger(drawerLayout, getSupportActionBar(), toolbar);

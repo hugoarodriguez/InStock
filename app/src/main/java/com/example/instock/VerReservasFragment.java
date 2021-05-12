@@ -1,10 +1,15 @@
 package com.example.instock;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -15,8 +20,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.example.instock.models.ModalDialogValues;
 import com.example.instock.models.Reserva;
 import com.example.instock.Adapter.ReservasAdaptador;
+import com.example.instock.utils.MyDialog;
+import com.example.instock.utils.NoticeDialogFragment;
 
 import java.util.ArrayList;
 
@@ -24,6 +33,14 @@ public class VerReservasFragment extends Fragment {
     RecyclerView recyclerReservas;
     ReservasAdaptador reservasAdaptador;
     ArrayList<Reserva> ReservaList;
+    Reserva reserva;
+
+    //Variable que almacena la posición del item al que se le hizo "swipe"
+    private int  recyclerPositionItem;
+
+    //Objeto de MyDialog
+    MyDialog myDialog = new MyDialog();
+    private ModalDialogValues modalDialogValues = ModalDialogValues.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,32 +123,74 @@ public class VerReservasFragment extends Fragment {
         }
 
         //Método que realiza acciones cuando se hace el swipe
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
 
             //swipeDir = 4 Indica swipe hacia la izquierda
             //swipeDir = 8 Indica swipe hacia la derecha
             if(swipeDir == 4){
-                //Eliminar item
-                //Remove swiped item from list and notify the RecyclerView
-                int position = viewHolder.getAdapterPosition();//Obtenemos la posición del item
-                ReservaList.remove(position);//Removemos el item segun la posición
-                reservasAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
-
-                Toast.makeText(getContext(), "¿Desea eliminar la reserva?", Toast.LENGTH_SHORT).show();
-
+                //Cancelar reserva
+                recyclerPositionItem = viewHolder.getAdapterPosition();
+                cancelarReserva();
             }
             else if(swipeDir == 8){
-                //Modificar item
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                Fragment fModificarProductos = new ModificarProductosFragment();
-                //Lo enviamos al Fragment de ModificarProductos
-                transaction.replace(R.id.fragment_container_view, fModificarProductos);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                //Convertir venta en reserva
+                recyclerPositionItem = viewHolder.getAdapterPosition();
+                convertirAVenta();
             }
-
         }
-
     };
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void cancelarReserva(){
+        //Asignamos los valores para mostrar el Dialog
+        modalDialogValues.modalDialogValues("Cancelar reserva",
+                "¿Estás seguro que deseas cancelar esta reserva?\n\nEl producto de la reserva" +
+                        " aparecerá como disponible.");
+
+        //Invocamos el dialog y sobreescribimos sus metodos setPositiveButton y setNegativeButton
+        myDialog.myDialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                ReservaList.remove(recyclerPositionItem);//Removemos el item segun la posición
+                reservasAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
+                Toast.makeText(getContext(), "Reserva cancelada", Toast.LENGTH_SHORT).show();
+
+            }
+        }).setNegativeButton(null, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                reservasAdaptador.notifyDataSetChanged();
+
+            }
+        }).show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void convertirAVenta(){
+        modalDialogValues.modalDialogValues("Reserva a Venta",
+                "¿Estás seguro que deseas convertir esta reserva en venta?");
+
+        //Invocamos el dialog y sobreescribimos sus metodos setPositiveButton y setNegativeButton
+        myDialog.myDialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                ReservaList.remove(recyclerPositionItem);//Removemos el item segun la posición
+                reservasAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
+                Toast.makeText(getContext(), "La reserva se convirtió en venta", Toast.LENGTH_SHORT).show();
+
+            }
+        }).setNegativeButton(null, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                reservasAdaptador.notifyDataSetChanged();
+
+            }
+        }).show();
+    }
 }
