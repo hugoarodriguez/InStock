@@ -1,10 +1,12 @@
 package com.example.instock;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -27,10 +29,12 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.FileProvider;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
 
+import com.example.instock.models.ModalDialogValues;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.File;
@@ -60,6 +64,10 @@ public class AgregarProductosFragment extends Fragment {
     Uri photoURI = null;
     Utils utils = new Utils();
     int tipoIntent = 0; //1 - Seleccionar Imagen, 2 - Tomar Foto
+
+    //Objeto de MyDialog
+    CreateDialog createDialog = new CreateDialog();
+    private ModalDialogValues modalDialogValues = ModalDialogValues.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -147,6 +155,7 @@ public class AgregarProductosFragment extends Fragment {
     private void agregar(){
 
         btnAgregar.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
 
@@ -168,7 +177,25 @@ public class AgregarProductosFragment extends Fragment {
                         tilDetallesPro.setError(mensajeAlerta);
                     }
                 } else {
-                    Toast.makeText(getContext(), "¡Agregar!", Toast.LENGTH_SHORT).show();
+
+                    //Asignamos los valores para mostrar el Dialog
+                    modalDialogValues.modalDialogValues("Agregar Producto",
+                            "¿Estás seguro que deseas agregar este producto?");
+
+                    //Invocamos el dialog() y sobreescribimos sus metodos setPositiveButton y setNegativeButton
+                    createDialog.dialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            Toast.makeText(getContext(), "¡Agregar!", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }).setNegativeButton(null, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).show();
                 }
             }
         });
@@ -176,9 +203,28 @@ public class AgregarProductosFragment extends Fragment {
 
     private void cancelar(){
         btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                limpiarCampos();
+
+                //Asignamos los valores para mostrar el Dialog
+                modalDialogValues.modalDialogValues("Limpiar",
+                        "Se limpiarán los datos ingresados ¿Estás seguro?");
+
+                //Invocamos el dialog() y sobreescribimos sus metodos setPositiveButton y setNegativeButton
+                createDialog.dialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        limpiarCampos();
+
+                    }
+                }).setNegativeButton(null, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
             }
         });
     }

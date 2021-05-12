@@ -1,11 +1,14 @@
 package com.example.instock;
 
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -18,8 +21,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.instock.models.ModalDialogValues;
 import com.example.instock.models.Producto;
 import com.example.instock.Adapter.ProductoAdaptadpr;
+import com.example.instock.utils.CreateDialog;
 
 import java.util.ArrayList;
 
@@ -29,7 +34,14 @@ public class ConsultaProductosFragment extends Fragment {
     RecyclerView recyclerProducto;
     ProductoAdaptadpr productoAdaptador;
     ArrayList<Producto> ProductoList;
-    Button btnm;
+    Producto producto;
+
+    //Variable que almacena la posición del item al que se le hizo "swipe"
+    private int  recyclerPositionItem;
+
+    //Objeto de MyDialog
+    CreateDialog createDialog = new CreateDialog();
+    private ModalDialogValues modalDialogValues = ModalDialogValues.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,7 +51,7 @@ public class ConsultaProductosFragment extends Fragment {
 
         //Agregado
         ProductoList = new ArrayList<>();
-        //btnm = vista.findViewById(R.id.btnModifica);
+
         RecyclerView recyclerProducto = vista.findViewById(R.id.recyclerProductos);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerProducto.setLayoutManager(layoutManager);
@@ -114,34 +126,78 @@ public class ConsultaProductosFragment extends Fragment {
         }
 
         //Método que realiza acciones cuando se hace el swipe
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
 
             //swipeDir = 4 Indica swipe hacia la izquierda
             //swipeDir = 8 Indica swipe hacia la derecha
             if(swipeDir == 4){
-                //Eliminar item
-                //Remove swiped item from list and notify the RecyclerView
-                int position = viewHolder.getAdapterPosition();//Obtenemos la posición del item
-                ProductoList.remove(position);//Removemos el item segun la posición
-                productoAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
-
-                Toast.makeText(getContext(), "¿Desea eliminar el producto?", Toast.LENGTH_SHORT).show();
-
+                //Cancelar reserva
+                recyclerPositionItem = viewHolder.getAdapterPosition();
+                eliminarProducto();
             }
             else if(swipeDir == 8){
-                //Modificar item
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                Fragment fModificarProductos = new ModificarProductosFragment();
-                //Lo enviamos al Fragment de ModificarProductos
-                transaction.replace(R.id.fragment_container_view, fModificarProductos);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                //Convertir venta en reserva
+                recyclerPositionItem = viewHolder.getAdapterPosition();
+                modificarProducto();
             }
 
         }
 
     };
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void eliminarProducto(){
+        //Asignamos los valores para mostrar el Dialog
+        modalDialogValues.modalDialogValues("Eliminar Producto",
+                "¿Estás seguro que deseas eliminar este producto?");
 
+        //Invocamos el dialog() y sobreescribimos sus metodos setPositiveButton y setNegativeButton
+        createDialog.dialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                ProductoList.remove(recyclerPositionItem);//Removemos el item segun la posición
+                productoAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
+                Toast.makeText(getContext(), "Producto eliminado", Toast.LENGTH_SHORT).show();
+
+            }
+        }).setNegativeButton(null, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                productoAdaptador.notifyDataSetChanged();
+
+            }
+        }).show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void modificarProducto(){
+        modalDialogValues.modalDialogValues("Modificar Producto",
+                "¿Quieres modificar este producto?");
+
+        //Invocamos el dialog() y sobreescribimos sus metodos setPositiveButton y setNegativeButton
+        createDialog.dialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                Fragment fModificarProductos = new ModificarProductosFragment();
+                //Lo enviamos al Fragment de ModificarProductos
+                transaction.replace(R.id.fragment_container_view, fModificarProductos);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+            }
+        }).setNegativeButton(null, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                productoAdaptador.notifyDataSetChanged();
+
+            }
+        }).show();
+    }
 }
