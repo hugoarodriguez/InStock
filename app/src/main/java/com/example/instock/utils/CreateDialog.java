@@ -12,12 +12,12 @@ import androidx.appcompat.app.AlertDialog;
 import com.example.instock.R;
 import com.example.instock.models.ModalDialogValues;
 
-public class MyDialog {
+public class CreateDialog {
 
     ModalDialogValues modalDialogValues = ModalDialogValues.getInstance();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public AlertDialog.Builder myDialog(Context context){
+    public AlertDialog.Builder dialog(Context context){
 
         Drawable drawablePositive = context.getDrawable(R.drawable.ic_baseline_check_circle_24);
         drawablePositive.setTint(Color.parseColor("#44B846"));

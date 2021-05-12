@@ -1,6 +1,5 @@
 package com.example.instock;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -9,9 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,8 +21,7 @@ import android.widget.Toast;
 import com.example.instock.models.ModalDialogValues;
 import com.example.instock.models.Reserva;
 import com.example.instock.Adapter.ReservasAdaptador;
-import com.example.instock.utils.MyDialog;
-import com.example.instock.utils.NoticeDialogFragment;
+import com.example.instock.utils.CreateDialog;
 
 import java.util.ArrayList;
 
@@ -39,7 +35,7 @@ public class VerReservasFragment extends Fragment {
     private int  recyclerPositionItem;
 
     //Objeto de MyDialog
-    MyDialog myDialog = new MyDialog();
+    CreateDialog createDialog = new CreateDialog();
     private ModalDialogValues modalDialogValues = ModalDialogValues.getInstance();
 
     @Override
@@ -149,8 +145,8 @@ public class VerReservasFragment extends Fragment {
                 "¿Estás seguro que deseas cancelar esta reserva?\n\nEl producto de la reserva" +
                         " aparecerá como disponible.");
 
-        //Invocamos el dialog y sobreescribimos sus metodos setPositiveButton y setNegativeButton
-        myDialog.myDialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
+        //Invocamos el dialog() y sobreescribimos sus metodos setPositiveButton y setNegativeButton
+        createDialog.dialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -174,8 +170,8 @@ public class VerReservasFragment extends Fragment {
         modalDialogValues.modalDialogValues("Reserva a Venta",
                 "¿Estás seguro que deseas convertir esta reserva en venta?");
 
-        //Invocamos el dialog y sobreescribimos sus metodos setPositiveButton y setNegativeButton
-        myDialog.myDialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
+        //Invocamos el dialog() y sobreescribimos sus metodos setPositiveButton y setNegativeButton
+        createDialog.dialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
