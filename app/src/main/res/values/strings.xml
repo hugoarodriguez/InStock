@@ -53,11 +53,13 @@
     <string name="correo_ejemplo">micorreo@mail.com</string>
     <string name="saludo">¡Hola User!\nBienvenido a InStock</string>
 
-    <!-- Categorias -->
-
-
     <!-- AgregarCliente -->
     <string name="ingCategoria">Ingrese categoría</string>
+
+    <!-- ReservarProductos -->
+    <string name="cliente_hint">Nombre del Cliente</string>
+    <string name="cantidad_hint">Cantidad</string>
+    <string name="btnReservar">Reservar</string>
 
     <!-- Ver Ventas -->
     <string name="tvBuscarPor">Buscar por:</string>
@@ -92,4 +94,38 @@
     <!-- ActualizarPassword -->
     <string name="anterior_password">Contraseña anterior</string>
     <string name="logo">Logo</string>
+
+    <!-- ========================= Strings para mensajes de DIALOGS ========================= -->
+
+    <!-- Strings para mensaje de BackButton -->
+    <string name="back_button_title1">Se descartarán los cambios</string>
+    <string name="back_button_message1">Se descartarán todos los cambios que no hayas guardado</string>
+
+    <string name="back_button_title2">Volver</string>
+    <string name="back_button_message2">No has finalizado la reserva\n\n¿Estás seguro que deseas volver?</string>
+
+    <!-- Strings para mensaje de Cerrar Sesión -->
+    <string name="cerrar_sesion_title">Cerrar Sesión</string>
+    <string name="cerrar_sesion_message">¿Estás seguro que deseas cerrar sesión?</string>
+
+    <!-- Strings para mensaje de Eliminar Producto -->
+    <string name="eliminar_producto_title">Eliminar Producto</string>
+    <string name="eliminar_producto_message">¿Estás seguro que deseas eliminar este producto?</string>
+
+    <!-- Strings para mensaje de redirección a ReservarProducto -->
+    <string name="go_to_modificar_producto_title">Modificar Producto</string>
+    <string name="go_to_modificar_producto_message">¿Quieres modificar este producto?</string>
+
+    <!-- Strings para mensaje de redirección a ReservarProducto -->
+    <string name="go_to_reservas_title">Reservar Producto</string>
+    <string name="go_to_reservas_message">¿Quieres reservar este producto?\n\nSe cargará un formulario para reservar el producto.</string>
+
+    <!-- Strings para mensaje de btnCancelar -->
+    <string name="cancelar_title">Cancelar</string>
+    <string name="cancelar_message">Se limpiarán los datos ingresados ¿Estás seguro?</string>
+
+    <!-- Strings para mensaje de btnReservar -->
+    <string name="reservar_title">Reservar Producto</string>
+    <string name="reservar_message">Se reservará el producto para el cliente indicado\n\n¿Estás seguro?</string>
+
 </resources>

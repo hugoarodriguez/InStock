@@ -49,7 +49,7 @@ public class ModificarProductosFragment extends Fragment {
         setHasOptionsMenu(true);
 
         ((MainMenu)getActivity()).setFragmentActivo(true);//Indicamos que hay un Framgent Activo
-        ((MainMenu)getActivity()).displayBackArrowOrHamburger(getContext());//Invocamos el método
+        ((MainMenu)getActivity()).displayBackArrowOrHamburger(getContext(), 1);//Invocamos el método
     }
 
     @Override

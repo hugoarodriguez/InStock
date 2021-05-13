@@ -196,7 +196,7 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
     }
 
     //Método que se invoca en el OnCreate de las pantallas de Editar/Modificar
-    public void displayBackArrowOrHamburger(Context context){
+    public void displayBackArrowOrHamburger(Context context, int dialogType){
 
         if(fragmentActivo){
             //Cambiamos la hamburguesa por la flecha de "regresar"
@@ -209,7 +209,7 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    backButtonDialog();
+                    backButtonDialog(dialogType);
                 }
             });
             setFragmentActivo(false);//Indicamos que se salió del Fragment
@@ -219,18 +219,25 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
     //dialogOptionDisplay = 1
     private void cerrarSesionDialog(){
         dialogOptionDisplay = 1;
-        modalDialogValues.modalDialogValues("Cerrar Sesión",
-                "¿Estás seguro que deseas cerrar sesión?");
+        modalDialogValues.modalDialogValues(getResources().getString(R.string.cerrar_sesion_title),
+                getResources().getString(R.string.cerrar_sesion_message));
 
         DialogFragment dialogFragment = new NoticeDialogFragment();
         dialogFragment.show(getSupportFragmentManager(), "NoticeDialogFramgent");
     }
 
     //dialogOptionDisplay = 2
-    private void backButtonDialog(){
+    private void backButtonDialog(int dialogType){
         dialogOptionDisplay = 2;
-        modalDialogValues.modalDialogValues("Se descartarán los cambios",
-                "Se descartarán todos los cambios que no hayas guardado.");
+
+        if(dialogType == 1){
+            modalDialogValues.modalDialogValues(getResources().getString(R.string.back_button_title1),
+                    getResources().getString(R.string.back_button_message1));
+        } else if(dialogType == 2){
+            modalDialogValues.modalDialogValues(getResources().getString(R.string.back_button_title2),
+                    getResources().getString(R.string.back_button_message2));
+
+        }
 
         DialogFragment dialogFragment = new NoticeDialogFragment();
         dialogFragment.show(getSupportFragmentManager(), "NoticeDialogFramgent");

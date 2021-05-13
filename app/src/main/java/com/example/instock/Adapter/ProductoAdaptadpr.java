@@ -11,19 +11,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.instock.R;
+import com.example.instock.interfaces.RecyclerViewClickInterface;
 import com.example.instock.models.Producto;
 
 import java.util.List;
 
 public class ProductoAdaptadpr extends  RecyclerView.Adapter<ProductoAdaptadpr.ViewHolder>{
 
-
     private List<Producto> ProductoList;
     private Context context;
+    //Agregado
+    private static RecyclerViewClickInterface recyclerViewClickInterface;
 
-    public ProductoAdaptadpr(List<Producto> productoList, Context context) {
+    public ProductoAdaptadpr(List<Producto> productoList, Context context, RecyclerViewClickInterface recyclerViewClickInterface) {
         ProductoList = productoList;
         this.context = context;
+        this.recyclerViewClickInterface = recyclerViewClickInterface;
     }
 
     @NonNull
@@ -45,7 +48,7 @@ public class ProductoAdaptadpr extends  RecyclerView.Adapter<ProductoAdaptadpr.V
         return ProductoList.size();
     }
 
-    public  static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
 
 
         private ImageView imgFoto;
@@ -60,6 +63,13 @@ public class ProductoAdaptadpr extends  RecyclerView.Adapter<ProductoAdaptadpr.V
             tvCategoria = itemView.findViewById(R.id.tvCategoriaVal);
             tvCantidad = itemView.findViewById(R.id.tvCantidadVal);
             tvPrecio = itemView.findViewById(R.id.tvPrecioVal);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    recyclerViewClickInterface.onItemClick(getAdapterPosition());
+                }
+            });
         }
     }
 }

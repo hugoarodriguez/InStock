@@ -50,6 +50,7 @@ import static android.app.Activity.RESULT_OK;
 public class AgregarProductosFragment extends Fragment {
 
     public AgregarProductosFragment(){}
+
     ImageView imgProducto;
     ImageButton btnSelectImage, btnTakePhoto;
     Button btnAgregar, btnCancelar;
@@ -208,8 +209,8 @@ public class AgregarProductosFragment extends Fragment {
             public void onClick(View v) {
 
                 //Asignamos los valores para mostrar el Dialog
-                modalDialogValues.modalDialogValues("Limpiar",
-                        "Se limpiarán los datos ingresados ¿Estás seguro?");
+                modalDialogValues.modalDialogValues(getResources().getString(R.string.cancelar_title),
+                        getResources().getString(R.string.cancelar_message));
 
                 //Invocamos el dialog() y sobreescribimos sus metodos setPositiveButton y setNegativeButton
                 createDialog.dialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {

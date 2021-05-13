@@ -18,9 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.instock.interfaces.RecyclerViewClickInterface;
 import com.example.instock.models.ModalDialogValues;
 import com.example.instock.models.Producto;
 import com.example.instock.Adapter.ProductoAdaptadpr;
@@ -29,7 +29,7 @@ import com.example.instock.utils.CreateDialog;
 import java.util.ArrayList;
 
 
-public class ConsultaProductosFragment extends Fragment {
+public class ConsultaProductosFragment extends Fragment implements RecyclerViewClickInterface {
 
     RecyclerView recyclerProducto;
     ProductoAdaptadpr productoAdaptador;
@@ -57,7 +57,7 @@ public class ConsultaProductosFragment extends Fragment {
         recyclerProducto.setLayoutManager(layoutManager);
 
         cargarDatos();
-        productoAdaptador = new ProductoAdaptadpr( ProductoList, getActivity());
+        productoAdaptador = new ProductoAdaptadpr( ProductoList, getActivity(), this);
 
         recyclerProducto.setAdapter(productoAdaptador);
 
@@ -145,13 +145,15 @@ public class ConsultaProductosFragment extends Fragment {
 
         }
 
+
+
     };
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void eliminarProducto(){
         //Asignamos los valores para mostrar el Dialog
-        modalDialogValues.modalDialogValues("Eliminar Producto",
-                "¿Estás seguro que deseas eliminar este producto?");
+        modalDialogValues.modalDialogValues(getResources().getString(R.string.eliminar_producto_title),
+                getResources().getString(R.string.eliminar_producto_message));
 
         //Invocamos el dialog() y sobreescribimos sus metodos setPositiveButton y setNegativeButton
         createDialog.dialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
@@ -175,8 +177,8 @@ public class ConsultaProductosFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void modificarProducto(){
-        modalDialogValues.modalDialogValues("Modificar Producto",
-                "¿Quieres modificar este producto?");
+        modalDialogValues.modalDialogValues(getResources().getString(R.string.go_to_modificar_producto_title),
+                getResources().getString(R.string.go_to_modificar_producto_message));
 
         //Invocamos el dialog() y sobreescribimos sus metodos setPositiveButton y setNegativeButton
         createDialog.dialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
@@ -199,5 +201,43 @@ public class ConsultaProductosFragment extends Fragment {
 
             }
         }).show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void reservarProducto(){
+        modalDialogValues.modalDialogValues(getResources().getString(R.string.go_to_reservas_title),
+                getResources().getString(R.string.go_to_reservas_message));
+
+        //Invocamos el dialog() y sobreescribimos sus metodos setPositiveButton y setNegativeButton
+        createDialog.dialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                //Agregar pantalla de Reservar Producto
+                //Redirigir a pantalla de Reservar Producto
+
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                Fragment fReservarProductos = new ReservarProductosFragment();
+                //Lo enviamos al Fragment de ModificarProductos
+                transaction.replace(R.id.fragment_container_view, fReservarProductos);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+            }
+        }).setNegativeButton(null, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                //Nada
+
+            }
+        }).show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(getContext(), ProductoList.get(position).getNomProducto(), Toast.LENGTH_SHORT).show();
+        reservarProducto();
     }
 }
