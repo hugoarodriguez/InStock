@@ -1,15 +1,23 @@
 package com.example.instock;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -24,7 +32,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.instock.utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -40,7 +54,10 @@ public class ModificarProductosFragment extends Fragment {
     Button btnModificar, btnCancelar;
     TextInputLayout tilNombrePro, tilCantPro, tilPrecioPro, tilDetallesPro;
     EditText edtNombrePro, edtCantPro, edtPrecioPro, edtDetallesPro;
-
+    Utils utils = new Utils();
+    int tipoIntent = 0;
+    File photoFile = null;
+    Uri photoURI = null;
     String mensajeAlerta = "Dato requerido";
 
     @Override
@@ -175,38 +192,79 @@ public class ModificarProductosFragment extends Fragment {
 
     //TODO: Sustituir gcSeleccionarImagen por gcObtenerFoto
     //Objeto que permite seleccionar archivos y por medio del cual se asigna la imagen al objeto imProducto
-    ActivityResultLauncher<String> gcSeleccionarImagen = registerForActivityResult(new ActivityResultContracts.GetContent(),
-            new ActivityResultCallback<Uri>() {
+    private ActivityResultLauncher<Intent> gcObtenerFoto = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
                 @Override
-                public void onActivityResult(Uri uri) {
+                public void onActivityResult(ActivityResult result) {
 
-                    if(uri != null){
-                        System.out.println(uri.getPath());
-                        imgProducto.setImageURI(uri);
-                    }
-                    else{
-                        Toast.makeText(getContext(), "¡No seleccionaste ninguna imagen!", Toast.LENGTH_SHORT).show();
-                    }
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent intent = result.getData();
+                        // Handle the Intent
+                        //Toast.makeText(getContext(), "¡Foto Guardada!", Toast.LENGTH_SHORT).show();
 
+                        if(tipoIntent == 1){
+                            Uri uri = result.getData().getData();
+                            InputStream is = null;
+                            try {
+                                is = getActivity().getContentResolver().openInputStream(uri);
+
+                                Bitmap bitmap = BitmapFactory.decodeStream(is);
+                                int rotation = utils.getRotationFromGallery(getContext(), uri);
+                                int rotationInDegrees = utils.exifToDegrees(rotation);
+
+                                Bitmap imagenFinal = utils.rotateAndBitmapConvert(rotation, rotationInDegrees, bitmap);
+                                imgProducto.setImageBitmap(imagenFinal);
+
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+
+                        } else if(tipoIntent == 2){
+                            Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getAbsoluteFile().getAbsolutePath());
+                            ExifInterface exif = null;
+                            try {
+                                exif = new ExifInterface(photoFile.getAbsoluteFile().getAbsolutePath());
+                                int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+                                int rotationInDegrees = utils.exifToDegrees(rotation);
+
+                                Bitmap imagenFinal = utils.rotateAndBitmapConvert(rotation, rotationInDegrees, bitmap);
+                                imgProducto.setImageBitmap(imagenFinal);
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            //bitmap.recycle();
+                        }
+                    } else{
+                        if(tipoIntent == 1){
+                            Toast.makeText(getContext(), "¡No seleccionaste ninguna imagen!", Toast.LENGTH_SHORT).show();
+                        } else if(tipoIntent == 2){
+                            Toast.makeText(getContext(), "¡No tomaste niguna foto!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
+
             });
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.home:
-                getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
-                break;
 
             case R.id.btnSelectImage:
 
-                //TODO: Cambiar a como está en AgregarProductosFragment
-                gcSeleccionarImagen.launch("image/*");
+                tipoIntent = 1;
+                Intent i = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                gcObtenerFoto.launch(i);
 
                 return true;
             case R.id.btnTakePhoto:
 
-                //TODO: Cambiar a como está en AgregarProductosFragment
+                tipoIntent = 2;
+                dispatchTakePictureIntent();
+
                 return true;
 
             default:
@@ -214,6 +272,32 @@ public class ModificarProductosFragment extends Fragment {
         }
 
         return false;
+    }
+
+    //Método para tomar foto
+    private void dispatchTakePictureIntent() {
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            photoFile = null;
+            try {
+                photoFile = utils.createImageFile(getActivity());
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                photoURI = FileProvider.getUriForFile(getContext(),
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                gcObtenerFoto.launch(takePictureIntent);
+            }
+        }
+
+
     }
 
     private void limpiarCampos(){
