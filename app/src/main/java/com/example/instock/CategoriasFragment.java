@@ -1,5 +1,7 @@
 package com.example.instock;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,8 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.instock.Adapter.CategoriasAdaptador;
+import com.example.instock.BD.Base;
 import com.example.instock.models.ListCategorias;
 
 import java.util.ArrayList;
@@ -87,30 +91,65 @@ public class CategoriasFragment extends Fragment {
         btnAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText cat = (EditText) getView().findViewById(R.id.edtCategoria);
+                /*EditText cat = (EditText) getView().findViewById(R.id.edtCategoria);
 
                 List<ListCategorias> categoriasList = new ArrayList<>();
                 categoriasList.add(new ListCategorias(cat.getText().toString()));
                 categoriasAdaptador = new CategoriasAdaptador(categoriasList, getActivity());
-                recyclerCategorias.setAdapter(categoriasAdaptador);
+                recyclerCategorias.setAdapter(categoriasAdaptador);*/
+                // Creamos la conexion a la BD
+                Base obj = new Base(getContext(), "InStock",null,1);
+                SQLiteDatabase objDB = obj.getWritableDatabase();
+
+                EditText categ = (EditText) getView().findViewById(R.id.edtCategoria);
+                String nuevaCateg = categ.getText().toString();
+                String sintaxisSql = "INSERT INTO Categorias VALUES ("+ null + ", '" +  nuevaCateg +"')";
+
+                if (nuevaCateg.trim().equals("")) {
+                    categ.setError("Debe agregar un producto");
+                }
+                else {
+                    objDB.execSQL(sintaxisSql);
+                    Toast.makeText(getContext(), "Se ha agregado categoria", Toast.LENGTH_SHORT).show();
+                    // Limpiamos el EditText
+                    categ.setText("");
+                    categ.requestFocus();
+                    inicializarElementos();
+                }
+                objDB.close();
             }
         });
     }
 
     RecyclerView recyclerCategorias;
     CategoriasAdaptador categoriasAdaptador;
+    // ArrayList para recibir datos de BD
+    ArrayList<String> array_list;
     private void inicializarElementos() {
         recyclerCategorias = getView().findViewById(R.id.rvCategoria);
         recyclerCategorias.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        // Creamos objeto de la clase Base
+        Base obj = new Base(getContext(), "InStock",null,1);
+        SQLiteDatabase objDB = obj.getWritableDatabase();
+        array_list = new ArrayList<String>();
         List<ListCategorias> categoriasList = new ArrayList<>();
-        categoriasList.add(new ListCategorias("Categoría 1"));
+        // Creamos Cursor
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Categorias",null);
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+            categoriasList.add(new ListCategorias(cursor.getString(cursor.getColumnIndex("categoria"))));
+            cursor.moveToNext();
+        }
+        /*categoriasList.add(new ListCategorias("Categoría 1"));
         categoriasList.add(new ListCategorias("Categoría 2"));
         categoriasList.add(new ListCategorias("Categoría 3"));
         categoriasList.add(new ListCategorias("Categoría 4"));
-        categoriasList.add(new ListCategorias("Categoría 5"));
+        categoriasList.add(new ListCategorias("Categoría 5"));*/
         categoriasAdaptador = new CategoriasAdaptador(categoriasList, getActivity());
 
         recyclerCategorias.setAdapter(categoriasAdaptador);
+
+
     }
 }

@@ -4,12 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.instock.BD.Base;
 import com.example.instock.models.ListCategorias;
 import com.example.instock.R;
 
@@ -43,7 +45,7 @@ public class CategoriasAdaptador extends RecyclerView.Adapter<CategoriasAdaptado
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView imgDelete;
+        public ImageView imgDelete;
         private TextView txtCategorias;
 
         public ViewHolder(@NonNull View itemView) {
