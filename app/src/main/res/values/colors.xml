@@ -16,4 +16,7 @@
     <color name="naranja">#FF9C5B</color>
     <color name="cafe_claro">#FAD089</color>
 
+    <color name="btnAgregar">#44B846</color>
+    <!--<color name="btnCancelar">#FF0000</color>-->
+    <color name="btnCancelar">#ED303C</color>
 </resources>

@@ -131,7 +131,7 @@
             android:text="@string/btnAgregar"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            app:backgroundTint="@color/botones" />
+            app:backgroundTint="@color/btnAgregar" />
 
         <Button
             android:id="@+id/btnCancelarC"
@@ -144,6 +144,6 @@
             android:text="@string/btnCancelar"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            app:backgroundTint="@color/botones" />
+            app:backgroundTint="@color/btnCancelar" />
     </RelativeLayout>
 </FrameLayout>
