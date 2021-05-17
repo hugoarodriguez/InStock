@@ -122,7 +122,7 @@ public class CategoriasFragment extends Fragment implements RecyclerViewClickInt
                 categoriasAdaptador = new CategoriasAdaptador(categoriasList, getActivity());
                 recyclerCategorias.setAdapter(categoriasAdaptador);*/
                 // Creamos la conexion a la BD
-                Base obj = new Base(getContext(), "InStock",null,1);
+                Base obj = new Base(getContext());
                 SQLiteDatabase objDB = obj.getWritableDatabase();
 
                 EditText categ = (EditText) getView().findViewById(R.id.edtCategoria);
@@ -154,7 +154,7 @@ public class CategoriasFragment extends Fragment implements RecyclerViewClickInt
         recyclerCategorias.setLayoutManager(layoutManager);
 
         // Creamos objeto de la clase Base
-        Base obj = new Base(getContext(), "InStock",null,1);
+        Base obj = new Base(getContext());
         SQLiteDatabase objDB = obj.getWritableDatabase();
 
         // Creamos Cursor
@@ -173,7 +173,7 @@ public class CategoriasFragment extends Fragment implements RecyclerViewClickInt
 
     private void eliminarCategoria(int position){
         // Creamos objeto de la clase Base
-        Base obj = new Base(getContext(), "InStock",null,1);
+        Base obj = new Base(getContext());
         SQLiteDatabase objDB = obj.getWritableDatabase();
         // Consultamos a BD y guardamos en ArrayList
         ArrayList<Integer> array_categID = new ArrayList<Integer>();
