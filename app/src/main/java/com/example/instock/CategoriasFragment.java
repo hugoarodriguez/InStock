@@ -1,12 +1,18 @@
 package com.example.instock;
 
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,8 +24,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.instock.Adapter.CategoriasAdaptador;
+import com.example.instock.Adapter.ProductoAdaptadpr;
 import com.example.instock.BD.Base;
+import com.example.instock.interfaces.RecyclerViewClickInterface;
 import com.example.instock.models.ListCategorias;
+import com.example.instock.models.ModalDialogValues;
+import com.example.instock.models.Producto;
+import com.example.instock.utils.CreateDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +40,7 @@ import java.util.List;
  * Use the {@link // CategoriasFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CategoriasFragment extends Fragment {
+public class CategoriasFragment extends Fragment implements RecyclerViewClickInterface {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -75,11 +86,24 @@ public class CategoriasFragment extends Fragment {
     View view;
     // Se crea boton
     Button btnAgregar;
+
+    RecyclerView recyclerCategorias;
+    CategoriasAdaptador categoriasAdaptador;
+    ArrayList<ListCategorias> CategoriaList;
+
+    //Objeto de MyDialog
+    CreateDialog createDialog = new CreateDialog();
+    private ModalDialogValues modalDialogValues = ModalDialogValues.getInstance();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_categorias, container, false);
         btnAgregar = (Button)view.findViewById(R.id.btnAgregar);
+
+        //Cargamos y mostramos los registros de categorías si es que existen
+        inicializarElementos();
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -121,35 +145,86 @@ public class CategoriasFragment extends Fragment {
         });
     }
 
-    RecyclerView recyclerCategorias;
-    CategoriasAdaptador categoriasAdaptador;
-    // ArrayList para recibir datos de BD
-    ArrayList<String> array_list;
     private void inicializarElementos() {
-        recyclerCategorias = getView().findViewById(R.id.rvCategoria);
-        recyclerCategorias.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        CategoriaList = new ArrayList<>();
+
+        recyclerCategorias = view.findViewById(R.id.rvCategoria);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerCategorias.setLayoutManager(layoutManager);
 
         // Creamos objeto de la clase Base
         Base obj = new Base(getContext(), "InStock",null,1);
         SQLiteDatabase objDB = obj.getWritableDatabase();
-        array_list = new ArrayList<String>();
-        List<ListCategorias> categoriasList = new ArrayList<>();
+
         // Creamos Cursor
         Cursor cursor = objDB.rawQuery("SELECT * FROM Categorias",null);
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
-            categoriasList.add(new ListCategorias(cursor.getString(cursor.getColumnIndex("categoria"))));
+            CategoriaList.add(new ListCategorias(cursor.getString(cursor.getColumnIndex("categoria"))));
             cursor.moveToNext();
         }
-        /*categoriasList.add(new ListCategorias("Categoría 1"));
-        categoriasList.add(new ListCategorias("Categoría 2"));
-        categoriasList.add(new ListCategorias("Categoría 3"));
-        categoriasList.add(new ListCategorias("Categoría 4"));
-        categoriasList.add(new ListCategorias("Categoría 5"));*/
-        categoriasAdaptador = new CategoriasAdaptador(categoriasList, getActivity());
+
+        categoriasAdaptador = new CategoriasAdaptador(CategoriaList, getActivity(), this);
 
         recyclerCategorias.setAdapter(categoriasAdaptador);
+        objDB.close();
+    }
 
+    private void eliminarCategoria(int position){
+        // Creamos objeto de la clase Base
+        Base obj = new Base(getContext(), "InStock",null,1);
+        SQLiteDatabase objDB = obj.getWritableDatabase();
+        // Consultamos a BD y guardamos en ArrayList
+        ArrayList<Integer> array_categID = new ArrayList<Integer>();
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Categorias",null);
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+            array_categID.add(cursor.getInt(cursor.getColumnIndex("idCategoria")));
+            cursor.moveToNext();
+        }
+        String consultaEliminar = "DELETE FROM Categorias WHERE idCategoria = " + array_categID.get(position);
+        objDB.execSQL(consultaEliminar);
+
+        objDB.close();
+
+        inicializarElementos();//Actualizamos el RecylcerView invocando el método de inicializarElementos()
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(getContext(), CategoriaList.get(position).getCategorias(), Toast.LENGTH_SHORT).show();
+
+
+        Drawable drawablePositive = getContext().getDrawable(R.drawable.ic_edit);
+        drawablePositive.setTint(Color.parseColor("#0099CC"));
+        Drawable drawableNegative = getContext().getDrawable(R.drawable.ic_delete);
+        drawableNegative.setTint(Color.parseColor("#FF0000"));
+
+        modalDialogValues.modalDialogValues("Has Seleccionado una Categoría",
+                "¿Qué acción deseas hacer?");
+
+        //Invocamos el dialog() y sobreescribimos sus metodos setPositiveButton y setNegativeButton
+        createDialog.dialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                //TODO: Llamar método/fragment para editar Categoría
+            }
+        }).setPositiveButtonIcon(drawablePositive)
+                .setNegativeButton(null, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                //Eliminamos el item del RecyclerView
+                CategoriaList.remove(position);
+                categoriasAdaptador.notifyDataSetChanged();
+                eliminarCategoria(position);//Método para eliminar registro de la BD
+
+            }
+        }).setNegativeButtonIcon(drawableNegative).show();
 
     }
 }

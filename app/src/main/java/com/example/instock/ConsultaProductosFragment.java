@@ -34,7 +34,6 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
     RecyclerView recyclerProducto;
     ProductoAdaptadpr productoAdaptador;
     ArrayList<Producto> ProductoList;
-    Producto producto;
 
     //Variable que almacena la posición del item al que se le hizo "swipe"
     private int  recyclerPositionItem;
