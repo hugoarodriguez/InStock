@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.instock.BD.ProductosManagerDB;
 import com.example.instock.interfaces.RecyclerViewClickInterface;
 import com.example.instock.models.ModalDialogValues;
 import com.example.instock.models.Producto;
@@ -30,6 +31,9 @@ import java.util.ArrayList;
 
 
 public class ConsultaProductosFragment extends Fragment implements RecyclerViewClickInterface {
+
+    //Vista del Layout
+    View vista;
 
     RecyclerView recyclerProducto;
     ProductoAdaptadpr productoAdaptador;
@@ -46,26 +50,10 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View vista = inflater.inflate(R.layout.fragment_consulta_productos, container, false);
+        vista = inflater.inflate(R.layout.fragment_consulta_productos, container, false);
 
         //Agregado
-        ProductoList = new ArrayList<>();
-
-        RecyclerView recyclerProducto = vista.findViewById(R.id.recyclerProductos);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerProducto.setLayoutManager(layoutManager);
-
         cargarDatos();
-        productoAdaptador = new ProductoAdaptadpr( ProductoList, getActivity(), this);
-
-        recyclerProducto.setAdapter(productoAdaptador);
-
-        cargarDatos();
-
-        //Enlazamos el simpleItemTouchCallback con el recyclerProducto
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerProducto);
-
         return vista;
     }
 
@@ -75,14 +63,25 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
 
     }
 
-
+    //Método para listar los productos con sus respectivas imágenes/fotos
     private void cargarDatos() {
 
-                ProductoList.add(new Producto("Camisa verde", "Camisas","25 Unidades","$13.50"));
-                ProductoList.add(new Producto("Short Azul", "Short","25 Unidades","$8.50"));
-                ProductoList.add(new Producto("Zapatos de vestir", "Zapatos","12 Unidades","$25.75"));
-                ProductoList.add(new Producto("Producto: Collar", "Joyeria","5 Unidades","$2.50"));
-                ProductoList.add(new Producto("Audifonos", "Auriculares","12 Unidades","7.00"));
+        //Inovcamos el método para consultar los productos
+        ProductosManagerDB productosManagerDB = new ProductosManagerDB();
+
+        ProductoList = productosManagerDB.obtenerProductos(getContext());
+
+        RecyclerView recyclerProducto = vista.findViewById(R.id.recyclerProductos);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerProducto.setLayoutManager(layoutManager);
+
+        //Enlazamos el simpleItemTouchCallback con el recyclerProducto
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerProducto);
+
+        productoAdaptador = new ProductoAdaptadpr( ProductoList, getActivity(), this);
+
+        recyclerProducto.setAdapter(productoAdaptador);
     }
 
     //Objeto de tipo ItemTouchHelper que permite realizar el swipe
@@ -226,9 +225,7 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
         }).setNegativeButton(null, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 //Nada
-
             }
         }).show();
     }

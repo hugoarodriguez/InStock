@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Environment;
@@ -22,8 +23,10 @@ import androidx.fragment.app.FragmentManager;
 import com.example.instock.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -92,6 +95,23 @@ public class Utils {
         Bitmap adjustedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 
         return  adjustedBitmap;
+    }
+
+    public byte[] convertBitmapToByteArray(Bitmap bitmap){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream); //PNG format is lossless and will ignore the quality setting!
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
+    }
+
+    public Bitmap convertByteArrayToBitmap(byte[] bitmapbytes){
+        Bitmap bitmap = null;
+
+        if(bitmapbytes != null){
+            bitmap = BitmapFactory.decodeByteArray(bitmapbytes , 0, bitmapbytes.length);
+        }
+
+        return bitmap;
     }
 
     //Colocar el ícono de hamburguesa y desbloquear el menú lateral

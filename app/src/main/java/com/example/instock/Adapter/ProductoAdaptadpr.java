@@ -1,6 +1,7 @@
 package com.example.instock.Adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.instock.R;
 import com.example.instock.interfaces.RecyclerViewClickInterface;
 import com.example.instock.models.Producto;
@@ -42,6 +44,7 @@ public class ProductoAdaptadpr extends  RecyclerView.Adapter<ProductoAdaptadpr.V
         holder.tvCategoria.setText(ProductoList.get(position).getCategoria());
         holder.tvCantidad.setText(ProductoList.get(position).getCantidad());
         holder.tvPrecio.setText(ProductoList.get(position).getPrecio());
+        Glide.with(context).load(ProductoList.get(position).getFotoProd()).into(holder.imgFoto);
     }
     @Override
     public int getItemCount() {

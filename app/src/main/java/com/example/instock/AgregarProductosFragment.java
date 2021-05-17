@@ -17,10 +17,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -34,17 +36,20 @@ import androidx.core.content.FileProvider;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.example.instock.BD.ProductosManagerDB;
 import com.example.instock.models.ModalDialogValues;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.instock.utils.*;
-
-import static android.app.Activity.RESULT_OK;
 
 
 public class AgregarProductosFragment extends Fragment {
@@ -56,6 +61,7 @@ public class AgregarProductosFragment extends Fragment {
     Button btnAgregar, btnCancelar;
     TextInputLayout tilNombrePro, tilCantPro, tilPrecioPro, tilDetallesPro;
     EditText edtNombrePro, edtCantPro, edtPrecioPro, edtDetallesPro;
+    Spinner sprCategoria;
 
     String mensajeAlerta = "Dato requerido";
 
@@ -65,6 +71,9 @@ public class AgregarProductosFragment extends Fragment {
     Uri photoURI = null;
     Utils utils = new Utils();
     int tipoIntent = 0; //1 - Seleccionar Imagen, 2 - Tomar Foto
+
+    byte[] fotoProd = null;
+    String urlFoto = null;
 
     //Objeto de MyDialog
     CreateDialog createDialog = new CreateDialog();
@@ -83,6 +92,7 @@ public class AgregarProductosFragment extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_agregar_productos, container, false);
         enlazarVistas(vista);//Enlazamos las vistas
 
+        cargarCategorias();//Método para llenar Spinner
         agregar();//Método para btnAgregar
         cancelar();//Método para btnCancelar
         edtChangeListenerAll();//Método para activar la escucha del onChange de todos los EditText
@@ -115,6 +125,7 @@ public class AgregarProductosFragment extends Fragment {
         edtDetallesPro = (EditText)v.findViewById(R.id.edtDetallesPro);
         edtNombrePro = (EditText)v.findViewById(R.id.edtNombrePro);
         edtPrecioPro = (EditText)v.findViewById(R.id.edtPrecioPro);
+        sprCategoria = (Spinner)v.findViewById(R.id.sprCategoria);
     }
 
     //Método para enlazar los editText con el ChangedListener
@@ -188,7 +199,25 @@ public class AgregarProductosFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
-                            Toast.makeText(getContext(), "¡Agregar!", Toast.LENGTH_SHORT).show();
+                            //Obtenemos los datos a almacenar
+                            String nomProd = edtNombrePro.getText().toString();
+                            int cantProd = Integer.parseInt(edtCantPro.getText().toString());
+                            double precioProd = Double.parseDouble(edtPrecioPro.getText().toString());
+                            String detalles = edtDetallesPro.getText().toString();
+                            int idCatProd = 0;
+
+                            //Inovcamos el método para agregar el registro a la BD
+                            ProductosManagerDB productosManagerDB = new ProductosManagerDB();
+                            long resultado = productosManagerDB.agregarProductos(getContext(), nomProd, cantProd,
+                                    precioProd, detalles, urlFoto, idCatProd);
+
+                            if(resultado != -1){
+                                Toast.makeText(getContext(), "¡Producto agregado satisfactoriamente!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), "¡No se pudo agregar el producto!", Toast.LENGTH_SHORT).show();
+                            }
+
+                            limpiarCampos();
 
                         }
                     }).setNegativeButton(null, new DialogInterface.OnClickListener() {
@@ -245,42 +274,64 @@ public class AgregarProductosFragment extends Fragment {
 
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     Intent intent = result.getData();
-                    // Handle the Intent
-                    //Toast.makeText(getContext(), "¡Foto Guardada!", Toast.LENGTH_SHORT).show();
 
                     if(tipoIntent == 1){
+                        //Cuando se selecciona una foto de la galería
+
                         Uri uri = result.getData().getData();
                         InputStream is = null;
                         try {
+                            //Obtenemos el InputStream según la "uri" proporcionada
                             is = getActivity().getContentResolver().openInputStream(uri);
 
+                            //Creamos el bitmap de nuestra imagen
                             Bitmap bitmap = BitmapFactory.decodeStream(is);
                             int rotation = utils.getRotationFromGallery(getContext(), uri);
                             int rotationInDegrees = utils.exifToDegrees(rotation);
 
+                            //Rotamos la imagen para que quede de forma vertical
                             Bitmap imagenFinal = utils.rotateAndBitmapConvert(rotation, rotationInDegrees, bitmap);
                             imgProducto.setImageBitmap(imagenFinal);
 
+                            photoFile = null;
+                            try {
+                                //Guardar imagen en directorio de la App
+                                photoFile = utils.createImageFile(getActivity());
+
+                                // Si se creó el archivo lo almacenamos en el directorio de la App
+                                if (photoFile != null) {
+                                    FileOutputStream out = new FileOutputStream(photoFile);
+                                    imagenFinal.compress(Bitmap.CompressFormat.PNG, 100, out);
+                                    out.flush();
+                                    out.close();
+
+                                    //Asignamos la imagen seleccionada al ImageView "imgProducto"
+                                    Glide.with(getContext()).load(photoFile.getAbsoluteFile().getAbsolutePath()).into(imgProducto);
+
+                                    //Variable para almacenar la ruta de la imagen
+                                    urlFoto = photoFile.getAbsoluteFile().getAbsolutePath();
+                                }
+                            } catch (IOException ex) {
+                                // Error occurred while creating the File
+                                Toast.makeText(getContext(), "¡Algo salió mal! Intenta de nuevo.", Toast.LENGTH_SHORT).show();
+                            }
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
+                            Toast.makeText(getContext(), "¡Algo salió mal! Intenta de nuevo.", Toast.LENGTH_SHORT).show();
                         }
 
                     } else if(tipoIntent == 2){
-                        Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getAbsoluteFile().getAbsolutePath());
-                        ExifInterface exif = null;
+                        //Cuando se toma foto
                         try {
-                            exif = new ExifInterface(photoFile.getAbsoluteFile().getAbsolutePath());
-                            int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
-                            int rotationInDegrees = utils.exifToDegrees(rotation);
+                            Glide.with(getContext()).load(photoFile.getAbsoluteFile().getAbsolutePath()).into(imgProducto);
 
-                            Bitmap imagenFinal = utils.rotateAndBitmapConvert(rotation, rotationInDegrees, bitmap);
-                            imgProducto.setImageBitmap(imagenFinal);
+                            //Variable para almacenar la ruta de la imagen
+                            urlFoto = photoFile.getAbsoluteFile().getAbsolutePath();
 
-                        } catch (IOException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
+                            Toast.makeText(getContext(), "¡Algo salió mal! Intenta de nuevo.", Toast.LENGTH_SHORT).show();
                         }
-
-                        //bitmap.recycle();
                     }
                 } else{
                     if(tipoIntent == 1){
@@ -345,6 +396,21 @@ public class AgregarProductosFragment extends Fragment {
 
     }
 
+    //Método para llenar "sprCategoria"
+    private void cargarCategorias(){
+        ProductosManagerDB productosManagerDB = new ProductosManagerDB();
+        List<String> categorias = new ArrayList<>();
+
+        categorias = productosManagerDB.getCategorias(getContext());
+
+        ArrayAdapter<String> categoriasAdaptador = new ArrayAdapter<String>(getContext()
+                , android.R.layout.simple_spinner_dropdown_item
+                , categorias);
+
+        sprCategoria.setAdapter(categoriasAdaptador);
+    }
+
+
     private void limpiarCampos(){
         edtNombrePro.setText("");
         edtCantPro.setText("");
@@ -354,6 +420,7 @@ public class AgregarProductosFragment extends Fragment {
         //Ruta de acceso a la imagen "sin_imagen.jpg"
         Uri uri = Uri.parse("android.resource://com.example.instock/drawable/sin_imagen");
         imgProducto.setImageURI(uri);
+        fotoProd = null;
 
         tilNombrePro.setError(null);
         tilCantPro.setError(null);

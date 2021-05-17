@@ -1,5 +1,7 @@
 package com.example.instock.models;
 
+import android.graphics.Bitmap;
+
 public class Producto {
 
 
@@ -7,17 +9,19 @@ public class Producto {
     private String Categoria;
     private String Cantidad;
     private String Precio;
+    private String FotoProd;
 
 
 
 
-    public Producto(String nomProducto, String categoria, String Cantidads, String Precios) {
+    public Producto(String nomProducto, String categoria, String cantidad, String precio
+            , String fotoProd) {
 
         NomProducto = nomProducto;
         Categoria = categoria;
-        Cantidad = Cantidads;
-        Precio = Precios;
-
+        Cantidad = cantidad;
+        Precio = precio;
+        FotoProd = fotoProd;
     }
 
 
@@ -49,6 +53,10 @@ public class Producto {
 
     public void setCantidad(String cantidad) {  Cantidad = cantidad; }
 
+    public String getFotoProd() { return FotoProd; }
+
+    public void setFotoProd(String fotoProd) { FotoProd = fotoProd; }
+
     @Override
     public String toString() {
         return "Producto{" +
@@ -56,6 +64,7 @@ public class Producto {
                 ", Categoria='" + Categoria + '\'' +
                 ", Cantidad='" + Cantidad + '\'' +
                 ", Precio='" + Precio + '\'' +
+                ", FotoProd='" + FotoProd + '\'' +
                 '}';
     }
 }
