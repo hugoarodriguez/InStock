@@ -133,7 +133,7 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
             if(swipeDir == 4){
                 //Cancelar reserva
                 recyclerPositionItem = viewHolder.getAdapterPosition();
-                eliminarProducto();
+                eliminarProducto(recyclerPositionItem);
             }
             else if(swipeDir == 8){
                 //Convertir venta en reserva
@@ -148,7 +148,7 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
     };
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void eliminarProducto(){
+    private void eliminarProducto(int recyclerPositionItem){
         //Asignamos los valores para mostrar el Dialog
         modalDialogValues.modalDialogValues(getResources().getString(R.string.eliminar_producto_title),
                 getResources().getString(R.string.eliminar_producto_message));
@@ -158,9 +158,21 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                ProductoList.remove(recyclerPositionItem);//Removemos el item segun la posición
-                productoAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
-                Toast.makeText(getContext(), "Producto eliminado", Toast.LENGTH_SHORT).show();
+                int idProd = Integer.parseInt(ProductoList.get(recyclerPositionItem).getIdProd());
+
+                ProductosManagerDB productosManagerDB = new ProductosManagerDB();
+
+                //Invocámos el método para eliminar el Producto
+                long resultado = productosManagerDB.eliminarProducto(getContext(), idProd);
+
+                if(resultado != 0){
+                    ProductoList.remove(recyclerPositionItem);//Removemos el item segun la posición
+                    productoAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
+                    Toast.makeText(getContext(), "Se eliminó el producto", Toast.LENGTH_SHORT).show();
+                } else {
+                    productoAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
+                    Toast.makeText(getContext(), "No se pudo eliminar el producto", Toast.LENGTH_SHORT).show();
+                }
 
             }
         }).setNegativeButton(null, new DialogInterface.OnClickListener() {
@@ -233,7 +245,7 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(getContext(), ProductoList.get(position).getNomProducto(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),  ProductoList.get(position).getIdProd() + " - " + ProductoList.get(position).getNomProducto(), Toast.LENGTH_SHORT).show();
         reservarProducto();
     }
 }

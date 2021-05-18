@@ -40,6 +40,7 @@ public class ProductosManagerDB {
         return  listCategoriasString;
     }
 
+    //Métotodo para agregar poductos
     public long agregarProductos(Context context, String nomProd, int cantProd, double precioProd
             , String detalle, String fotoProd, int idCatProd){
 
@@ -66,8 +67,9 @@ public class ProductosManagerDB {
         return resultado;
     }
 
+    //Método para obtener el listado de productos
     public ArrayList<Producto> obtenerProductos(Context context){
-        Producto producto = new Producto(null, null, null, null, null);
+        Producto producto = new Producto(null, null, null, null, null, null);
         ArrayList<Producto> productos = new ArrayList<>();
         Utils utils = new Utils();
 
@@ -78,7 +80,8 @@ public class ProductosManagerDB {
         Cursor cursor = objDB.rawQuery("SELECT * FROM Productos",null);
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
-            producto = new Producto((cursor.getString(cursor.getColumnIndex("nomProd"))),
+            producto = new Producto((cursor.getString(cursor.getColumnIndex("idProd"))),
+                    (cursor.getString(cursor.getColumnIndex("nomProd"))),
                     (cursor.getString(cursor.getColumnIndex("idCatProd"))),
                     (cursor.getString(cursor.getColumnIndex("cantProd"))),
                     (cursor.getString(cursor.getColumnIndex("precioProd"))),
@@ -89,5 +92,25 @@ public class ProductosManagerDB {
         }
 
         return productos;
+    }
+
+    //Método para eliminar un Producto
+    public long eliminarProducto(Context context, int idProd){
+        long resultado = 0l;
+
+        // Creamos objeto de la clase Base
+        Base obj = new Base(context);
+        SQLiteDatabase objDB = obj.getWritableDatabase();
+        // Consultamos a BD y guardamos en ArrayList
+        ArrayList<Integer> array_categID = new ArrayList<>();
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Productos WHERE idProd = ?", new String[]{String.valueOf(idProd)});
+        if (cursor.moveToNext()) {
+            //Eliminamos el producto según el idProd
+            resultado = objDB.delete("Productos", "idProd = ?", new String[]{String.valueOf(idProd)});
+        }
+
+        objDB.close();
+
+        return resultado;
     }
 }
