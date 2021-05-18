@@ -43,7 +43,7 @@ public class EditarCategoriasFragment extends Fragment {
             public void onClick(View v) {
                 // Para actualizar los datos
                 // Creamos objeto de la clase Base
-                Base obj = new Base(getContext(), "InStock",null,1);
+                Base obj = new Base(getContext());
                 SQLiteDatabase objDB = obj.getWritableDatabase();
                 // Consultamos a BD y guardamos en ArrayList
                 ArrayList<Integer> array_categID = new ArrayList<Integer>();
@@ -74,7 +74,7 @@ public class EditarCategoriasFragment extends Fragment {
         edtEditar = getView().findViewById(R.id.edtEditarC);
         String nCateg = edtEditar.getText().toString();
         // Creamos objeto de la clase Base
-        Base obj = new Base(getContext(), "InStock",null,1);
+        Base obj = new Base(getContext());
         SQLiteDatabase objDB = obj.getWritableDatabase();
         // Consultamos a BD y guardamos en ArrayList
         array_categID = new ArrayList<Integer>();
