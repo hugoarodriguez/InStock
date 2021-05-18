@@ -48,6 +48,7 @@
     <string name="btnAgregar">Agregar</string>
     <string name="btnCancelar">Cancelar</string>
     <string name="btnConfirmar">Confirmar</string>
+    <string name="btnActualizar">Actualizar</string>
     <string name="imageViewText">Imagen</string>
     <string name="nombre_ejemplo">Nombre Apellido</string>
     <string name="correo_ejemplo">micorreo@mail.com</string>

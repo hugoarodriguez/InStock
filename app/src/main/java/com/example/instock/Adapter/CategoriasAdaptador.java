@@ -49,12 +49,12 @@ public class CategoriasAdaptador extends RecyclerView.Adapter<CategoriasAdaptado
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView imgDelete;
+        //public ImageView imgDelete;
         private TextView txtCategorias;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imgDelete = itemView.findViewById(R.id.img_delete);
+            //imgDelete = itemView.findViewById(R.id.img_delete);
             txtCategorias = itemView.findViewById(R.id.tvCategoria);
 
             itemView.setOnClickListener(new View.OnClickListener() {

@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.instock.Adapter.CategoriasAdaptador;
@@ -115,8 +116,8 @@ public class CategoriasFragment extends Fragment implements RecyclerViewClickInt
         btnAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*EditText cat = (EditText) getView().findViewById(R.id.edtCategoria);
-
+                //EditText cat = (EditText) getView().findViewById(R.id.edtCategoria);
+                /*
                 List<ListCategorias> categoriasList = new ArrayList<>();
                 categoriasList.add(new ListCategorias(cat.getText().toString()));
                 categoriasAdaptador = new CategoriasAdaptador(categoriasList, getActivity());
@@ -191,12 +192,15 @@ public class CategoriasFragment extends Fragment implements RecyclerViewClickInt
         inicializarElementos();//Actualizamos el RecylcerView invocando el método de inicializarElementos()
     }
 
+    // Objeto EditarCategoria
+    EditarCategoriasFragment objEditarCategoria = new EditarCategoriasFragment();
 
+    FragmentTransaction transaction;
+    Fragment fragmentEditarC;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onItemClick(int position) {
         Toast.makeText(getContext(), CategoriaList.get(position).getCategorias(), Toast.LENGTH_SHORT).show();
-
 
         Drawable drawablePositive = getContext().getDrawable(R.drawable.ic_edit);
         drawablePositive.setTint(Color.parseColor("#0099CC"));
@@ -212,19 +216,26 @@ public class CategoriasFragment extends Fragment implements RecyclerViewClickInt
             public void onClick(DialogInterface dialog, int which) {
 
                 //TODO: Llamar método/fragment para editar Categoría
+
+                fragmentEditarC = new EditarCategoriasFragment();
+                transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container_view, fragmentEditarC);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         }).setPositiveButtonIcon(drawablePositive)
                 .setNegativeButton(null, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 //Eliminamos el item del RecyclerView
                 CategoriaList.remove(position);
                 categoriasAdaptador.notifyDataSetChanged();
                 eliminarCategoria(position);//Método para eliminar registro de la BD
-
+                objEditarCategoria.position(position); // Se envia la posición
             }
         }).setNegativeButtonIcon(drawableNegative).show();
 
     }
+
+
 }
