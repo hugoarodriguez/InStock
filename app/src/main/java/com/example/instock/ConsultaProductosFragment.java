@@ -138,7 +138,7 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
             else if(swipeDir == 8){
                 //Convertir venta en reserva
                 recyclerPositionItem = viewHolder.getAdapterPosition();
-                modificarProducto();
+                modificarProducto(recyclerPositionItem);
             }
 
         }
@@ -186,7 +186,7 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void modificarProducto(){
+    private void modificarProducto(int recyclerPositionItem){
         modalDialogValues.modalDialogValues(getResources().getString(R.string.go_to_modificar_producto_title),
                 getResources().getString(R.string.go_to_modificar_producto_message));
 
@@ -195,8 +195,15 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                int idProd = Integer.parseInt(ProductoList.get(recyclerPositionItem).getIdProd());
+
+                //Argumentos a enviar
+                Bundle argumentos = new Bundle();
+                argumentos.putInt("idProdParametro", idProd);
+
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 Fragment fModificarProductos = new ModificarProductosFragment();
+                fModificarProductos.setArguments(argumentos);
                 //Lo enviamos al Fragment de ModificarProductos
                 transaction.replace(R.id.fragment_container_view, fModificarProductos);
                 transaction.addToBackStack(null);

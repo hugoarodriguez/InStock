@@ -72,7 +72,6 @@ public class AgregarProductosFragment extends Fragment {
     Utils utils = new Utils();
     int tipoIntent = 0; //1 - Seleccionar Imagen, 2 - Tomar Foto
 
-    byte[] fotoProd = null;
     String urlFoto = null;
 
     //Objeto de MyDialog
@@ -206,6 +205,7 @@ public class AgregarProductosFragment extends Fragment {
                             String detalles = edtDetallesPro.getText().toString();
                             int idCatProd = 0;
 
+                            //TODO: Agregar valor de idCategoría al registro (tomarlo del "sprCategoria")
                             //Inovcamos el método para agregar el registro a la BD
                             ProductosManagerDB productosManagerDB = new ProductosManagerDB();
                             long resultado = productosManagerDB.agregarProductos(getContext(), nomProd, cantProd,
@@ -420,7 +420,7 @@ public class AgregarProductosFragment extends Fragment {
         //Ruta de acceso a la imagen "sin_imagen.jpg"
         Uri uri = Uri.parse("android.resource://com.example.instock/drawable/sin_imagen");
         imgProducto.setImageURI(uri);
-        fotoProd = null;
+        urlFoto = null;
 
         tilNombrePro.setError(null);
         tilCantPro.setError(null);

@@ -69,7 +69,8 @@ public class ProductosManagerDB {
 
     //Método para obtener el listado de productos
     public ArrayList<Producto> obtenerProductos(Context context){
-        Producto producto = new Producto(null, null, null, null, null, null);
+        Producto producto = new Producto(null, null, null,
+                null, null, null, null);
         ArrayList<Producto> productos = new ArrayList<>();
         Utils utils = new Utils();
 
@@ -85,13 +86,38 @@ public class ProductosManagerDB {
                     (cursor.getString(cursor.getColumnIndex("idCatProd"))),
                     (cursor.getString(cursor.getColumnIndex("cantProd"))),
                     (cursor.getString(cursor.getColumnIndex("precioProd"))),
-                    (cursor.getString(cursor.getColumnIndex("fotoProd"))));
+                    (cursor.getString(cursor.getColumnIndex("fotoProd"))),
+                    (cursor.getString(cursor.getColumnIndex("detalle"))));
 
             productos.add(producto);
             cursor.moveToNext();
         }
 
         return productos;
+    }
+
+    //Método para obtener los datos de un Producto
+    public Producto obtenerProducto(Context context, String idProd){
+        Producto producto = new Producto(null, null, null,
+                null, null, null, null);
+
+        Base obj = new Base(context);
+        SQLiteDatabase objDB = obj.getReadableDatabase();
+
+        // Creamos Cursor
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Productos WHERE idProd = ?",new String[]{idProd});
+
+        if (cursor.moveToFirst()) {
+            producto = new Producto((cursor.getString(cursor.getColumnIndex("idProd"))),
+                    (cursor.getString(cursor.getColumnIndex("nomProd"))),
+                    (cursor.getString(cursor.getColumnIndex("idCatProd"))),
+                    (cursor.getString(cursor.getColumnIndex("cantProd"))),
+                    (cursor.getString(cursor.getColumnIndex("precioProd"))),
+                    (cursor.getString(cursor.getColumnIndex("fotoProd"))),
+                    (cursor.getString(cursor.getColumnIndex("detalle"))));
+        }
+
+        return producto;
     }
 
     //Método para eliminar un Producto

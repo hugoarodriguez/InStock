@@ -10,9 +10,10 @@ public class Producto {
     private String Cantidad;
     private String Precio;
     private String FotoProd;
+    private String Detalles;
 
     public Producto(String idProd, String nomProducto, String categoria, String cantidad, String precio
-            , String fotoProd) {
+            , String fotoProd, String detalles) {
 
         IdProd = idProd;
         NomProducto = nomProducto;
@@ -20,6 +21,7 @@ public class Producto {
         Cantidad = cantidad;
         Precio = precio;
         FotoProd = fotoProd;
+        Detalles = detalles;
     }
 
     public String getIdProd() { return IdProd; }
@@ -52,6 +54,10 @@ public class Producto {
 
     public void setFotoProd(String fotoProd) { FotoProd = fotoProd; }
 
+    public String getDetalles() { return Detalles; }
+
+    public void setDetalles(String detalles) { Detalles = detalles; }
+
     @Override
     public String toString() {
         return "Producto{" +
@@ -61,6 +67,7 @@ public class Producto {
                 ", Cantidad='" + Cantidad + '\'' +
                 ", Precio='" + Precio + '\'' +
                 ", FotoProd='" + FotoProd + '\'' +
+                ", Detalles='" + Detalles + '\'' +
                 '}';
     }
 }
