@@ -14,52 +14,6 @@ import java.util.ArrayList;
 
 public class ProductosManagerDB {
 
-    //Métodos de AgregarProductosFragment
-
-
-    //Método para obtener listado de Categorías
-    public ArrayList<String> getCategorias(Context context){
-        ListCategorias listCategorias;
-        ArrayList<String> listCategoriasString = new ArrayList<>();
-
-        String primerValor = context.getResources().getString(R.string.spr_categoria_first_value);
-        listCategoriasString.add(primerValor);
-
-        Base obj = new Base(context);
-        SQLiteDatabase objDB = obj.getWritableDatabase();
-
-        // Creamos Cursor
-        Cursor cursor = objDB.rawQuery("SELECT * FROM Categorias",null);
-        cursor.moveToFirst();
-        int index = 0;
-        while (cursor.isAfterLast() == false) {
-            listCategorias = new ListCategorias(
-                    cursor.getInt(cursor.getColumnIndex("idCategoria")),
-                    cursor.getString(cursor.getColumnIndex("categoria")));
-            listCategoriasString.add(listCategorias.getCategoria());
-            cursor.moveToNext();
-        }
-
-        return  listCategoriasString;
-    }
-
-    //Método para obtener el idCategoria según el nombre de la Categoria
-    public int getIDCategoriaByName(Context context, String categoria){
-        int idCategoria = 0;
-
-        Base obj = new Base(context);
-        SQLiteDatabase objDB = obj.getReadableDatabase();
-
-        Cursor cursor = objDB.rawQuery("SELECT idCategoria FROM Categorias WHERE categoria =?"
-                , new String[]{categoria});
-
-        if(cursor.moveToNext()){
-            idCategoria = cursor.getInt(cursor.getColumnIndex("idCategoria"));
-        }
-
-        return idCategoria;
-    }
-
     //Métotodo para agregar poductos
     public long agregarProductos(Context context, String nomProd, int cantProd, double precioProd
             , String detalle, String fotoProd, int idCatProd){
@@ -89,8 +43,8 @@ public class ProductosManagerDB {
 
     //Método para obtener el listado de productos
     public ArrayList<Producto> obtenerProductos(Context context){
-        Producto producto = new Producto(null, null, null,
-                null, null, null, null);
+        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB();
+        Producto producto;
         ArrayList<Producto> productos = new ArrayList<>();
         Utils utils = new Utils();
 
@@ -103,7 +57,7 @@ public class ProductosManagerDB {
         while (cursor.isAfterLast() == false) {
             producto = new Producto((cursor.getString(cursor.getColumnIndex("idProd"))),
                     (cursor.getString(cursor.getColumnIndex("nomProd"))),
-                    (cursor.getString(cursor.getColumnIndex("idCatProd"))),
+                    categoriasManagerDB.getNameCategoriaById(context, cursor.getInt(cursor.getColumnIndex("idCatProd"))),
                     (cursor.getString(cursor.getColumnIndex("cantProd"))),
                     (cursor.getString(cursor.getColumnIndex("precioProd"))),
                     (cursor.getString(cursor.getColumnIndex("fotoProd"))),
@@ -118,6 +72,7 @@ public class ProductosManagerDB {
 
     //Método para obtener los datos de un Producto
     public Producto obtenerProducto(Context context, String idProd){
+        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB();
         Producto producto = null;
 
         Base obj = new Base(context);
@@ -127,13 +82,13 @@ public class ProductosManagerDB {
         Cursor cursor = objDB.rawQuery("SELECT * FROM Productos WHERE idProd = ?",new String[]{idProd});
 
         if (cursor.moveToFirst()) {
-            producto = new Producto((cursor.getString(cursor.getColumnIndex("idProd"))),
-                    (cursor.getString(cursor.getColumnIndex("nomProd"))),
-                    (cursor.getString(cursor.getColumnIndex("idCatProd"))),
-                    (cursor.getString(cursor.getColumnIndex("cantProd"))),
-                    (cursor.getString(cursor.getColumnIndex("precioProd"))),
-                    (cursor.getString(cursor.getColumnIndex("fotoProd"))),
-                    (cursor.getString(cursor.getColumnIndex("detalle"))));
+            producto = new Producto(cursor.getString(cursor.getColumnIndex("idProd")),
+                    cursor.getString(cursor.getColumnIndex("nomProd")),
+                    categoriasManagerDB.getNameCategoriaById(context, cursor.getInt(cursor.getColumnIndex("idCatProd"))),
+                    cursor.getString(cursor.getColumnIndex("cantProd")),
+                    cursor.getString(cursor.getColumnIndex("precioProd")),
+                    cursor.getString(cursor.getColumnIndex("fotoProd")),
+                    cursor.getString(cursor.getColumnIndex("detalle")));
         }
 
         return producto;

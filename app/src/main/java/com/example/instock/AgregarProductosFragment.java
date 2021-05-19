@@ -37,6 +37,7 @@ import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.instock.BD.CategoriasManagerDB;
 import com.example.instock.BD.ProductosManagerDB;
 import com.example.instock.models.ListCategorias;
 import com.example.instock.models.ModalDialogValues;
@@ -211,16 +212,17 @@ public class AgregarProductosFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
-                            ProductosManagerDB productosManagerDB = new ProductosManagerDB();
-
                             //Obtenemos los datos a almacenar
                             String nomProd = edtNombrePro.getText().toString();
                             int cantProd = Integer.parseInt(edtCantPro.getText().toString());
                             double precioProd = Double.parseDouble(edtPrecioPro.getText().toString());
                             String detalles = edtDetallesPro.getText().toString();
-                            int idCatProd = productosManagerDB.getIDCategoriaByName(getContext(),
+
+                            CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB();
+                            int idCatProd = categoriasManagerDB.getIDCategoriaByName(getContext(),
                                     sprCategoria.getSelectedItem().toString());
 
+                            ProductosManagerDB productosManagerDB = new ProductosManagerDB();
                             //Inovcamos el método para agregar el registro a la BD
                             long resultado = productosManagerDB.agregarProductos(getContext(), nomProd, cantProd,
                                     precioProd, detalles, urlFoto, idCatProd);
@@ -412,32 +414,16 @@ public class AgregarProductosFragment extends Fragment {
 
     //Método para llenar "sprCategoria"
     private void cargarCategorias(){
-        ProductosManagerDB productosManagerDB = new ProductosManagerDB();
+        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB();
         List<String> categorias = new ArrayList<>();
 
-        categorias = productosManagerDB.getCategorias(getContext());
+        categorias = categoriasManagerDB.getCategorias(getContext());
 
         categoriasAdaptador = new ArrayAdapter<>(getContext()
                 , android.R.layout.simple_spinner_dropdown_item
                 , categorias);
 
         sprCategoria.setAdapter(categoriasAdaptador);
-    }
-
-    //Método que permite comprobar si el valor del Spinner es diferente de "Seleccione"
-    private boolean validateSpinner(){
-        boolean r = false;
-        String primerValorSpinner = getResources().getString(R.string.spr_categoria_first_value);
-        String valorSeleccionado = sprCategoria.getSelectedItem().toString();
-
-        for(int i = 0; i < categoriasAdaptador.getCount(); i++){
-            if(primerValorSpinner.trim().equals(valorSeleccionado)){
-                r = true;
-                break;
-            }
-        }
-
-        return r;
     }
 
     private void limpiarCampos(){
