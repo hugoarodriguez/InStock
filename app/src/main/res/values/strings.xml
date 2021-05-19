@@ -96,6 +96,9 @@
     <string name="anterior_password">Contraseña anterior</string>
     <string name="logo">Logo</string>
 
+    <!-- String de primer valor de Spinner de Categorías -->
+    <string name="spr_categoria_first_value">Seleccione Categoría</string>
+
     <!-- ========================= Strings para mensajes de DIALOGS ========================= -->
 
     <!-- Strings para mensaje de BackButton -->

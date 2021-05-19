@@ -38,6 +38,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.instock.BD.ProductosManagerDB;
+import com.example.instock.models.ListCategorias;
 import com.example.instock.models.ModalDialogValues;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -62,6 +63,8 @@ public class AgregarProductosFragment extends Fragment {
     TextInputLayout tilNombrePro, tilCantPro, tilPrecioPro, tilDetallesPro;
     EditText edtNombrePro, edtCantPro, edtPrecioPro, edtDetallesPro;
     Spinner sprCategoria;
+
+    ArrayAdapter<String> categoriasAdaptador;
 
     String mensajeAlerta = "Dato requerido";
 
@@ -170,10 +173,14 @@ public class AgregarProductosFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                boolean spinnerValidation = utils.validateSpinner(getContext(),
+                        categoriasAdaptador, sprCategoria, R.string.spr_categoria_first_value);
+
                 if(edtNombrePro.getText().toString().equals("")
                         || edtCantPro.getText().toString().equals("")
                         || edtPrecioPro.getText().toString().equals("")
-                        || edtDetallesPro.getText().toString().equals("")){
+                        || edtDetallesPro.getText().toString().equals("")
+                        || spinnerValidation){
 
                     if(edtNombrePro.getText().toString().equals("")){
                         tilNombrePro.setError(mensajeAlerta);
@@ -187,6 +194,12 @@ public class AgregarProductosFragment extends Fragment {
                     if(edtDetallesPro.getText().toString().equals("")){
                         tilDetallesPro.setError(mensajeAlerta);
                     }
+
+                    if(spinnerValidation){
+                        Toast.makeText(getContext(), "¡Debes seleccionar una categoría!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
                 } else {
 
                     //Asignamos los valores para mostrar el Dialog
@@ -198,16 +211,17 @@ public class AgregarProductosFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
+                            ProductosManagerDB productosManagerDB = new ProductosManagerDB();
+
                             //Obtenemos los datos a almacenar
                             String nomProd = edtNombrePro.getText().toString();
                             int cantProd = Integer.parseInt(edtCantPro.getText().toString());
                             double precioProd = Double.parseDouble(edtPrecioPro.getText().toString());
                             String detalles = edtDetallesPro.getText().toString();
-                            int idCatProd = 0;
+                            int idCatProd = productosManagerDB.getIDCategoriaByName(getContext(),
+                                    sprCategoria.getSelectedItem().toString());
 
-                            //TODO: Agregar valor de idCategoría al registro (tomarlo del "sprCategoria")
                             //Inovcamos el método para agregar el registro a la BD
-                            ProductosManagerDB productosManagerDB = new ProductosManagerDB();
                             long resultado = productosManagerDB.agregarProductos(getContext(), nomProd, cantProd,
                                     precioProd, detalles, urlFoto, idCatProd);
 
@@ -403,19 +417,35 @@ public class AgregarProductosFragment extends Fragment {
 
         categorias = productosManagerDB.getCategorias(getContext());
 
-        ArrayAdapter<String> categoriasAdaptador = new ArrayAdapter<String>(getContext()
+        categoriasAdaptador = new ArrayAdapter<>(getContext()
                 , android.R.layout.simple_spinner_dropdown_item
                 , categorias);
 
         sprCategoria.setAdapter(categoriasAdaptador);
     }
 
+    //Método que permite comprobar si el valor del Spinner es diferente de "Seleccione"
+    private boolean validateSpinner(){
+        boolean r = false;
+        String primerValorSpinner = getResources().getString(R.string.spr_categoria_first_value);
+        String valorSeleccionado = sprCategoria.getSelectedItem().toString();
+
+        for(int i = 0; i < categoriasAdaptador.getCount(); i++){
+            if(primerValorSpinner.trim().equals(valorSeleccionado)){
+                r = true;
+                break;
+            }
+        }
+
+        return r;
+    }
 
     private void limpiarCampos(){
         edtNombrePro.setText("");
         edtCantPro.setText("");
         edtPrecioPro.setText("");
         edtDetallesPro.setText("");
+        sprCategoria.setSelection(0);
 
         //Ruta de acceso a la imagen "sin_imagen.jpg"
         Uri uri = Uri.parse("android.resource://com.example.instock/drawable/sin_imagen");

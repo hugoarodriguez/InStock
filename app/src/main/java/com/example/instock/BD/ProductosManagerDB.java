@@ -4,9 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
+import com.example.instock.R;
 import com.example.instock.models.ListCategorias;
 import com.example.instock.models.Producto;
 import com.example.instock.utils.Utils;
@@ -20,9 +19,11 @@ public class ProductosManagerDB {
 
     //Método para obtener listado de Categorías
     public ArrayList<String> getCategorias(Context context){
-        ListCategorias listCategorias = new ListCategorias(null);
-        ArrayList<String> listCategoriasString = new ArrayList<String>();
-        listCategoriasString.add("Seleccione");
+        ListCategorias listCategorias;
+        ArrayList<String> listCategoriasString = new ArrayList<>();
+
+        String primerValor = context.getResources().getString(R.string.spr_categoria_first_value);
+        listCategoriasString.add(primerValor);
 
         Base obj = new Base(context);
         SQLiteDatabase objDB = obj.getWritableDatabase();
@@ -32,12 +33,31 @@ public class ProductosManagerDB {
         cursor.moveToFirst();
         int index = 0;
         while (cursor.isAfterLast() == false) {
-            listCategorias = new ListCategorias(cursor.getString(cursor.getColumnIndex("categoria")));
-            listCategoriasString.add(listCategorias.getCategorias());
+            listCategorias = new ListCategorias(
+                    cursor.getInt(cursor.getColumnIndex("idCategoria")),
+                    cursor.getString(cursor.getColumnIndex("categoria")));
+            listCategoriasString.add(listCategorias.getCategoria());
             cursor.moveToNext();
         }
 
         return  listCategoriasString;
+    }
+
+    //Método para obtener el idCategoria según el nombre de la Categoria
+    public int getIDCategoriaByName(Context context, String categoria){
+        int idCategoria = 0;
+
+        Base obj = new Base(context);
+        SQLiteDatabase objDB = obj.getReadableDatabase();
+
+        Cursor cursor = objDB.rawQuery("SELECT idCategoria FROM Categorias WHERE categoria =?"
+                , new String[]{categoria});
+
+        if(cursor.moveToNext()){
+            idCategoria = cursor.getInt(cursor.getColumnIndex("idCategoria"));
+        }
+
+        return idCategoria;
     }
 
     //Métotodo para agregar poductos
@@ -98,8 +118,7 @@ public class ProductosManagerDB {
 
     //Método para obtener los datos de un Producto
     public Producto obtenerProducto(Context context, String idProd){
-        Producto producto = new Producto(null, null, null,
-                null, null, null, null);
+        Producto producto = null;
 
         Base obj = new Base(context);
         SQLiteDatabase objDB = obj.getReadableDatabase();

@@ -11,6 +11,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Html;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -138,5 +140,22 @@ public class Utils {
     //Método para cambiar el título del ActionBar/ToolBar
     public void changeActionBarTitle(String titulo, ActionBar actionBar){
         actionBar.setTitle((Html.fromHtml("<font color=\"#FFFFFF\">" + titulo + "</font>")));
+    }
+
+    //Método que permite comprobar si el valor del Spinner es diferente de "Seleccione"
+    public boolean validateSpinner(Context context, ArrayAdapter<String> arrayAdapter,
+                                    Spinner spinner, int stringResourceValue){
+        boolean r = false;
+        String primerValorSpinner = context.getResources().getString(stringResourceValue);
+        String valorSeleccionado = spinner.getSelectedItem().toString();
+
+        for(int i = 0; i < arrayAdapter.getCount(); i++){
+            if(primerValorSpinner.trim().equals(valorSeleccionado)){
+                r = true;
+                break;
+            }
+        }
+
+        return r;
     }
 }
