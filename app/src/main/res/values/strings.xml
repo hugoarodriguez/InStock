@@ -94,6 +94,9 @@
     <!-- String de primer valor de Spinner de Categorías -->
     <string name="spr_categoria_first_value">Seleccione Categoría</string>
 
+    <!-- String de primer valor de Spinner de Sexos -->
+    <string name="spr_sexo_first_value">Seleccione un genero</string>
+
     <!-- ========================= Strings para mensajes de DIALOGS ========================= -->
 
     <!-- Strings para mensaje de BackButton -->
@@ -121,7 +124,7 @@
 
     <!-- Strings para mensaje de redirección a ReservarProducto -->
     <string name="go_to_reservas_title">Reservar Producto</string>
-    <string name="go_to_reservas_message">¿Quieres reservar este producto?\n\nSe cargará un formulario para reservar el producto.</string>
+    <string name="go_to_reservas_message">¿Quieres reservar este producto?\n\nSe cargará un formulario para hacerlo.</string>
 
     <!-- Strings para mensaje de confirmación de ReservarProducto -->
     <string name="reservas_title">Reservar Producto</string>

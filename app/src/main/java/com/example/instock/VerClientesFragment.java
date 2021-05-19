@@ -125,19 +125,19 @@ public class VerClientesFragment extends Fragment {
             if(swipeDir == 4){
                 //Cancelar reserva
                 recyclerPositionItem = viewHolder.getAdapterPosition();
-                eliminarCliente();
+                eliminarCliente(recyclerPositionItem);
             }
             else if(swipeDir == 8){
                 //Convertir venta en reserva
                 recyclerPositionItem = viewHolder.getAdapterPosition();
-                modificarCliente();
+                modificarCliente(recyclerPositionItem);
             }
 
         }
     };
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void eliminarCliente(){
+    private void eliminarCliente(int recyclerPositionItem){
         //Asignamos los valores para mostrar el Dialog
         modalDialogValues.modalDialogValues("Eliminar Cliente",
                 "¿Estás seguro que deseas eliminar este cliente?");
@@ -163,17 +163,24 @@ public class VerClientesFragment extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void modificarCliente(){
+    private void modificarCliente(int recyclerPositionItem){
         modalDialogValues.modalDialogValues("Modificar Cliente",
                 "¿Quieres modificar este cliente?");
 
         //Invocamos el dialog() y sobreescribimos sus metodos setPositiveButton y setNegativeButton
         createDialog.dialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
             @Override
+
             public void onClick(DialogInterface dialog, int which) {
+
+                int idCliente = Integer.parseInt(ClientesList.get(recyclerPositionItem).getIdCliente());
+
+                Bundle argumentos = new Bundle();
+                argumentos.putInt("idClienteParametro", idCliente);
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 Fragment fModificarCliente = new ModificarClienteFragment();
+                fModificarCliente.setArguments(argumentos);
                 //Lo enviamos al Fragment de ModificarProductos
                 transaction.replace(R.id.fragment_container_view, fModificarCliente);
                 transaction.addToBackStack(null);

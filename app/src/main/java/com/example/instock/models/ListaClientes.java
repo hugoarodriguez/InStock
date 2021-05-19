@@ -4,6 +4,7 @@ public class ListaClientes {
 
     private String idCliente;
     private String nombre;
+    private String apellido;
     private String telefono;
     private String correo;
     private String sexo;
@@ -19,6 +20,10 @@ public class ListaClientes {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public String getApellido() { return apellido; }
+
+    public void setApellido(String apellido) { this.apellido = apellido; }
 
     public String getTelefono() {
         return telefono;
@@ -52,11 +57,21 @@ public class ListaClientes {
         this.sexo = sexo;
     }
 
+    public ListaClientes(String idCliente, String nombre, String apellido, String telefono, String correo, String sexo) {
+        this.idCliente = idCliente;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.sexo = sexo;
+    }
+
     @Override
     public String toString() {
         return "ListaClientes{" +
                 "idCliente='" + idCliente + '\'' +
                 ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
                 ", telefono='" + telefono + '\'' +
                 ", correo='" + correo + '\'' +
                 ", sexo='" + sexo + '\'' +

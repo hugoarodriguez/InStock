@@ -43,7 +43,7 @@ public class ProductoAdaptadpr extends  RecyclerView.Adapter<ProductoAdaptadpr.V
         holder.tvProducto.setText(ProductoList.get(position).getNomProducto());
         holder.tvCategoria.setText(ProductoList.get(position).getCategoria());
         holder.tvCantidad.setText(ProductoList.get(position).getCantidad());
-        holder.tvPrecio.setText(ProductoList.get(position).getPrecio());
+        holder.tvPrecio.setText("$"+ ProductoList.get(position).getPrecio());
         Glide.with(context).load(ProductoList.get(position).getFotoProd()).into(holder.imgFoto);
     }
     @Override

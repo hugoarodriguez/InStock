@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.instock.models.ListaClientes;
+import com.example.instock.models.Producto;
 
 import java.util.ArrayList;
 
@@ -39,8 +40,8 @@ public class ClientesManagerDB {
         return  resultado;
     }
 
-    public long modificarCliente(int idCliente, String nombre, String apellido, String sexo, String telefono, String correo){
-        long resultado = 0l;
+    public int modificarCliente(int idCliente, String nombre, String apellido, String sexo, String telefono, String correo){
+        int resultado = 0;
 
         Base obj = new Base(context);
         SQLiteDatabase objDB = obj.getWritableDatabase();
@@ -55,7 +56,6 @@ public class ClientesManagerDB {
         //Actualizamos el cliente
         resultado = objDB.update("Clientes", values, "idCliente = ?", new String[]{String.valueOf(idCliente)});
 
-        //objDB.execSQL(query);
         objDB.close();
 
         return  resultado;
@@ -78,7 +78,7 @@ public class ClientesManagerDB {
                             + cursor.getString(cursor.getColumnIndex("apellido")),
                     cursor.getString(cursor.getColumnIndex("telefono")),
                     cursor.getString(cursor.getColumnIndex("correo")),
-                    (cursor.getString(cursor.getColumnIndex("sexo"))));
+                    cursor.getString(cursor.getColumnIndex("sexo")));
 
             clientes.add(cliente);
             cursor.moveToNext();
@@ -105,5 +105,28 @@ public class ClientesManagerDB {
         }
 
         return nombresClientes;
+    }
+
+    //Método para obtener los datos de un Cliente
+    public ListaClientes obtenerCliente(String idCliente){
+        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB();
+        ListaClientes cliente = null;
+
+        Base obj = new Base(context);
+        SQLiteDatabase objDB = obj.getReadableDatabase();
+
+        // Creamos Cursor
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Clientes WHERE idCliente = ?",new String[]{idCliente});
+
+        if (cursor.moveToFirst()) {
+            cliente = new ListaClientes(cursor.getString(cursor.getColumnIndex("idCliente")),
+                    cursor.getString(cursor.getColumnIndex("nombre")),
+                    cursor.getString(cursor.getColumnIndex("apellido")),
+                    cursor.getString(cursor.getColumnIndex("telefono")),
+                    cursor.getString(cursor.getColumnIndex("correo")),
+                    cursor.getString(cursor.getColumnIndex("sexo")));
+        }
+
+        return cliente;
     }
 }

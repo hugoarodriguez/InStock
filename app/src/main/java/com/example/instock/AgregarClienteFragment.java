@@ -21,9 +21,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.instock.BD.CategoriasManagerDB;
 import com.example.instock.BD.ClientesManagerDB;
-import com.example.instock.BD.ProductosManagerDB;
 import com.example.instock.models.ModalDialogValues;
 import com.example.instock.utils.CreateDialog;
 import com.google.android.material.textfield.TextInputLayout;
@@ -49,7 +47,7 @@ public class AgregarClienteFragment extends Fragment {
 
     int posGenero;
 
-    private void getPosition(int position) {
+    private void setPosGenero(int position) {
         this.posGenero = position;
     }
 
@@ -87,7 +85,7 @@ public class AgregarClienteFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
 
-                    getPosition(position);
+                    setPosGenero(position);
 
                 }
             }
@@ -97,6 +95,7 @@ public class AgregarClienteFragment extends Fragment {
 
             }
         });
+        sprSexo.setAdapter(adapter);
     }
 
     //Método que activa la escucha del onChange de los EditText

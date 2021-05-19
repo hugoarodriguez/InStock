@@ -218,10 +218,14 @@ public class ModificarProductosFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                boolean spinnerValidation = utils.validateSpinner(getContext(),
+                        categoriasAdaptador, sprCategoria, R.string.spr_categoria_first_value);
+
                 if(edtNombrePro.getText().toString().equals("")
-                        || edtCantPro.getText().toString().equals("")
-                        || edtPrecioPro.getText().toString().equals("")
-                        || edtDetallesPro.getText().toString().equals("")){
+                        || edtCantPro.getText().toString().equals("") || Integer.parseInt(edtCantPro.getText().toString()) <= 0
+                        || edtPrecioPro.getText().toString().equals("") || Double.parseDouble(edtPrecioPro.getText().toString()) < 1.00
+                        || edtDetallesPro.getText().toString().equals("")
+                        || spinnerValidation){
 
                     if(edtNombrePro.getText().toString().equals("")){
                         tilNombrePro.setError(mensajeAlerta);
@@ -234,6 +238,10 @@ public class ModificarProductosFragment extends Fragment {
                     }
                     if(edtDetallesPro.getText().toString().equals("")){
                         tilDetallesPro.setError(mensajeAlerta);
+                    }
+                    if(spinnerValidation){
+                        Toast.makeText(getContext(), "¡Debes seleccionar una categoría!",
+                                Toast.LENGTH_SHORT).show();
                     }
                 } else {
 
@@ -258,7 +266,7 @@ public class ModificarProductosFragment extends Fragment {
                                     sprCategoria.getSelectedItem().toString());
 
                             ProductosManagerDB productosManagerDB = new ProductosManagerDB();
-                            //Inovcamos el método para agregar el registro a la BD
+                            //Inovcamos el método para modificar el registro a la BD
                             long resultado = productosManagerDB.modificarProducto(getContext(), idProd,
                                     nomProd, cantProd, precioProd, detalles, urlFoto, idCatProd);
 

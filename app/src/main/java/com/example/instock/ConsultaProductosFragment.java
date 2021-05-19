@@ -249,7 +249,7 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(getContext(),  ProductoList.get(position).getIdProd() + " - " + ProductoList.get(position).getNomProducto(), Toast.LENGTH_SHORT).show();
+        //Llamamos el método que nos lleva a la pantalla para reservar el Producto
         reservarProducto();
     }
 }
