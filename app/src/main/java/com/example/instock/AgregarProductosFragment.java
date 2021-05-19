@@ -130,7 +130,7 @@ public class AgregarProductosFragment extends Fragment {
     }
 
     //Método para enlazar los editText con el ChangedListener
-    private void edtChangeListener(EditText editText, TextInputLayout til){
+    private void edtChangedListener(EditText editText, TextInputLayout til){
 
 
         editText.addTextChangedListener(new TextWatcher() {
@@ -159,10 +159,10 @@ public class AgregarProductosFragment extends Fragment {
     //Método que activa la escucha del onChange de los EditText
     private void edtChangeListenerAll(){
         //Método para quitar alerta en onChanged
-        edtChangeListener(edtNombrePro, tilNombrePro);
-        edtChangeListener(edtCantPro, tilCantPro);
-        edtChangeListener(edtPrecioPro, tilPrecioPro);
-        edtChangeListener(edtDetallesPro, tilDetallesPro);
+        edtChangedListener(edtNombrePro, tilNombrePro);
+        edtChangedListener(edtCantPro, tilCantPro);
+        edtChangedListener(edtPrecioPro, tilPrecioPro);
+        edtChangedListener(edtDetallesPro, tilDetallesPro);
     }
 
     private void agregar(){

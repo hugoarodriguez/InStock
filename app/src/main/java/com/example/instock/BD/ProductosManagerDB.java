@@ -18,7 +18,7 @@ public class ProductosManagerDB {
     public long agregarProducto(Context context, String nomProd, int cantProd, double precioProd
             , String detalle, String fotoProd, int idCatProd){
 
-        Long resultado;
+        long resultado;
 
         Base obj = new Base(context);
         SQLiteDatabase objDB = obj.getWritableDatabase();

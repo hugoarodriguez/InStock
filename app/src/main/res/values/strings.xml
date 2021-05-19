@@ -141,4 +141,6 @@
     <string name="reservar_title">Reservar Producto</string>
     <string name="reservar_message">Se reservará el producto para el cliente indicado\n\n¿Estás seguro?</string>
 
+    <string name="campo_requerido">Campo requerido</string>
+
 </resources>

@@ -27,19 +27,17 @@ public class Base extends SQLiteOpenHelper {
     // Metodo onCreate para crear la Base de datos
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String queryCategoria = null;
-        String queryCliente = null;
-        queryCategoria = "CREATE TABLE IF NOT EXISTS Categorias(idCategoria INTEGER PRIMARY KEY AUTOINCREMENT, categoria TEXT);";
-        db.execSQL(queryCategoria);
-        queryCliente = "CREATE TABLE IF NOT EXISTS Clientes(idCliente INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, apellido TEXT, sexo TEXT, telefono TEXT, correo TEXT);";
-        db.execSQL(queryCliente);
-        String query = null;
-        query = "CREATE TABLE IF NOT EXISTS Categorias(idCategoria INTEGER PRIMARY KEY AUTOINCREMENT, categoria TEXT);";
-        db.execSQL(query);
+        String queryCategorias = null, queryClientes = null, queryProductos = null;
 
-        query = "CREATE TABLE IF NOT EXISTS Productos(idProd INTEGER PRIMARY KEY AUTOINCREMENT, nomProd TEXT, cantProd INTEGER, precioProd REAL, detalle TEXT" +
+        queryCategorias = "CREATE TABLE IF NOT EXISTS Categorias(idCategoria INTEGER PRIMARY KEY AUTOINCREMENT, categoria TEXT);";
+        db.execSQL(queryCategorias);
+
+        queryClientes = "CREATE TABLE IF NOT EXISTS Clientes(idCliente INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, apellido TEXT, sexo TEXT, telefono TEXT, correo TEXT);";
+        db.execSQL(queryClientes);
+
+        queryProductos = "CREATE TABLE IF NOT EXISTS Productos(idProd INTEGER PRIMARY KEY AUTOINCREMENT, nomProd TEXT, cantProd INTEGER, precioProd REAL, detalle TEXT" +
                 ", fotoProd TEXT, idCatProd INTEGER);";
-        db.execSQL(query);
+        db.execSQL(queryProductos);
     }
 
     @Override
