@@ -19,9 +19,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.example.instock.BD.ClientesManagerDB;
 import com.example.instock.models.ModalDialogValues;
 import com.example.instock.utils.CreateDialog;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.ArrayList;
 
 public class ReservarProductosFragment extends Fragment {
 
@@ -42,12 +45,6 @@ public class ReservarProductosFragment extends Fragment {
     Button  btnReservar, btnCancelar;
 
     int cantidad = 1;
-
-    //Cambiar este elemento por los datos que se cargaran en el "actvCliente"
-    private static final String[] COUNTRIES = new String[] {
-            "Belgium", "France", "Italy", "Germany", "Spain"
-    };
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,8 +100,11 @@ public class ReservarProductosFragment extends Fragment {
     }
 
     public void actvClienteAdapter(){
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                android.R.layout.simple_dropdown_item_1line, COUNTRIES);
+        ClientesManagerDB clientesManagerDB = new ClientesManagerDB(getContext());
+        ArrayList<String> clientes = clientesManagerDB.obtenerNombresClientes();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_dropdown_item_1line, clientes);
         actvCliente.setAdapter(adapter);
     }
 

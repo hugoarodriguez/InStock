@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.instock.models.ListaClientes;
-import com.example.instock.models.Producto;
-import com.example.instock.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -65,7 +63,6 @@ public class ClientesManagerDB {
 
     //Método para obtener el listado de productos
     public ArrayList<ListaClientes> obtenerClientes(){
-        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB();
         ListaClientes cliente;
         ArrayList<ListaClientes> clientes = new ArrayList<>();
 
@@ -88,5 +85,25 @@ public class ClientesManagerDB {
         }
 
         return clientes;
+    }
+
+    //Método para obtener el listado de productos
+    public ArrayList<String> obtenerNombresClientes(){
+        ArrayList<String> nombresClientes = new ArrayList<>();
+
+        Base obj = new Base(context);
+        SQLiteDatabase objDB = obj.getReadableDatabase();
+
+        // Creamos Cursor
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Clientes",null);
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+
+            nombresClientes.add(cursor.getString(cursor.getColumnIndex("nombre")) + " "
+                    + cursor.getString(cursor.getColumnIndex("apellido")));
+            cursor.moveToNext();
+        }
+
+        return nombresClientes;
     }
 }
