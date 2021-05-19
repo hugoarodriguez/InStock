@@ -216,7 +216,7 @@ public class CategoriasFragment extends Fragment implements RecyclerViewClickInt
                 //TODO: Llamar método/fragment para editar Categoría
 
                 fragmentEditarC = new EditarCategoriasFragment();
-                transaction = getFragmentManager().beginTransaction();
+                transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container_view, fragmentEditarC);
                 transaction.addToBackStack(null);
                 transaction.commit();

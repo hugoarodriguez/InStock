@@ -36,6 +36,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.instock.BD.CategoriasManagerDB;
 import com.example.instock.BD.ProductosManagerDB;
 import com.example.instock.models.Producto;
 import com.example.instock.utils.Utils;
@@ -60,6 +61,8 @@ public class ModificarProductosFragment extends Fragment {
 
     Producto producto;
     ArrayList<Producto> ProductoList;
+
+    ArrayAdapter<String> categoriasAdaptador;
 
     ImageView imgProducto;
     ImageButton btnSelectImage, btnTakePhoto;
@@ -104,6 +107,9 @@ public class ModificarProductosFragment extends Fragment {
         modificar();//Método para btnModificar
         cancelar();//Método para btnCancelar
         edtChangeListenerAll();//Método para activar la escucha del onChange de todos los EditText
+
+        //Asignamos los valores iniciales a los Campos
+        asignarValoresAVistas(String.valueOf(idProdParametro));
         return vista;
     }
 
@@ -127,9 +133,6 @@ public class ModificarProductosFragment extends Fragment {
         edtNombrePro = (EditText)v.findViewById(R.id.edtNombrePro);
         edtPrecioPro = (EditText)v.findViewById(R.id.edtPrecioPro);
         sprCategoria = (Spinner)v.findViewById(R.id.sprCategoria);
-
-        //Asignamos los valores iniciales a los Campos
-        asignarValoresAVistas(String.valueOf(idProdParametro));
     }
 
     //Método para enlazar los editText con el ChangedListener
@@ -182,6 +185,12 @@ public class ModificarProductosFragment extends Fragment {
         edtPrecioPro.setText(producto.getPrecio());
         edtDetallesPro.setText(producto.getDetalles());
         //TODO agregar Categoria y seleccionar ese item del Spinner
+        for(int i = 0; i < categoriasAdaptador.getCount(); i++){
+            if(producto.getCategoria().trim().equals(categoriasAdaptador.getItem(i).toString().trim())){
+                sprCategoria.setSelection(i);
+                break;
+            }
+        }
     }
 
     private void modificar(){
@@ -363,12 +372,12 @@ public class ModificarProductosFragment extends Fragment {
 
     //Método para llenar "sprCategoria"
     private void cargarCategorias(){
-        ProductosManagerDB productosManagerDB = new ProductosManagerDB();
+        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB();
         List<String> categorias = new ArrayList<>();
 
-        categorias = productosManagerDB.getCategorias(getContext());
+        categorias = categoriasManagerDB.getCategorias(getContext());
 
-        ArrayAdapter<String> categoriasAdaptador = new ArrayAdapter<String>(getContext()
+        categoriasAdaptador = new ArrayAdapter<>(getContext()
                 , android.R.layout.simple_spinner_dropdown_item
                 , categorias);
 
@@ -380,6 +389,7 @@ public class ModificarProductosFragment extends Fragment {
         edtCantPro.setText("");
         edtPrecioPro.setText("");
         edtDetallesPro.setText("");
+        sprCategoria.setSelection(0);
 
         //Ruta de acceso a la imagen "sin_imagen.jpg"
         Uri uri = Uri.parse("android.resource://com.example.instock/drawable/sin_imagen");
