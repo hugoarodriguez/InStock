@@ -178,18 +178,20 @@ public class AgregarProductosFragment extends Fragment {
                         categoriasAdaptador, sprCategoria, R.string.spr_categoria_first_value);
 
                 if(edtNombrePro.getText().toString().equals("")
-                        || edtCantPro.getText().toString().equals("")
-                        || edtPrecioPro.getText().toString().equals("")
+                        || edtCantPro.getText().toString().equals("") || Integer.parseInt(edtCantPro.getText().toString()) <= 0
+                        || edtPrecioPro.getText().toString().equals("") || Double.parseDouble(edtPrecioPro.getText().toString()) < 1.00
                         || edtDetallesPro.getText().toString().equals("")
                         || spinnerValidation){
 
                     if(edtNombrePro.getText().toString().equals("")){
                         tilNombrePro.setError(mensajeAlerta);
                     }
-                    if(edtCantPro.getText().toString().equals("")){
+                    if(edtCantPro.getText().toString().equals("")
+                            || Integer.parseInt(edtCantPro.getText().toString()) <= 0){
                         tilCantPro.setError(mensajeAlerta);
                     }
-                    if(edtPrecioPro.getText().toString().equals("")){
+                    if(edtPrecioPro.getText().toString().equals("")
+                            || Double.parseDouble(edtPrecioPro.getText().toString()) < 1.00){
                         tilPrecioPro.setError(mensajeAlerta);
                     }
                     if(edtDetallesPro.getText().toString().equals("")){
