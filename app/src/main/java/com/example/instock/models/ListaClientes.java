@@ -2,10 +2,15 @@ package com.example.instock.models;
 
 public class ListaClientes {
 
+    private String idCliente;
     private String nombre;
     private String telefono;
     private String correo;
     private String sexo;
+
+    public String getIdCliente() { return idCliente; }
+
+    public void setIdCliente(String idCliente) { this.idCliente = idCliente; }
 
     public String getNombre() {
         return nombre;
@@ -39,7 +44,8 @@ public class ListaClientes {
         this.sexo = sexo;
     }
 
-    public ListaClientes(String nombre, String telefono, String correo, String sexo) {
+    public ListaClientes(String idCliente, String nombre, String telefono, String correo, String sexo) {
+        this.idCliente = idCliente;
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
@@ -49,7 +55,8 @@ public class ListaClientes {
     @Override
     public String toString() {
         return "ListaClientes{" +
-                "nombre='" + nombre + '\'' +
+                "idCliente='" + idCliente + '\'' +
+                ", nombre='" + nombre + '\'' +
                 ", telefono='" + telefono + '\'' +
                 ", correo='" + correo + '\'' +
                 ", sexo='" + sexo + '\'' +

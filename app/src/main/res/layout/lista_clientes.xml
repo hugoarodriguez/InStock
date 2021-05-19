@@ -28,24 +28,36 @@
                 android:id="@+id/txtNombre"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
+                style="@style/tvLarger"
+                android:textSize="20sp"
+                android:textColor="@color/black"
                 android:text="Nombre" />
 
             <TextView
                 android:id="@+id/txtTelefono"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
+                style="@style/tvLarger"
+                android:textSize="20sp"
+                android:textColor="@color/black"
                 android:text="Teléfono" />
 
             <TextView
                 android:id="@+id/txtCorreo"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
+                style="@style/tvLarger"
+                android:textSize="20sp"
+                android:textColor="@color/black"
                 android:text="Correo" />
 
             <TextView
                 android:id="@+id/txtSexo"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
+                style="@style/tvLarger"
+                android:textSize="20sp"
+                android:textColor="@color/black"
                 android:text="Sexo" />
         </LinearLayout>
 

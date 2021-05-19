@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.instock.Adapter.ClientesAdaptador;
+import com.example.instock.BD.ClientesManagerDB;
 import com.example.instock.models.ListaClientes;
 import com.example.instock.models.ModalDialogValues;
 import com.example.instock.utils.CreateDialog;
@@ -57,19 +58,20 @@ public class VerClientesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         cargarDatos();
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerCliente);
     }
 
     private void cargarDatos() {
-        ClientesList.add(new ListaClientes("Nombre: AMILTON ABRAHAM", "Teléfono: 7859-8598", "Correo: algo@gmail.com", "Sexo: Masculino"));
-        ClientesList.add(new ListaClientes("Nombre: HUGO ALEXANDER", "Teléfono: 7859-8598", "Correo: algo@gmail.com", "Sexo: Masculino"));
-        ClientesList.add(new ListaClientes("Nombre: SAMUEL ENRIQUE", "Teléfono: 7859-8598", "Correo: algo@gmail.com", "Sexo: Masculino"));
-        ClientesList.add(new ListaClientes("Nombre: BLADIMIR STANLEY", "Teléfono: 7859-8598", "Correo: algo@gmail.com", "Sexo: Masculino"));
-        ClientesList.add(new ListaClientes("Nombre: ISAI", "Teléfono: 7859-8598", "Correo: algo@gmail.com", "Sexo: Masculino"));
+
+        ClientesManagerDB clientesManagerDB = new ClientesManagerDB(getContext());
+
+        ClientesList = clientesManagerDB.obtenerClientes();
 
         recyclerCliente = getView().findViewById(R.id.recyclerClientes);
         recyclerCliente.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerCliente);
+
         clienteAdaptador = new ClientesAdaptador(ClientesList, getActivity());
         recyclerCliente.setAdapter(clienteAdaptador);
     }
