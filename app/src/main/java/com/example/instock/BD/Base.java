@@ -27,14 +27,12 @@ public class Base extends SQLiteOpenHelper {
     // Metodo onCreate para crear la Base de datos
     @Override
     public void onCreate(SQLiteDatabase db) {
-//<<<<<<< HEAD
         String queryCategoria = null;
         String queryCliente = null;
         queryCategoria = "CREATE TABLE IF NOT EXISTS Categorias(idCategoria INTEGER PRIMARY KEY AUTOINCREMENT, categoria TEXT);";
         db.execSQL(queryCategoria);
-        /*queryCliente = "CREATE TABLE IF NOT EXISTS Clientes(idCliente INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, apellido TEXT, sexo TEXT, telefono TEXT, correo TEXT);";
+        queryCliente = "CREATE TABLE IF NOT EXISTS Clientes(idCliente INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, apellido TEXT, sexo TEXT, telefono TEXT, correo TEXT);";
         db.execSQL(queryCliente);
-=======*/
         String query = null;
         query = "CREATE TABLE IF NOT EXISTS Categorias(idCategoria INTEGER PRIMARY KEY AUTOINCREMENT, categoria TEXT);";
         db.execSQL(query);
@@ -42,7 +40,6 @@ public class Base extends SQLiteOpenHelper {
         query = "CREATE TABLE IF NOT EXISTS Productos(idProd INTEGER PRIMARY KEY AUTOINCREMENT, nomProd TEXT, cantProd INTEGER, precioProd REAL, detalle TEXT" +
                 ", fotoProd TEXT, idCatProd INTEGER);";
         db.execSQL(query);
-//>>>>>>> 1d3902ca0e761e225f78ed852a63b620b017f7c0
     }
 
     @Override
@@ -50,11 +47,9 @@ public class Base extends SQLiteOpenHelper {
         String query = null;
         query = "DROP TABLE IF EXISTS Categorias";
         db.execSQL(query);
-/*//<<<<<<< HEAD
         query = "DROP TABLE IF EXISTS Clientes";
-//=======*/
+        db.execSQL(query);
         query = "DROP TABLE IF EXISTS Productos";
-//>>>>>>> 1d3902ca0e761e225f78ed852a63b620b017f7c0
         db.execSQL(query);
         onCreate(db);
     }

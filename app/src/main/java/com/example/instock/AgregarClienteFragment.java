@@ -32,7 +32,9 @@ public class AgregarClienteFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_agregar_cliente, container, false);
     }
+
     int posGenero;
+
     private void getPosition(int position) {
         this.posGenero = position;
     }
@@ -40,20 +42,21 @@ public class AgregarClienteFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        nombre = (EditText)getView().findViewById(R.id.edtNombre);
-        apellido = (EditText)getView().findViewById(R.id.edtApellido);
-        telefono = (EditText)getView().findViewById(R.id.edtTelefono);
-        correo = (EditText)getView().findViewById(R.id.edtCorreo);
+        nombre = (EditText) getView().findViewById(R.id.edtNombre);
+        apellido = (EditText) getView().findViewById(R.id.edtApellido);
+        telefono = (EditText) getView().findViewById(R.id.edtTelefono);
+        correo = (EditText) getView().findViewById(R.id.edtCorreo);
         agregar = (Button) getView().findViewById(R.id.btnAgregarC);
-        sexo = (Spinner)getView().findViewById(R.id.spinner);
+        sexo = (Spinner) getView().findViewById(R.id.spGeneroC);
         String[] generos = getResources().getStringArray(R.array.genero);
         ArrayAdapter adapter = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, generos);
         sexo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
-                    Toast.makeText(getContext(), "Item seleccionado " + generos[position], Toast.LENGTH_SHORT).show();
+
                     getPosition(position);
+                    Toast.makeText(getContext(), "Item seleccionado " + generos[position] + posGenero, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -67,19 +70,18 @@ public class AgregarClienteFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Creamos la conexion a la BD
-//                Base obj = new Base(getContext(), "InStock",null,1);
-//                SQLiteDatabase objDB = obj.getWritableDatabase();
+                Base obj = new Base(getContext());
+                SQLiteDatabase objDB = obj.getWritableDatabase();
                 String nomb = nombre.getText().toString();
                 String ape = apellido.getText().toString();
                 String tel = telefono.getText().toString();
                 String corr = correo.getText().toString();
-                /*String sintaxisSql = "INSERT INTO Clientes VALUES ("+ null + ", '" +  nomb +"', '" + ape + "', '" + generos[posGenero] + "', '" + tel + "', '" + corr + "')";
-
-                if (nomb.trim().equals("") || ape.trim().equals("") || tel.trim().equals("") || corr.trim().equals("")) {
+                //String sintaxisSql = "INSERT INTO Clientes(nombre,apellido,sexo,telefono,correo) VALUES ('" + nomb + "', '" + ape + "', '" + generos[posGenero] + "', ''" + tel + "', '" + corr + "')";
+                if (nomb.trim().equals("") || ape.trim().equals("") || tel.trim().equals("") || corr.trim().equals("") || posGenero == 0) {
                     agregar.setError("Debe llenar todos los campos");
-                }
-                else {
-                    objDB.execSQL(sintaxisSql);
+                } else {
+                    //Toast.makeText(getContext(), "Item seleccionado " + generos[posGenero], Toast.LENGTH_SHORT).show();
+                    //objDB.execSQL(sintaxisSql);
                     Toast.makeText(getContext(), "Se ha agregado cliente", Toast.LENGTH_SHORT).show();
                     // Limpiamos el EditText
                     nombre.setText("");
@@ -88,9 +90,8 @@ public class AgregarClienteFragment extends Fragment {
                     correo.setText("");
                     nombre.requestFocus();
                 }
-                objDB.close();*/
+                objDB.close();
             }
         });
     }
-
 }
