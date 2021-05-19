@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class ProductosManagerDB {
 
     //Métotodo para agregar poductos
-    public long agregarProductos(Context context, String nomProd, int cantProd, double precioProd
+    public long agregarProducto(Context context, String nomProd, int cantProd, double precioProd
             , String detalle, String fotoProd, int idCatProd){
 
         Long resultado;
@@ -31,11 +31,35 @@ public class ProductosManagerDB {
         values.put("fotoProd", fotoProd);
         values.put("idCatProd", idCatProd);
 
-        //En la siguiente pasamos el valor "null" para el "Id" ya que este es autoincrementable
+        //En la siguiente consulta pasamos el valor "null" para el "Id" ya que este es autoincrementable
         resultado = objDB.insert("Productos", "idProd", values);
-        //String query = "INSERT INTO Productos(idProd, nomProd, cant) VALUES ("+null+", '"+ nuevoProducto +"')";
 
         //objDB.execSQL(query);
+        objDB.close();
+
+        return resultado;
+    }
+
+    //Métotodo para modificar poductos
+    public int modificarProducto(Context context, int idProd, String nomProd, int cantProd, double precioProd
+            , String detalle, String fotoProd, int idCatProd){
+
+        int resultado;
+
+        Base obj = new Base(context);
+        SQLiteDatabase objDB = obj.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("nomProd", nomProd);
+        values.put("cantProd", cantProd);
+        values.put("precioProd", precioProd);
+        values.put("detalle", detalle);
+        values.put("fotoProd", fotoProd);
+        values.put("idCatProd", idCatProd);
+
+        //Actualizamos el producto
+        resultado = objDB.update("Productos", values, "idProd = ?", new String[]{String.valueOf(idProd)});
+
         objDB.close();
 
         return resultado;

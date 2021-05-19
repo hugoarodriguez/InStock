@@ -33,13 +33,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.FileProvider;
-import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.instock.BD.CategoriasManagerDB;
 import com.example.instock.BD.ProductosManagerDB;
-import com.example.instock.models.ListCategorias;
 import com.example.instock.models.ModalDialogValues;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -226,7 +224,7 @@ public class AgregarProductosFragment extends Fragment {
 
                             ProductosManagerDB productosManagerDB = new ProductosManagerDB();
                             //Inovcamos el método para agregar el registro a la BD
-                            long resultado = productosManagerDB.agregarProductos(getContext(), nomProd, cantProd,
+                            long resultado = productosManagerDB.agregarProducto(getContext(), nomProd, cantProd,
                                     precioProd, detalles, urlFoto, idCatProd);
 
                             if(resultado != -1){

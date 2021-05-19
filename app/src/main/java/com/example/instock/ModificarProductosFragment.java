@@ -1,10 +1,12 @@
 package com.example.instock;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -13,10 +15,12 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.FileProvider;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -38,7 +42,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.instock.BD.CategoriasManagerDB;
 import com.example.instock.BD.ProductosManagerDB;
+import com.example.instock.models.ModalDialogValues;
 import com.example.instock.models.Producto;
+import com.example.instock.utils.CreateDialog;
 import com.example.instock.utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -65,11 +71,16 @@ public class ModificarProductosFragment extends Fragment {
     ArrayAdapter<String> categoriasAdaptador;
 
     ImageView imgProducto;
-    ImageButton btnSelectImage, btnTakePhoto;
+    ImageButton btnAddCantidad, btnSubCantidad;
     Button btnModificar, btnCancelar;
     TextInputLayout tilNombrePro, tilCantPro, tilPrecioPro, tilDetallesPro;
     EditText edtNombrePro, edtCantPro, edtPrecioPro, edtDetallesPro;
     Spinner sprCategoria;
+    int cantidad = 0;
+
+    //Objeto de MyDialog
+    CreateDialog createDialog = new CreateDialog();
+    private ModalDialogValues modalDialogValues = ModalDialogValues.getInstance();
 
     Utils utils = new Utils();
     int tipoIntent = 0;
@@ -108,6 +119,10 @@ public class ModificarProductosFragment extends Fragment {
         cancelar();//Método para btnCancelar
         edtChangeListenerAll();//Método para activar la escucha del onChange de todos los EditText
 
+        //Invocamos los métodos para sumar/restar valores al "edtCantPro"
+        addCantidad();
+        subCantidad();
+
         //Asignamos los valores iniciales a los Campos
         asignarValoresAVistas(String.valueOf(idProdParametro));
         return vista;
@@ -124,6 +139,8 @@ public class ModificarProductosFragment extends Fragment {
         imgProducto = (ImageView) v.findViewById(R.id.imgProducto);
         btnModificar = (Button)v.findViewById(R.id.btnModificar);
         btnCancelar = (Button)v.findViewById(R.id.btnCancelar);
+        btnAddCantidad = (ImageButton)v.findViewById(R.id.btnAddCantidad);
+        btnSubCantidad = (ImageButton)v.findViewById(R.id.btnSubCantidad);
         tilNombrePro = (TextInputLayout)v.findViewById(R.id.tilNombrePro);
         tilCantPro = (TextInputLayout)v.findViewById(R.id.tilCantPro);
         tilDetallesPro = (TextInputLayout)v.findViewById(R.id.tilDetallesPro);
@@ -180,11 +197,13 @@ public class ModificarProductosFragment extends Fragment {
         producto = productosManagerDB.obtenerProducto(getContext(), String.valueOf(idProdParametro));
 
         Glide.with(getContext()).load(producto.getFotoProd()).into(imgProducto);
+        urlFoto = producto.getFotoProd();
         edtNombrePro.setText(producto.getNomProducto());
         edtCantPro.setText(producto.getCantidad());
+        cantidad = Integer.parseInt(producto.getCantidad());
         edtPrecioPro.setText(producto.getPrecio());
         edtDetallesPro.setText(producto.getDetalles());
-        //TODO agregar Categoria y seleccionar ese item del Spinner
+
         for(int i = 0; i < categoriasAdaptador.getCount(); i++){
             if(producto.getCategoria().trim().equals(categoriasAdaptador.getItem(i).toString().trim())){
                 sprCategoria.setSelection(i);
@@ -195,6 +214,7 @@ public class ModificarProductosFragment extends Fragment {
 
     private void modificar(){
         btnModificar.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
 
@@ -217,8 +237,48 @@ public class ModificarProductosFragment extends Fragment {
                     }
                 } else {
 
-                    //TODO Crear método para modificar Producto en ProductosManagerDB e invocarlo aquí
-                    Toast.makeText(getContext(), "¡Agregar!", Toast.LENGTH_SHORT).show();
+                    //Asignamos los valores para mostrar el Dialog
+                    modalDialogValues.modalDialogValues(getResources().getString(R.string.modificar_producto_title),
+                            getResources().getString(R.string.modificar_producto_message));
+
+                    //Invocamos el dialog() y sobreescribimos sus metodos setPositiveButton y setNegativeButton
+                    createDialog.dialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            //Obtenemos los datos a almacenar
+                            int idProd = Integer.parseInt(producto.getIdProd());
+                            String nomProd = edtNombrePro.getText().toString();
+                            int cantProd = Integer.parseInt(edtCantPro.getText().toString());
+                            double precioProd = Double.parseDouble(edtPrecioPro.getText().toString());
+                            String detalles = edtDetallesPro.getText().toString();
+
+                            CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB();
+                            int idCatProd = categoriasManagerDB.getIDCategoriaByName(getContext(),
+                                    sprCategoria.getSelectedItem().toString());
+
+                            ProductosManagerDB productosManagerDB = new ProductosManagerDB();
+                            //Inovcamos el método para agregar el registro a la BD
+                            long resultado = productosManagerDB.modificarProducto(getContext(), idProd,
+                                    nomProd, cantProd, precioProd, detalles, urlFoto, idCatProd);
+
+                            if(resultado != -1){
+                                Toast.makeText(getContext(), "¡Producto modificado satisfactoriamente!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), "¡No se pudo modificar el producto!", Toast.LENGTH_SHORT).show();
+                            }
+
+                            limpiarCampos();
+                            //Deshabilitamos el BackButton del ActionBar y mostramos la hamburguesa del menú
+                            ((MainMenu)getActivity()).displayHamburguer();
+                            getParentFragmentManager().popBackStack();//Cerramos el fragment
+                        }
+                    }).setNegativeButton(null, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).show();
                 }
             }
         });
@@ -226,10 +286,52 @@ public class ModificarProductosFragment extends Fragment {
 
     private void cancelar(){
         btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                limpiarCampos();
-                asignarValoresAVistas(String.valueOf(idProdParametro));
+
+                //Asignamos los valores para mostrar el Dialog
+                modalDialogValues.modalDialogValues(getResources().getString(R.string.cancelar_title),
+                        getResources().getString(R.string.cancelar_message));
+
+                //Invocamos el dialog() y sobreescribimos sus metodos setPositiveButton y setNegativeButton
+                createDialog.dialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        limpiarCampos();
+                        asignarValoresAVistas(String.valueOf(idProdParametro));
+
+                    }
+                }).setNegativeButton(null, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
+            }
+        });
+    }
+
+    public void addCantidad(){
+        btnAddCantidad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cantidad++;
+                edtCantPro.setText(Integer.toString(cantidad));
+            }
+        });
+    }
+
+    public void subCantidad(){
+        btnSubCantidad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Verificamos que la cantidad modificada sea mayor que la registrada para poder restar
+                if(cantidad > Integer.parseInt(producto.getCantidad())){
+                    cantidad--;
+                    edtCantPro.setText(Integer.toString(cantidad));
+                }
             }
         });
     }

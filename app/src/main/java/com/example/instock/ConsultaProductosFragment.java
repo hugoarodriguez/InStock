@@ -230,12 +230,9 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                //Agregar pantalla de Reservar Producto
-                //Redirigir a pantalla de Reservar Producto
-
+                //Lo enviamos al Fragment de ReservarProductos
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 Fragment fReservarProductos = new ReservarProductosFragment();
-                //Lo enviamos al Fragment de ModificarProductos
                 transaction.replace(R.id.fragment_container_view, fReservarProductos);
                 transaction.addToBackStack(null);
                 transaction.commit();

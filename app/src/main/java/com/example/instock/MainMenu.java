@@ -243,6 +243,10 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
         dialogFragment.show(getSupportFragmentManager(), "NoticeDialogFramgent");
     }
 
+    public void displayHamburguer(){
+        utils.displayHamburger(drawerLayout, getSupportActionBar(), toolbar);
+    }
+
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         if(dialogOptionDisplay == 1){
@@ -255,6 +259,6 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
-        Toast.makeText(this, "Negative", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Negative", Toast.LENGTH_SHORT).show();
     }
 }

@@ -54,7 +54,7 @@
 
     <!-- ReservarProductos -->
     <string name="cliente_hint">Nombre del Cliente</string>
-    <string name="cantidad_hint">Cantidad</string>
+    <string name="cantidad_hint">Cantidad de Producto</string>
     <string name="btnReservar">Reservar</string>
 
     <!-- Ver Ventas -->
@@ -97,7 +97,7 @@
     <!-- ========================= Strings para mensajes de DIALOGS ========================= -->
 
     <!-- Strings para mensaje de BackButton -->
-    <string name="back_button_title1">Se descartarán los cambios</string>
+    <string name="back_button_title1">¿Salir sin guardar?</string>
     <string name="back_button_message1">Se descartarán todos los cambios que no hayas guardado</string>
 
     <string name="back_button_title2">Volver</string>
@@ -111,13 +111,21 @@
     <string name="eliminar_producto_title">Eliminar Producto</string>
     <string name="eliminar_producto_message">¿Estás seguro que deseas eliminar este producto?</string>
 
-    <!-- Strings para mensaje de redirección a ReservarProducto -->
+    <!-- Strings para mensaje de redirección a ModificarProducto -->
     <string name="go_to_modificar_producto_title">Modificar Producto</string>
     <string name="go_to_modificar_producto_message">¿Quieres modificar este producto?</string>
+
+    <!-- Strings para mensaje de confirmación de ModificarProducto -->
+    <string name="modificar_producto_title">Modificar Producto</string>
+    <string name="modificar_producto_message">¿Estás seguro que quieres modificar este producto?</string>
 
     <!-- Strings para mensaje de redirección a ReservarProducto -->
     <string name="go_to_reservas_title">Reservar Producto</string>
     <string name="go_to_reservas_message">¿Quieres reservar este producto?\n\nSe cargará un formulario para reservar el producto.</string>
+
+    <!-- Strings para mensaje de confirmación de ReservarProducto -->
+    <string name="reservas_title">Reservar Producto</string>
+    <string name="reservas_message">¿Estás seguro que quieres reservar este producto?</string>
 
     <!-- Array para SPINNER de AgregarClienteFragment -->
     <array name="genero">
@@ -127,7 +135,7 @@
     </array>
     <!-- Strings para mensaje de btnCancelar -->
     <string name="cancelar_title">Cancelar</string>
-    <string name="cancelar_message">Se limpiarán los datos ingresados ¿Estás seguro?</string>
+    <string name="cancelar_message">Los datos del formulario se reestablecerán a sus valores iniciales ¿Estás seguro?</string>
 
     <!-- Strings para mensaje de btnReservar -->
     <string name="reservar_title">Reservar Producto</string>
