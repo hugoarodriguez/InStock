@@ -17,15 +17,20 @@ public class Base extends SQLiteOpenHelper {
     // Metodo onCreate para crear la Base de datos
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String query = null;
-        query = "CREATE TABLE IF NOT EXISTS Categorias(idCategoria INTEGER PRIMARY KEY AUTOINCREMENT, categoria TEXT);";
-        db.execSQL(query);
+        String queryCategoria = null;
+        String queryCliente = null;
+        queryCategoria = "CREATE TABLE IF NOT EXISTS Categorias(idCategoria INTEGER PRIMARY KEY AUTOINCREMENT, categoria TEXT);";
+        db.execSQL(queryCategoria);
+        queryCliente = "CREATE TABLE IF NOT EXISTS Clientes(idCliente INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, apellido TEXT, sexo TEXT, telefono TEXT, correo TEXT);";
+        db.execSQL(queryCliente);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String query = null;
         query = "DROP TABLE IF EXISTS Categorias";
+        db.execSQL(query);
+        query = "DROP TABLE IF EXISTS Clientes";
         db.execSQL(query);
         onCreate(db);
     }

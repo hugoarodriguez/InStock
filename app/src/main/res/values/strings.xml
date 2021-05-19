@@ -1,9 +1,4 @@
 <resources>
-    <array name="agregarCliente">
-        <item>Sexo</item>
-        <item>Masculino</item>
-        <item>Femenino</item>
-    </array>
 
     <!-- MainActivity(Login) -->
     <string name="app_name">InStock</string>
@@ -121,6 +116,12 @@
     <string name="go_to_reservas_title">Reservar Producto</string>
     <string name="go_to_reservas_message">¿Quieres reservar este producto?\n\nSe cargará un formulario para reservar el producto.</string>
 
+    <!-- Array para SPINNER de AgregarClienteFragment -->
+    <array name="genero">
+        <item>Seleccione un genero</item>
+        <item>Masculino</item>
+        <item>Femenino</item>
+    </array>
     <!-- Strings para mensaje de btnCancelar -->
     <string name="cancelar_title">Cancelar</string>
     <string name="cancelar_message">Se limpiarán los datos ingresados ¿Estás seguro?</string>

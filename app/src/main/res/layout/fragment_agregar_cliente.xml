@@ -70,7 +70,7 @@
             android:layout_alignEnd="@+id/tilApellido"
             android:layout_alignRight="@+id/tilApellido"
             android:layout_marginTop="10dp"
-            android:entries="@array/agregarCliente" />
+            android:entries="@array/genero" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilTelefono"
