@@ -4,14 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.instock.BD.Base;
 import com.example.instock.interfaces.RecyclerViewClickInterface;
 import com.example.instock.models.ListCategorias;
 import com.example.instock.R;
@@ -39,7 +36,7 @@ public class CategoriasAdaptador extends RecyclerView.Adapter<CategoriasAdaptado
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtCategorias.setText(categoriasList.get(position).getCategorias());
+        holder.txtCategorias.setText(categoriasList.get(position).getCategoria());
     }
 
     @Override

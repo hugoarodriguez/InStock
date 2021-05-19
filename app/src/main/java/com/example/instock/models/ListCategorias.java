@@ -1,24 +1,32 @@
 package com.example.instock.models;
 
 public class ListCategorias {
-    private String categorias;
+    private String categoria;
 
-    public ListCategorias(String categorias) {
-        this.categorias = categorias;
+    private int idCategoria;
+
+    public ListCategorias(int idCategoria, String categoria) {
+        this.categoria = categoria;
+        this.idCategoria = idCategoria;
     }
 
-    public String getCategorias() {
-        return categorias;
+    public int getIdCategoria() { return idCategoria; }
+
+    public void setIdCategoria(int idCategoria) { this.idCategoria = idCategoria; }
+
+    public String getCategoria() {
+        return categoria;
     }
 
-    public void setCategorias(String categorias) {
-        this.categorias = categorias;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     @Override
     public String toString() {
         return "ListCategorias{" +
-                "categorias='" + categorias + '\'' +
+                "idCategoria='" + idCategoria + '\'' +
+                ", categoria='" + categoria + '\'' +
                 '}';
     }
 }
