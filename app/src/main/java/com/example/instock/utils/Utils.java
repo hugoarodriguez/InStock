@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Html;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -22,8 +25,10 @@ import androidx.fragment.app.FragmentManager;
 import com.example.instock.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -94,6 +99,23 @@ public class Utils {
         return  adjustedBitmap;
     }
 
+    public byte[] convertBitmapToByteArray(Bitmap bitmap){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream); //PNG format is lossless and will ignore the quality setting!
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
+    }
+
+    public Bitmap convertByteArrayToBitmap(byte[] bitmapbytes){
+        Bitmap bitmap = null;
+
+        if(bitmapbytes != null){
+            bitmap = BitmapFactory.decodeByteArray(bitmapbytes , 0, bitmapbytes.length);
+        }
+
+        return bitmap;
+    }
+
     //Colocar el ícono de hamburguesa y desbloquear el menú lateral
     public void displayHamburger(DrawerLayout drawerLayout, ActionBar actionBar, Toolbar toolbar){
         //Desbloqueamos el Menú
@@ -118,5 +140,22 @@ public class Utils {
     //Método para cambiar el título del ActionBar/ToolBar
     public void changeActionBarTitle(String titulo, ActionBar actionBar){
         actionBar.setTitle((Html.fromHtml("<font color=\"#FFFFFF\">" + titulo + "</font>")));
+    }
+
+    //Método que permite comprobar si el valor del Spinner es diferente de "Seleccione"
+    public boolean validateSpinner(Context context, ArrayAdapter<String> arrayAdapter,
+                                    Spinner spinner, int stringResourceValue){
+        boolean r = false;
+        String primerValorSpinner = context.getResources().getString(stringResourceValue);
+        String valorSeleccionado = spinner.getSelectedItem().toString();
+
+        for(int i = 0; i < arrayAdapter.getCount(); i++){
+            if(primerValorSpinner.trim().equals(valorSeleccionado)){
+                r = true;
+                break;
+            }
+        }
+
+        return r;
     }
 }

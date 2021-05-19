@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -26,19 +27,28 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.instock.BD.CategoriasManagerDB;
+import com.example.instock.BD.ProductosManagerDB;
+import com.example.instock.models.Producto;
 import com.example.instock.utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -49,21 +59,38 @@ import static android.app.Activity.RESULT_OK;
  */
 public class ModificarProductosFragment extends Fragment {
 
+    Producto producto;
+    ArrayList<Producto> ProductoList;
+
+    ArrayAdapter<String> categoriasAdaptador;
+
     ImageView imgProducto;
     ImageButton btnSelectImage, btnTakePhoto;
     Button btnModificar, btnCancelar;
     TextInputLayout tilNombrePro, tilCantPro, tilPrecioPro, tilDetallesPro;
     EditText edtNombrePro, edtCantPro, edtPrecioPro, edtDetallesPro;
+    Spinner sprCategoria;
+
     Utils utils = new Utils();
     int tipoIntent = 0;
     File photoFile = null;
     Uri photoURI = null;
+    String urlFoto = null;
     String mensajeAlerta = "Dato requerido";
+
+    //ID del producto recibido por parámetro
+    int idProdParametro = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        //Obtenemos los datos enviados desde ConsultarProductosFragment
+        Bundle datosRecuperados = getArguments();
+        if(datosRecuperados != null){
+            idProdParametro = datosRecuperados.getInt("idProdParametro");
+        }
 
         ((MainMenu)getActivity()).setFragmentActivo(true);//Indicamos que hay un Framgent Activo
         ((MainMenu)getActivity()).displayBackArrowOrHamburger(getContext(), 1);//Invocamos el método
@@ -76,18 +103,16 @@ public class ModificarProductosFragment extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_modificar_productos, container, false);
         enlazarVistas(vista);//Enlazamos las vistas
 
+        cargarCategorias();//Método para llenar Spinner
         modificar();//Método para btnModificar
         cancelar();//Método para btnCancelar
         edtChangeListenerAll();//Método para activar la escucha del onChange de todos los EditText
+
+        //Asignamos los valores iniciales a los Campos
+        asignarValoresAVistas(String.valueOf(idProdParametro));
         return vista;
     }
 
-    //Método que carga el estado guardado del Fragment
-    @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
-        limpiarCampos();
-        super.onViewStateRestored(savedInstanceState);
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -107,6 +132,7 @@ public class ModificarProductosFragment extends Fragment {
         edtDetallesPro = (EditText)v.findViewById(R.id.edtDetallesPro);
         edtNombrePro = (EditText)v.findViewById(R.id.edtNombrePro);
         edtPrecioPro = (EditText)v.findViewById(R.id.edtPrecioPro);
+        sprCategoria = (Spinner)v.findViewById(R.id.sprCategoria);
     }
 
     //Método para enlazar los editText con el ChangedListener
@@ -145,8 +171,29 @@ public class ModificarProductosFragment extends Fragment {
         edtChangeListener(edtDetallesPro, tilDetallesPro);
     }
 
-    private void modificar(){
+    //Asignamos los valores a las vistas según el "idProd"
+    private void asignarValoresAVistas(String idProd){
 
+        //Inovcamos el método para consultar los productos
+        ProductosManagerDB productosManagerDB = new ProductosManagerDB();
+
+        producto = productosManagerDB.obtenerProducto(getContext(), String.valueOf(idProdParametro));
+
+        Glide.with(getContext()).load(producto.getFotoProd()).into(imgProducto);
+        edtNombrePro.setText(producto.getNomProducto());
+        edtCantPro.setText(producto.getCantidad());
+        edtPrecioPro.setText(producto.getPrecio());
+        edtDetallesPro.setText(producto.getDetalles());
+        //TODO agregar Categoria y seleccionar ese item del Spinner
+        for(int i = 0; i < categoriasAdaptador.getCount(); i++){
+            if(producto.getCategoria().trim().equals(categoriasAdaptador.getItem(i).toString().trim())){
+                sprCategoria.setSelection(i);
+                break;
+            }
+        }
+    }
+
+    private void modificar(){
         btnModificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,6 +216,8 @@ public class ModificarProductosFragment extends Fragment {
                         tilDetallesPro.setError(mensajeAlerta);
                     }
                 } else {
+
+                    //TODO Crear método para modificar Producto en ProductosManagerDB e invocarlo aquí
                     Toast.makeText(getContext(), "¡Agregar!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -180,6 +229,7 @@ public class ModificarProductosFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 limpiarCampos();
+                asignarValoresAVistas(String.valueOf(idProdParametro));
             }
         });
     }
@@ -190,8 +240,8 @@ public class ModificarProductosFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    //TODO: Sustituir gcSeleccionarImagen por gcObtenerFoto
-    //Objeto que permite seleccionar archivos y por medio del cual se asigna la imagen al objeto imProducto
+    /*Objeto que permite obtener manipular los resultados de los intents de Seleccionar Imagen
+    o de Tomar Foto*/
     private ActivityResultLauncher<Intent> gcObtenerFoto = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -199,42 +249,64 @@ public class ModificarProductosFragment extends Fragment {
 
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent intent = result.getData();
-                        // Handle the Intent
-                        //Toast.makeText(getContext(), "¡Foto Guardada!", Toast.LENGTH_SHORT).show();
 
                         if(tipoIntent == 1){
+                            //Cuando se selecciona una foto de la galería
+
                             Uri uri = result.getData().getData();
                             InputStream is = null;
                             try {
+                                //Obtenemos el InputStream según la "uri" proporcionada
                                 is = getActivity().getContentResolver().openInputStream(uri);
 
+                                //Creamos el bitmap de nuestra imagen
                                 Bitmap bitmap = BitmapFactory.decodeStream(is);
                                 int rotation = utils.getRotationFromGallery(getContext(), uri);
                                 int rotationInDegrees = utils.exifToDegrees(rotation);
 
+                                //Rotamos la imagen para que quede de forma vertical
                                 Bitmap imagenFinal = utils.rotateAndBitmapConvert(rotation, rotationInDegrees, bitmap);
                                 imgProducto.setImageBitmap(imagenFinal);
 
+                                photoFile = null;
+                                try {
+                                    //Guardar imagen en directorio de la App
+                                    photoFile = utils.createImageFile(getActivity());
+
+                                    // Si se creó el archivo lo almacenamos en el directorio de la App
+                                    if (photoFile != null) {
+                                        FileOutputStream out = new FileOutputStream(photoFile);
+                                        imagenFinal.compress(Bitmap.CompressFormat.PNG, 100, out);
+                                        out.flush();
+                                        out.close();
+
+                                        //Asignamos la imagen seleccionada al ImageView "imgProducto"
+                                        Glide.with(getContext()).load(photoFile.getAbsoluteFile().getAbsolutePath()).into(imgProducto);
+
+                                        //Variable para almacenar la ruta de la imagen
+                                        urlFoto = photoFile.getAbsoluteFile().getAbsolutePath();
+                                    }
+                                } catch (IOException ex) {
+                                    // Error occurred while creating the File
+                                    Toast.makeText(getContext(), "¡Algo salió mal! Intenta de nuevo.", Toast.LENGTH_SHORT).show();
+                                }
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
+                                Toast.makeText(getContext(), "¡Algo salió mal! Intenta de nuevo.", Toast.LENGTH_SHORT).show();
                             }
 
                         } else if(tipoIntent == 2){
-                            Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getAbsoluteFile().getAbsolutePath());
-                            ExifInterface exif = null;
+                            //Cuando se toma foto
                             try {
-                                exif = new ExifInterface(photoFile.getAbsoluteFile().getAbsolutePath());
-                                int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
-                                int rotationInDegrees = utils.exifToDegrees(rotation);
+                                Glide.with(getContext()).load(photoFile.getAbsoluteFile().getAbsolutePath()).into(imgProducto);
 
-                                Bitmap imagenFinal = utils.rotateAndBitmapConvert(rotation, rotationInDegrees, bitmap);
-                                imgProducto.setImageBitmap(imagenFinal);
+                                //Variable para almacenar la ruta de la imagen
+                                urlFoto = photoFile.getAbsoluteFile().getAbsolutePath();
 
-                            } catch (IOException e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
+                                Toast.makeText(getContext(), "¡Algo salió mal! Intenta de nuevo.", Toast.LENGTH_SHORT).show();
                             }
-
-                            //bitmap.recycle();
                         }
                     } else{
                         if(tipoIntent == 1){
@@ -296,8 +368,20 @@ public class ModificarProductosFragment extends Fragment {
                 gcObtenerFoto.launch(takePictureIntent);
             }
         }
+    }
 
+    //Método para llenar "sprCategoria"
+    private void cargarCategorias(){
+        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB();
+        List<String> categorias = new ArrayList<>();
 
+        categorias = categoriasManagerDB.getCategorias(getContext());
+
+        categoriasAdaptador = new ArrayAdapter<>(getContext()
+                , android.R.layout.simple_spinner_dropdown_item
+                , categorias);
+
+        sprCategoria.setAdapter(categoriasAdaptador);
     }
 
     private void limpiarCampos(){
@@ -305,6 +389,7 @@ public class ModificarProductosFragment extends Fragment {
         edtCantPro.setText("");
         edtPrecioPro.setText("");
         edtDetallesPro.setText("");
+        sprCategoria.setSelection(0);
 
         //Ruta de acceso a la imagen "sin_imagen.jpg"
         Uri uri = Uri.parse("android.resource://com.example.instock/drawable/sin_imagen");

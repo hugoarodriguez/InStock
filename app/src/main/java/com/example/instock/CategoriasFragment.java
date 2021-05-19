@@ -21,20 +21,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.instock.Adapter.CategoriasAdaptador;
-import com.example.instock.Adapter.ProductoAdaptadpr;
 import com.example.instock.BD.Base;
 import com.example.instock.interfaces.RecyclerViewClickInterface;
 import com.example.instock.models.ListCategorias;
 import com.example.instock.models.ModalDialogValues;
-import com.example.instock.models.Producto;
 import com.example.instock.utils.CreateDialog;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CategoriasFragment extends Fragment implements RecyclerViewClickInterface {
 
@@ -78,7 +74,7 @@ public class CategoriasFragment extends Fragment implements RecyclerViewClickInt
                 categoriasAdaptador = new CategoriasAdaptador(categoriasList, getActivity());
                 recyclerCategorias.setAdapter(categoriasAdaptador);*/
                 // Creamos la conexion a la BD
-                Base obj = new Base(getContext(), "InStock",null,1);
+                Base obj = new Base(getContext());
                 SQLiteDatabase objDB = obj.getWritableDatabase();
 
                 EditText categ = (EditText) getView().findViewById(R.id.edtCategoria);
@@ -110,14 +106,16 @@ public class CategoriasFragment extends Fragment implements RecyclerViewClickInt
         recyclerCategorias.setLayoutManager(layoutManager);
 
         // Creamos objeto de la clase Base
-        Base obj = new Base(getContext(), "InStock",null,1);
+        Base obj = new Base(getContext());
         SQLiteDatabase objDB = obj.getWritableDatabase();
 
         // Creamos Cursor
         Cursor cursor = objDB.rawQuery("SELECT * FROM Categorias",null);
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
-            CategoriaList.add(new ListCategorias(cursor.getString(cursor.getColumnIndex("categoria"))));
+            CategoriaList.add(new ListCategorias(
+                    cursor.getInt(cursor.getColumnIndex("idCategoria")),
+                    cursor.getString(cursor.getColumnIndex("categoria"))));
             cursor.moveToNext();
         }
 
@@ -129,7 +127,7 @@ public class CategoriasFragment extends Fragment implements RecyclerViewClickInt
 
     private void eliminarCategoria(int position){
         // Creamos objeto de la clase Base
-        Base obj = new Base(getContext(), "InStock",null,1);
+        Base obj = new Base(getContext());
         SQLiteDatabase objDB = obj.getWritableDatabase();
         // Consultamos a BD y guardamos en ArrayList
         ArrayList<Integer> array_categID = new ArrayList<Integer>();
@@ -155,7 +153,7 @@ public class CategoriasFragment extends Fragment implements RecyclerViewClickInt
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(getContext(), CategoriaList.get(position).getCategorias(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), CategoriaList.get(position).getCategoria(), Toast.LENGTH_SHORT).show();
 
         Drawable drawablePositive = getContext().getDrawable(R.drawable.ic_edit);
         drawablePositive.setTint(Color.parseColor("#0099CC"));
@@ -173,7 +171,7 @@ public class CategoriasFragment extends Fragment implements RecyclerViewClickInt
                 //TODO: Llamar método/fragment para editar Categoría
 
                 fragmentEditarC = new EditarCategoriasFragment();
-                transaction = getFragmentManager().beginTransaction();
+                transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container_view, fragmentEditarC);
                 transaction.addToBackStack(null);
                 transaction.commit();

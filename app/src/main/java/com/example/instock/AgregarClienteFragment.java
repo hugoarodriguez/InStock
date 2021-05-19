@@ -67,8 +67,8 @@ public class AgregarClienteFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Creamos la conexion a la BD
-                Base obj = new Base(getContext(), "InStock",null,1);
-                SQLiteDatabase objDB = obj.getWritableDatabase();
+//                Base obj = new Base(getContext(), "InStock",null,1);
+//                SQLiteDatabase objDB = obj.getWritableDatabase();
                 String nomb = nombre.getText().toString();
                 String ape = apellido.getText().toString();
                 String tel = telefono.getText().toString();

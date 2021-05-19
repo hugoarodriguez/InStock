@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.instock.BD.ProductosManagerDB;
 import com.example.instock.interfaces.RecyclerViewClickInterface;
 import com.example.instock.models.ModalDialogValues;
 import com.example.instock.models.Producto;
@@ -30,6 +31,9 @@ import java.util.ArrayList;
 
 
 public class ConsultaProductosFragment extends Fragment implements RecyclerViewClickInterface {
+
+    //Vista del Layout
+    View vista;
 
     RecyclerView recyclerProducto;
     ProductoAdaptadpr productoAdaptador;
@@ -46,26 +50,10 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View vista = inflater.inflate(R.layout.fragment_consulta_productos, container, false);
+        vista = inflater.inflate(R.layout.fragment_consulta_productos, container, false);
 
         //Agregado
-        ProductoList = new ArrayList<>();
-
-        RecyclerView recyclerProducto = vista.findViewById(R.id.recyclerProductos);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerProducto.setLayoutManager(layoutManager);
-
         cargarDatos();
-        productoAdaptador = new ProductoAdaptadpr( ProductoList, getActivity(), this);
-
-        recyclerProducto.setAdapter(productoAdaptador);
-
-        cargarDatos();
-
-        //Enlazamos el simpleItemTouchCallback con el recyclerProducto
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerProducto);
-
         return vista;
     }
 
@@ -75,14 +63,25 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
 
     }
 
-
+    //Método para listar los productos con sus respectivas imágenes/fotos
     private void cargarDatos() {
 
-                ProductoList.add(new Producto("Camisa verde", "Camisas","25 Unidades","$13.50"));
-                ProductoList.add(new Producto("Short Azul", "Short","25 Unidades","$8.50"));
-                ProductoList.add(new Producto("Zapatos de vestir", "Zapatos","12 Unidades","$25.75"));
-                ProductoList.add(new Producto("Producto: Collar", "Joyeria","5 Unidades","$2.50"));
-                ProductoList.add(new Producto("Audifonos", "Auriculares","12 Unidades","7.00"));
+        //Inovcamos el método para consultar los productos
+        ProductosManagerDB productosManagerDB = new ProductosManagerDB();
+
+        ProductoList = productosManagerDB.obtenerProductos(getContext());
+
+        RecyclerView recyclerProducto = vista.findViewById(R.id.recyclerProductos);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerProducto.setLayoutManager(layoutManager);
+
+        //Enlazamos el simpleItemTouchCallback con el recyclerProducto
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerProducto);
+
+        productoAdaptador = new ProductoAdaptadpr( ProductoList, getActivity(), this);
+
+        recyclerProducto.setAdapter(productoAdaptador);
     }
 
     //Objeto de tipo ItemTouchHelper que permite realizar el swipe
@@ -134,12 +133,12 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
             if(swipeDir == 4){
                 //Cancelar reserva
                 recyclerPositionItem = viewHolder.getAdapterPosition();
-                eliminarProducto();
+                eliminarProducto(recyclerPositionItem);
             }
             else if(swipeDir == 8){
                 //Convertir venta en reserva
                 recyclerPositionItem = viewHolder.getAdapterPosition();
-                modificarProducto();
+                modificarProducto(recyclerPositionItem);
             }
 
         }
@@ -149,7 +148,7 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
     };
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void eliminarProducto(){
+    private void eliminarProducto(int recyclerPositionItem){
         //Asignamos los valores para mostrar el Dialog
         modalDialogValues.modalDialogValues(getResources().getString(R.string.eliminar_producto_title),
                 getResources().getString(R.string.eliminar_producto_message));
@@ -159,9 +158,21 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                ProductoList.remove(recyclerPositionItem);//Removemos el item segun la posición
-                productoAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
-                Toast.makeText(getContext(), "Producto eliminado", Toast.LENGTH_SHORT).show();
+                int idProd = Integer.parseInt(ProductoList.get(recyclerPositionItem).getIdProd());
+
+                ProductosManagerDB productosManagerDB = new ProductosManagerDB();
+
+                //Invocámos el método para eliminar el Producto
+                long resultado = productosManagerDB.eliminarProducto(getContext(), idProd);
+
+                if(resultado != 0){
+                    ProductoList.remove(recyclerPositionItem);//Removemos el item segun la posición
+                    productoAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
+                    Toast.makeText(getContext(), "Se eliminó el producto", Toast.LENGTH_SHORT).show();
+                } else {
+                    productoAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
+                    Toast.makeText(getContext(), "No se pudo eliminar el producto", Toast.LENGTH_SHORT).show();
+                }
 
             }
         }).setNegativeButton(null, new DialogInterface.OnClickListener() {
@@ -175,7 +186,7 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void modificarProducto(){
+    private void modificarProducto(int recyclerPositionItem){
         modalDialogValues.modalDialogValues(getResources().getString(R.string.go_to_modificar_producto_title),
                 getResources().getString(R.string.go_to_modificar_producto_message));
 
@@ -184,8 +195,15 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                int idProd = Integer.parseInt(ProductoList.get(recyclerPositionItem).getIdProd());
+
+                //Argumentos a enviar
+                Bundle argumentos = new Bundle();
+                argumentos.putInt("idProdParametro", idProd);
+
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 Fragment fModificarProductos = new ModificarProductosFragment();
+                fModificarProductos.setArguments(argumentos);
                 //Lo enviamos al Fragment de ModificarProductos
                 transaction.replace(R.id.fragment_container_view, fModificarProductos);
                 transaction.addToBackStack(null);
@@ -226,9 +244,7 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
         }).setNegativeButton(null, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 //Nada
-
             }
         }).show();
     }
@@ -236,7 +252,7 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(getContext(), ProductoList.get(position).getNomProducto(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),  ProductoList.get(position).getIdProd() + " - " + ProductoList.get(position).getNomProducto(), Toast.LENGTH_SHORT).show();
         reservarProducto();
     }
 }
