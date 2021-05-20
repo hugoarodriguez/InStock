@@ -27,7 +27,8 @@ public class Base extends SQLiteOpenHelper {
     // Metodo onCreate para crear la Base de datos
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String queryCategorias = null, queryClientes = null, queryProductos = null;
+        String queryCategorias = null, queryClientes = null, queryProductos = null,
+                queryReservas = null;
 
         queryCategorias = "CREATE TABLE IF NOT EXISTS Categorias(idCategoria INTEGER PRIMARY KEY AUTOINCREMENT, categoria TEXT);";
         db.execSQL(queryCategorias);
@@ -37,6 +38,12 @@ public class Base extends SQLiteOpenHelper {
 
         queryProductos = "CREATE TABLE IF NOT EXISTS Productos(idProd INTEGER PRIMARY KEY AUTOINCREMENT, nomProd TEXT, cantProd INTEGER, precioProd REAL, detalle TEXT" +
                 ", fotoProd TEXT, idCatProd INTEGER);";
+        db.execSQL(queryProductos);
+
+        queryProductos = "CREATE TABLE IF NOT EXISTS " +
+                "Reservas(idReserva INTEGER PRIMARY KEY AUTOINCREMENT, idProd INTEGER, idCliente INTEGER, cantProd INTEGER, totalPagar Real," +
+                "FOREIGN KEY(idProd) REFERENCES Productos(idProd)," +
+                "FOREIGN KEY(idCliente) REFERENCES Clientes(idCliente));";
         db.execSQL(queryProductos);
     }
 
@@ -48,6 +55,8 @@ public class Base extends SQLiteOpenHelper {
         query = "DROP TABLE IF EXISTS Clientes";
         db.execSQL(query);
         query = "DROP TABLE IF EXISTS Productos";
+        db.execSQL(query);
+        query = "DROP TABLE IF EXISTS Reservas";
         db.execSQL(query);
         onCreate(db);
     }

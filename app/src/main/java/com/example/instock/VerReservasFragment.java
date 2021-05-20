@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.instock.BD.ReservasManagerDB;
 import com.example.instock.models.ModalDialogValues;
 import com.example.instock.models.Reserva;
 import com.example.instock.Adapter.ReservasAdaptador;
@@ -26,6 +27,9 @@ import com.example.instock.utils.CreateDialog;
 import java.util.ArrayList;
 
 public class VerReservasFragment extends Fragment {
+
+    View vista;
+
     RecyclerView recyclerReservas;
     ReservasAdaptador reservasAdaptador;
     ArrayList<Reserva> ReservaList;
@@ -43,42 +47,38 @@ public class VerReservasFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-
-    private void cargarDatos() {
-
-        ReservaList.add(new Reserva("Camisa verde","$13.50", "Maria Martinez"));
-        ReservaList.add(new Reserva("Short Azul","$8.50", "Mario Gonzáles"));
-        ReservaList.add(new Reserva("Zapatos de vestir","$25.75", "Rosa Rivera"));
-        ReservaList.add(new Reserva("Collar","$2.50", "CR7 \"El Bicho\""));
-        ReservaList.add(new Reserva("Audifonos","$7.00", "Juan Pérez"));
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View vista = inflater.inflate(R.layout.fragment_ver_reservas, container, false);
+        vista = inflater.inflate(R.layout.fragment_ver_reservas, container, false);
 
         //Agregado
         ReservaList = new ArrayList<>();
+
+        cargarDatos();
+
+        return vista;
+    }
+
+    private void cargarDatos() {
+
+        ReservasManagerDB reservasManagerDB = new ReservasManagerDB(getContext());
+
+        ReservaList = reservasManagerDB.obtenerReservas();
 
         RecyclerView recyclerReservas = vista.findViewById(R.id.recyclerReservas);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerReservas.setLayoutManager(layoutManager);
 
-        cargarDatos();
-        reservasAdaptador = new ReservasAdaptador (ReservaList, getActivity());
-
-        recyclerReservas.setAdapter(reservasAdaptador);
-
-        cargarDatos();
-
         //Enlazamos el simpleItemTouchCallback con el recyclerProducto
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerReservas);
 
-        return vista;
+        reservasAdaptador = new ReservasAdaptador (ReservaList, getActivity());
+
+        recyclerReservas.setAdapter(reservasAdaptador);
     }
+
     //Objeto de tipo ItemTouchHelper que permite realizar el swipe
     ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 

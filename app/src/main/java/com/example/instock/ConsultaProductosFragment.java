@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.instock.BD.ProductosManagerDB;
 import com.example.instock.interfaces.RecyclerViewClickInterface;
+import com.example.instock.models.ListaClientes;
 import com.example.instock.models.ModalDialogValues;
 import com.example.instock.models.Producto;
 import com.example.instock.Adapter.ProductoAdaptadpr;
@@ -165,7 +166,7 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
                 //Invocámos el método para eliminar el Producto
                 long resultado = productosManagerDB.eliminarProducto(getContext(), idProd);
 
-                if(resultado != 0){
+                if(resultado > 0){
                     ProductoList.remove(recyclerPositionItem);//Removemos el item segun la posición
                     productoAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
                     Toast.makeText(getContext(), "Se eliminó el producto", Toast.LENGTH_SHORT).show();
@@ -221,7 +222,7 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void reservarProducto(){
+    private void reservarProducto(int idProd){
         modalDialogValues.modalDialogValues(getResources().getString(R.string.go_to_reservas_title),
                 getResources().getString(R.string.go_to_reservas_message));
 
@@ -230,9 +231,14 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                //Argumentos a enviar
+                Bundle argumentos = new Bundle();
+                argumentos.putInt("idProdParametro", idProd);
+
                 //Lo enviamos al Fragment de ReservarProductos
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 Fragment fReservarProductos = new ReservarProductosFragment();
+                fReservarProductos.setArguments(argumentos);
                 transaction.replace(R.id.fragment_container_view, fReservarProductos);
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -250,6 +256,7 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
     @Override
     public void onItemClick(int position) {
         //Llamamos el método que nos lleva a la pantalla para reservar el Producto
-        reservarProducto();
+        int idProd = Integer.parseInt(ProductoList.get(position).getIdProd());
+        reservarProducto(idProd);
     }
 }

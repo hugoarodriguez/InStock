@@ -72,6 +72,7 @@
     <string name="tvProducto">Producto: </string>
     <string name="tvCliente">Cliente:</string>
     <string name="tvPrecio">Precio:</string>
+    <string name="tvTotalPagar">Total a pagar:</string>
     <string name="imgProdu">Imagen del producto</string>
 
     <!-- RecuperarCuenta -->

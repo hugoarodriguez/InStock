@@ -8,19 +8,27 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.instock.BD.ClientesManagerDB;
+import com.example.instock.BD.ProductosManagerDB;
+import com.example.instock.BD.ReservasManagerDB;
+import com.example.instock.models.ListaClientes;
 import com.example.instock.models.ModalDialogValues;
+import com.example.instock.models.Producto;
 import com.example.instock.utils.CreateDialog;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -32,17 +40,24 @@ public class ReservarProductosFragment extends Fragment {
         // Required empty public constructor
     }
 
-    boolean fragmentCall = false;
+    Producto producto;
+
+    //ID del producto recibido por parámetro
+    int idProdParametro = 0;
 
     //Objeto de MyDialog
     CreateDialog createDialog = new CreateDialog();
     private ModalDialogValues modalDialogValues = ModalDialogValues.getInstance();
 
+    ImageView imgProducto;
+    TextView tvProductoVal, tvPrecioVal;
     AutoCompleteTextView actvCliente;
     EditText edtCantidad;
     TextInputLayout tilCantidad;
     ImageButton btnAddCantidad, btnSubCantidad;
     Button  btnReservar, btnCancelar;
+
+    int idCliente = 0;
 
     int cantidad = 1;
 
@@ -50,6 +65,12 @@ public class ReservarProductosFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        //Obtenemos los datos enviados desde ConsultarProductosFragment
+        Bundle datosRecuperados = getArguments();
+        if(datosRecuperados != null){
+            idProdParametro = datosRecuperados.getInt("idProdParametro");
+        }
 
         ((MainMenu)getActivity()).setFragmentActivo(true);//Indicamos que hay un Framgent Activo
         ((MainMenu)getActivity()).displayBackArrowOrHamburger(getContext(), 2);//Invocamos el método
@@ -64,9 +85,6 @@ public class ReservarProductosFragment extends Fragment {
         enlazarVistas(vista);
         actvClienteAdapter();
 
-        //TODO: Colocar en "cantidad" el valor extraído de la BD
-        edtCantidad.setText(Integer.toString(cantidad));
-
         //Invocamos los métodos para sumar/restar valores al "edtCantidad"
         addCantidad();
         subCantidad();
@@ -75,6 +93,8 @@ public class ReservarProductosFragment extends Fragment {
         reservar();
         cancelar();
 
+        //Asignamos los valores iniciales a los Campos
+        asignarValoresAVistas(String.valueOf(idProdParametro));
         return vista;
     }
 
@@ -90,6 +110,9 @@ public class ReservarProductosFragment extends Fragment {
     }
 
     public void enlazarVistas(View v){
+        imgProducto = (ImageView)v.findViewById(R.id.imgProducto);
+        tvProductoVal = (TextView)v.findViewById(R.id.tvProductoVal);
+        tvPrecioVal = (TextView)v.findViewById(R.id.tvPrecioVal);
         actvCliente = (AutoCompleteTextView)v.findViewById(R.id.actvCliente);
         edtCantidad = (EditText)v.findViewById(R.id.edtCantidad);
         tilCantidad = (TextInputLayout)v.findViewById(R.id.tilCantidad);
@@ -101,11 +124,36 @@ public class ReservarProductosFragment extends Fragment {
 
     public void actvClienteAdapter(){
         ClientesManagerDB clientesManagerDB = new ClientesManagerDB(getContext());
-        ArrayList<String> clientes = clientesManagerDB.obtenerNombresClientes();
+        ArrayList<String> nombresClientes = clientesManagerDB.obtenerCorreosClientes();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_dropdown_item_1line, clientes);
+                android.R.layout.simple_dropdown_item_1line, nombresClientes);
         actvCliente.setAdapter(adapter);
+        actvCliente.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                //Obtenemos el ID del Cliente
+                System.out.println("Adapter position: " + adapter.getItem(position));
+                idCliente = clientesManagerDB.getIdClienteByCorreo(adapter.getItem(position).trim());
+                System.out.println("Id Cliente: " + idCliente);
+            }
+        });
+    }
+
+    //Asignamos los valores a las vistas según el "idProd"
+    private void asignarValoresAVistas(String idProd){
+
+        //Inovcamos el método para consultar los productos
+        ProductosManagerDB productosManagerDB = new ProductosManagerDB();
+
+        producto = productosManagerDB.obtenerProducto(getContext(), String.valueOf(idProdParametro));
+
+        Glide.with(getContext()).load(producto.getFotoProd()).into(imgProducto);
+        tvProductoVal.setText(producto.getNomProducto());
+        tvPrecioVal.setText("$"+producto.getPrecio());
+        edtCantidad.setText("1");//Colocamos 1 en el valor inicial de la cantidad de producto a reservar
+        cantidad = Integer.parseInt(producto.getCantidad());
     }
 
     public void addCantidad(){
@@ -113,8 +161,10 @@ public class ReservarProductosFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //TODO: Evaluar si "cantidad" es igual o mayor que el valor máximo de cantidad extraído de la BD
-                cantidad++;
-                edtCantidad.setText(Integer.toString(cantidad));
+                if(cantidad < Integer.parseInt(producto.getCantidad())){
+                    cantidad++;
+                    edtCantidad.setText(Integer.toString(cantidad));
+                }
             }
         });
     }
@@ -149,17 +199,21 @@ public class ReservarProductosFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
 
                             //TODO: Agregar función para registrar datos en la BD
+                            ReservasManagerDB reservasManagerDB = new ReservasManagerDB(getContext());
 
+                            long resultado = reservasManagerDB.agregarReserva(idProdParametro, idCliente,
+                                    Integer.parseInt(producto.getCantidad()), cantidad, Double.parseDouble(producto.getPrecio()));
 
-                            limpiarCampos();//Limpiamos los campos
+                            if(resultado != -1){
+                                Toast.makeText(getContext(), "¡Producto reservado satisfactoriamente!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), "¡No se pudo reservar el producto!", Toast.LENGTH_SHORT).show();
+                            }
 
-                            //Redirigímos a la pantalla de ConsultarProductos
-                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                            Fragment fConsultarProductos = new ConsultaProductosFragment();
-                            //Lo enviamos al Fragment de ModificarProductos
-                            transaction.replace(R.id.fragment_container_view, fConsultarProductos);
-                            transaction.addToBackStack(null);
-                            transaction.commit();
+                            limpiarCampos();
+                            //Deshabilitamos el BackButton del ActionBar y mostramos la hamburguesa del menú
+                            ((MainMenu)getActivity()).displayHamburguer();
+                            getParentFragmentManager().popBackStack();//Cerramos el fragment
 
                         }
                     }).setNegativeButton(null, new DialogInterface.OnClickListener() {
