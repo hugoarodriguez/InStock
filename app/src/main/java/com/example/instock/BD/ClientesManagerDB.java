@@ -88,7 +88,7 @@ public class ClientesManagerDB {
     }
 
     //Método para obtener el listado de productos
-    public ArrayList<String> obtenerNombresClientes(){
+    public ArrayList<String> obtenerCorreosClientes(){
         ArrayList<String> nombresClientes = new ArrayList<>();
 
         Base obj = new Base(context);
@@ -98,9 +98,7 @@ public class ClientesManagerDB {
         Cursor cursor = objDB.rawQuery("SELECT * FROM Clientes",null);
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
-
-            nombresClientes.add(cursor.getString(cursor.getColumnIndex("nombre")) + " "
-                    + cursor.getString(cursor.getColumnIndex("apellido")));
+            nombresClientes.add(cursor.getString(cursor.getColumnIndex("correo")));
             cursor.moveToNext();
         }
 
@@ -128,5 +126,44 @@ public class ClientesManagerDB {
         }
 
         return cliente;
+    }
+
+    //Método para obtener el id de un Cliente según su Correo
+    public int getIdClienteByCorreo(String correo){
+        int idCliente = 0;
+        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB();
+        ListaClientes cliente = null;
+
+        Base obj = new Base(context);
+        SQLiteDatabase objDB = obj.getReadableDatabase();
+
+        // Creamos Cursor
+        Cursor cursor = objDB.rawQuery("SELECT idCliente FROM Clientes WHERE correo = ?",new String[]{correo});
+
+        if (cursor.moveToFirst()) {
+            idCliente = cursor.getInt(cursor.getColumnIndex("idCliente"));
+        }
+
+        return idCliente;
+    }
+
+    //Método para eliminar un Cliente
+    public int eliminarCliente(int idCliente){
+        int resultado = 0;
+
+        // Creamos objeto de la clase Base
+        Base obj = new Base(context);
+        SQLiteDatabase objDB = obj.getWritableDatabase();
+
+        //Verificamos si existe el cliente según su ID
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Clientes WHERE idCliente = ?", new String[]{String.valueOf(idCliente)});
+        if (cursor.moveToNext()) {
+            //Eliminamos el cliente según el "idCliente"
+            resultado = objDB.delete("Clientes", "idCliente = ?", new String[]{String.valueOf(idCliente)});
+        }
+
+        objDB.close();
+
+        return resultado;
     }
 }

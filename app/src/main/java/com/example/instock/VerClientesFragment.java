@@ -147,9 +147,20 @@ public class VerClientesFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                ClientesList.remove(recyclerPositionItem);//Removemos el item segun la posición
-                clienteAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
-                Toast.makeText(getContext(), "Cliente eliminado", Toast.LENGTH_SHORT).show();
+                int idCliente = Integer.parseInt(ClientesList.get(recyclerPositionItem).getIdCliente());
+
+                ClientesManagerDB clientesManagerDB = new ClientesManagerDB(getContext());
+
+                int resultado = clientesManagerDB.eliminarCliente(idCliente);
+
+                if(resultado > 0){
+                    ClientesList.remove(recyclerPositionItem);//Removemos el item segun la posición
+                    clienteAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
+                    Toast.makeText(getContext(), "Cliente eliminado satisfactoriamente", Toast.LENGTH_SHORT).show();
+                } else {
+                    clienteAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
+                    Toast.makeText(getContext(), "No se puedo eliminar el cliente", Toast.LENGTH_SHORT).show();
+                }
 
             }
         }).setNegativeButton(null, new DialogInterface.OnClickListener() {
@@ -190,6 +201,8 @@ public class VerClientesFragment extends Fragment {
         }).setNegativeButton(null, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+
 
                 clienteAdaptador.notifyDataSetChanged();
 
