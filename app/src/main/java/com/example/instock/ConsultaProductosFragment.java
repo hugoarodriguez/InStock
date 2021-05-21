@@ -255,8 +255,26 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onItemClick(int position) {
-        //Llamamos el método que nos lleva a la pantalla para reservar el Producto
-        int idProd = Integer.parseInt(ProductoList.get(position).getIdProd());
-        reservarProducto(idProd);
+        int cantProd = Integer.parseInt(ProductoList.get(position).getCantidad());
+
+        if(cantProd > 0){
+            //Llamamos el método que nos lleva a la pantalla para reservar el Producto
+            int idProd = Integer.parseInt(ProductoList.get(position).getIdProd());
+            reservarProducto(idProd);
+        } else {
+            modalDialogValues.modalDialogValues("Producto Sin Existencias",
+                    "No puedes reservar este producto ya que no posee existencias.\n\n" +
+                            "Si quieres reservarlo debes agregar existencias en la opción de Modificar.");
+
+            //Invocamos el dialog() y sobreescribimos sus metodos setPositiveButton y setNegativeButton
+            createDialog.dialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            }).setNegativeButtonIcon(null)
+                    .show();
+        }
+
     }
 }

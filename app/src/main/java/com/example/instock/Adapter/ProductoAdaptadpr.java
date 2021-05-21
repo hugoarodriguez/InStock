@@ -1,7 +1,9 @@
 package com.example.instock.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -38,6 +42,7 @@ public class ProductoAdaptadpr extends  RecyclerView.Adapter<ProductoAdaptadpr.V
         return new ViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.tvProducto.setText(ProductoList.get(position).getNomProducto());
@@ -45,6 +50,11 @@ public class ProductoAdaptadpr extends  RecyclerView.Adapter<ProductoAdaptadpr.V
         holder.tvCantidad.setText(ProductoList.get(position).getCantidad());
         holder.tvPrecio.setText("$"+ ProductoList.get(position).getPrecio());
         Glide.with(context).load(ProductoList.get(position).getFotoProd()).into(holder.imgFoto);
+
+        if(Integer.parseInt(ProductoList.get(position).getCantidad()) == 0){
+            holder.cardView.setAlpha(0.7f);
+            holder.imgFoto.setAlpha(0.4f);
+        }
     }
     @Override
     public int getItemCount() {
@@ -53,7 +63,7 @@ public class ProductoAdaptadpr extends  RecyclerView.Adapter<ProductoAdaptadpr.V
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
-
+        private CardView cardView;
         private ImageView imgFoto;
         private TextView tvProducto;
         private TextView tvCategoria;
@@ -61,6 +71,7 @@ public class ProductoAdaptadpr extends  RecyclerView.Adapter<ProductoAdaptadpr.V
         private TextView tvPrecio;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            cardView = itemView.findViewById(R.id.cvProducto);
             imgFoto = itemView.findViewById(R.id.imgProd);
             tvProducto = itemView.findViewById(R.id.tvNombreProductoVal);
             tvCategoria = itemView.findViewById(R.id.tvCategoriaVal);
