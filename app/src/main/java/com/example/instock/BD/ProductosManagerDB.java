@@ -30,6 +30,7 @@ public class ProductosManagerDB {
         values.put("detalle", detalle);
         values.put("fotoProd", fotoProd);
         values.put("idCatProd", idCatProd);
+        values.put("estadoProducto", 1);//Producto Activo
 
         //En la siguiente consulta pasamos el valor "null" para el "Id" ya que este es autoincrementable
         resultado = objDB.insert("Productos", "idProd", values);
@@ -65,7 +66,7 @@ public class ProductosManagerDB {
         return resultado;
     }
 
-    //Método para obtener el listado de productos
+    //Método para obtener el listado de Productos (únicamente los activos)
     public ArrayList<Producto> obtenerProductos(Context context){
         CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(context);
         Producto producto;
@@ -76,7 +77,8 @@ public class ProductosManagerDB {
         SQLiteDatabase objDB = obj.getReadableDatabase();
 
         // Creamos Cursor
-        Cursor cursor = objDB.rawQuery("SELECT * FROM Productos",null);
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Productos WHERE estadoProducto = ?",
+                new String[]{"1"});
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
             producto = new Producto((cursor.getString(cursor.getColumnIndex("idProd"))),
@@ -94,7 +96,7 @@ public class ProductosManagerDB {
         return productos;
     }
 
-    //Método para obtener los datos de un Producto
+    //Método para obtener los datos de un Producto (si está activo)
     public Producto obtenerProducto(Context context, String idProd){
         CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(context);
         Producto producto = null;
@@ -103,7 +105,8 @@ public class ProductosManagerDB {
         SQLiteDatabase objDB = obj.getReadableDatabase();
 
         // Creamos Cursor
-        Cursor cursor = objDB.rawQuery("SELECT * FROM Productos WHERE idProd = ?",new String[]{idProd});
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Productos WHERE idProd = ? AND estadoProducto = ?",
+                new String[]{idProd, "1"});
 
         if (cursor.moveToFirst()) {
             producto = new Producto(cursor.getString(cursor.getColumnIndex("idProd")),
@@ -128,8 +131,11 @@ public class ProductosManagerDB {
 
         Cursor cursor = objDB.rawQuery("SELECT * FROM Productos WHERE idProd = ?", new String[]{String.valueOf(idProd)});
         if (cursor.moveToNext()) {
+            ContentValues values = new ContentValues();
+            values.put("estadoProducto", 2);//Establecemos el estado del Producto como "Eliminado"
+
             //Eliminamos el producto según el idProd
-            resultado = objDB.delete("Productos", "idProd = ?", new String[]{String.valueOf(idProd)});
+            resultado = objDB.update("Productos", values,"idProd = ?", new String[]{String.valueOf(idProd)});
         }
 
         objDB.close();
