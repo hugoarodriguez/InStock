@@ -43,6 +43,31 @@ public class CategoriasManagerDB {
         return resultado;
     }
 
+    public int modificarCategoria(int idCategoria, String nomCategoria){
+        int resultado = 0;
+
+        // Creamos objeto de la clase Base
+        Base obj = new Base(context);
+        SQLiteDatabase objDB = obj.getWritableDatabase();
+
+        //Verificamos que no haya una categoría existente con el mismo nombre
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Categorias WHERE idCategoria = ?", new String[]{String.valueOf(idCategoria)});
+        if (cursor.moveToNext()) {
+            ContentValues values = new ContentValues();
+            values.put("categoria", nomCategoria.trim().toUpperCase());//El valor "2" en el campo "estadoCategoria" indica "Eliminada"
+
+            //Establecemos como "eliminada" la categoría según su ID
+            resultado = objDB.update("Categorias", values, "idCategoria = ?",
+                    new String[]{String.valueOf(idCategoria)} );
+        } else {
+            resultado = -2;//Indica que ya NO existe esa Categoria
+        }
+
+        objDB.close();
+
+        return resultado;
+    }
+
     //Método para obtener listado de Categorías
     public ArrayList<ListCategorias> getCategorias(){
         ArrayList<ListCategorias> listCategorias = new ArrayList<>();
