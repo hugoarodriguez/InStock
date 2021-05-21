@@ -30,12 +30,12 @@ public class ReservasManagerDB {
         values.put("idCliente", idCliente);
         values.put("cantProd", cantProdReservado);//Cantidad de producto a reservar
         values.put("totalPagar", (precioProd*cantProdReservado));//Total a pagar por el producto
+        values.put("estadoReserva", 1);//Indica que aún es una reserva y no se concretó su venta
 
         //En la siguiente consulta pasamos el valor "null" para el "Id" ya que este es autoincrementable
         resultado = objDB.insert("Reservas", "idReserva", values);
 
         if(resultado != -1){
-            //TODO: actualizar stock del producto reservado
             int cantProductoFinal = cantProdActual - cantProdReservado;
             ContentValues updateValues = new ContentValues();
             updateValues.put("cantProd", cantProductoFinal);
@@ -51,7 +51,7 @@ public class ReservasManagerDB {
         return  resultado;
     }
 
-    //Método para obtener el listado de productos
+    //Método para obtener el listado de Reservas (únicamente las que poseen estado Reserva)
     public ArrayList<Reserva> obtenerReservas(){
         Reserva reserva;
         ArrayList<Reserva> reservas = new ArrayList<>();
@@ -61,8 +61,10 @@ public class ReservasManagerDB {
 
         // Creamos Cursor
         String query = "SELECT nombre||' '||apellido as nombreCompleto, nomProd, Reservas.cantProd, totalPagar, fotoProd " +
-                "FROM Reservas INNER JOIN Productos ON Productos.idProd = Reservas.idProd INNER JOIN Clientes ON Clientes.idCliente = Reservas.idCliente";
-        Cursor cursor = objDB.rawQuery(query,null);
+                "FROM Reservas INNER JOIN Productos ON Productos.idProd = Reservas.idProd " +
+                "INNER JOIN Clientes ON Clientes.idCliente = Reservas.idCliente " +
+                "WHERE estadoReserva = ?";
+        Cursor cursor = objDB.rawQuery(query,new String[]{"1"});
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
             reserva = new Reserva(cursor.getString(cursor.getColumnIndex("nomProd")),
