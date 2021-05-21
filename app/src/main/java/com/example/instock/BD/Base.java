@@ -28,23 +28,32 @@ public class Base extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String queryCategorias = null, queryClientes = null, queryProductos = null,
-                queryReservas = null;
+                queryReservas = null, queryVentas = null;
 
-        queryCategorias = "CREATE TABLE IF NOT EXISTS Categorias(idCategoria INTEGER PRIMARY KEY AUTOINCREMENT, categoria TEXT);";
+        //estadoCategoria: 1 - Activa, 2 - Eliminada
+        queryCategorias = "CREATE TABLE IF NOT EXISTS Categorias(idCategoria INTEGER PRIMARY KEY AUTOINCREMENT, categoria TEXT, estadoCategoria INTEGER);";
         db.execSQL(queryCategorias);
 
-        queryClientes = "CREATE TABLE IF NOT EXISTS Clientes(idCliente INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, apellido TEXT, sexo TEXT, telefono TEXT, correo TEXT);";
+        //estadoCliente: 1 - Activo, 2 - Eliminado
+        queryClientes = "CREATE TABLE IF NOT EXISTS Clientes(idCliente INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, apellido TEXT, sexo TEXT, telefono TEXT, correo TEXT, estadoCliente INTEGER);";
         db.execSQL(queryClientes);
 
+        //estadoProducto: 1 - Activo, 2 - Eliminado, 3 - Sin stock
         queryProductos = "CREATE TABLE IF NOT EXISTS Productos(idProd INTEGER PRIMARY KEY AUTOINCREMENT, nomProd TEXT, cantProd INTEGER, precioProd REAL, detalle TEXT" +
-                ", fotoProd TEXT, idCatProd INTEGER);";
+                ", fotoProd TEXT, idCatProd INTEGER, estadoProducto INTEGER);";
         db.execSQL(queryProductos);
 
-        queryProductos = "CREATE TABLE IF NOT EXISTS " +
-                "Reservas(idReserva INTEGER PRIMARY KEY AUTOINCREMENT, idProd INTEGER, idCliente INTEGER, cantProd INTEGER, totalPagar Real," +
+        //estadoReserva: 1 - Reserva, 2 - Venta
+        queryReservas = "CREATE TABLE IF NOT EXISTS " +
+                "Reservas(idReserva INTEGER PRIMARY KEY AUTOINCREMENT, idProd INTEGER, idCliente INTEGER, cantProd INTEGER, fechaEntregaInicial TEXT, totalPagar Real, estadoReserva INTEGER," +
                 "FOREIGN KEY(idProd) REFERENCES Productos(idProd)," +
                 "FOREIGN KEY(idCliente) REFERENCES Clientes(idCliente));";
-        db.execSQL(queryProductos);
+        db.execSQL(queryReservas);
+
+        queryVentas = "CREATE TABLE IF NOT EXISTS " +
+                "Ventas(idVenta INTEGER PRIMARY KEY AUTOINCREMENT, idReserva INTEGER, fechaEntregaFinal TEXT," +
+                "FOREIGN KEY(idReserva) REFERENCES Reservas(idReserva));";
+        db.execSQL(queryVentas);
     }
 
     @Override

@@ -67,7 +67,7 @@ public class ProductosManagerDB {
 
     //Método para obtener el listado de productos
     public ArrayList<Producto> obtenerProductos(Context context){
-        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB();
+        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(context);
         Producto producto;
         ArrayList<Producto> productos = new ArrayList<>();
         Utils utils = new Utils();
@@ -81,7 +81,7 @@ public class ProductosManagerDB {
         while (cursor.isAfterLast() == false) {
             producto = new Producto((cursor.getString(cursor.getColumnIndex("idProd"))),
                     (cursor.getString(cursor.getColumnIndex("nomProd"))),
-                    categoriasManagerDB.getNameCategoriaById(context, cursor.getInt(cursor.getColumnIndex("idCatProd"))),
+                    categoriasManagerDB.getNameCategoriaById(cursor.getInt(cursor.getColumnIndex("idCatProd"))),
                     (cursor.getString(cursor.getColumnIndex("cantProd"))),
                     (cursor.getString(cursor.getColumnIndex("precioProd"))),
                     (cursor.getString(cursor.getColumnIndex("fotoProd"))),
@@ -96,7 +96,7 @@ public class ProductosManagerDB {
 
     //Método para obtener los datos de un Producto
     public Producto obtenerProducto(Context context, String idProd){
-        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB();
+        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(context);
         Producto producto = null;
 
         Base obj = new Base(context);
@@ -108,7 +108,7 @@ public class ProductosManagerDB {
         if (cursor.moveToFirst()) {
             producto = new Producto(cursor.getString(cursor.getColumnIndex("idProd")),
                     cursor.getString(cursor.getColumnIndex("nomProd")),
-                    categoriasManagerDB.getNameCategoriaById(context, cursor.getInt(cursor.getColumnIndex("idCatProd"))),
+                    categoriasManagerDB.getNameCategoriaById(cursor.getInt(cursor.getColumnIndex("idCatProd"))),
                     cursor.getString(cursor.getColumnIndex("cantProd")),
                     cursor.getString(cursor.getColumnIndex("precioProd")),
                     cursor.getString(cursor.getColumnIndex("fotoProd")),
@@ -119,14 +119,13 @@ public class ProductosManagerDB {
     }
 
     //Método para eliminar un Producto
-    public long eliminarProducto(Context context, int idProd){
-        long resultado = 0l;
+    public int eliminarProducto(Context context, int idProd){
+        int resultado = 0;
 
         // Creamos objeto de la clase Base
         Base obj = new Base(context);
         SQLiteDatabase objDB = obj.getWritableDatabase();
-        // Consultamos a BD y guardamos en ArrayList
-        ArrayList<Integer> array_categID = new ArrayList<>();
+
         Cursor cursor = objDB.rawQuery("SELECT * FROM Productos WHERE idProd = ?", new String[]{String.valueOf(idProd)});
         if (cursor.moveToNext()) {
             //Eliminamos el producto según el idProd

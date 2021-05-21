@@ -17,10 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.FileProvider;
-import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -55,8 +52,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -261,9 +256,8 @@ public class ModificarProductosFragment extends Fragment {
                             double precioProd = Double.parseDouble(edtPrecioPro.getText().toString());
                             String detalles = edtDetallesPro.getText().toString();
 
-                            CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB();
-                            int idCatProd = categoriasManagerDB.getIDCategoriaByName(getContext(),
-                                    sprCategoria.getSelectedItem().toString());
+                            CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(getContext());
+                            int idCatProd = categoriasManagerDB.getIDCategoriaByName(sprCategoria.getSelectedItem().toString());
 
                             ProductosManagerDB productosManagerDB = new ProductosManagerDB();
                             //Inovcamos el método para modificar el registro a la BD
@@ -482,10 +476,10 @@ public class ModificarProductosFragment extends Fragment {
 
     //Método para llenar "sprCategoria"
     private void cargarCategorias(){
-        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB();
+        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(getContext());
         List<String> categorias = new ArrayList<>();
 
-        categorias = categoriasManagerDB.getCategorias(getContext());
+        categorias = categoriasManagerDB.getCategoriasStringArray();
 
         categoriasAdaptador = new ArrayAdapter<>(getContext()
                 , android.R.layout.simple_spinner_dropdown_item

@@ -107,7 +107,7 @@ public class ClientesManagerDB {
 
     //Método para obtener los datos de un Cliente
     public ListaClientes obtenerCliente(String idCliente){
-        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB();
+        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(context);
         ListaClientes cliente = null;
 
         Base obj = new Base(context);
@@ -131,7 +131,7 @@ public class ClientesManagerDB {
     //Método para obtener el id de un Cliente según su Correo
     public int getIdClienteByCorreo(String correo){
         int idCliente = 0;
-        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB();
+        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(context);
         ListaClientes cliente = null;
 
         Base obj = new Base(context);

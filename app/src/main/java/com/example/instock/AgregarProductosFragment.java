@@ -218,9 +218,8 @@ public class AgregarProductosFragment extends Fragment {
                             double precioProd = Double.parseDouble(edtPrecioPro.getText().toString());
                             String detalles = edtDetallesPro.getText().toString();
 
-                            CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB();
-                            int idCatProd = categoriasManagerDB.getIDCategoriaByName(getContext(),
-                                    sprCategoria.getSelectedItem().toString());
+                            CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(getContext());
+                            int idCatProd = categoriasManagerDB.getIDCategoriaByName(sprCategoria.getSelectedItem().toString());
 
                             ProductosManagerDB productosManagerDB = new ProductosManagerDB();
                             //Inovcamos el método para agregar el registro a la BD
@@ -414,10 +413,10 @@ public class AgregarProductosFragment extends Fragment {
 
     //Método para llenar "sprCategoria"
     private void cargarCategorias(){
-        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB();
+        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(getContext());
         List<String> categorias = new ArrayList<>();
 
-        categorias = categoriasManagerDB.getCategorias(getContext());
+        categorias = categoriasManagerDB.getCategoriasStringArray();
 
         categoriasAdaptador = new ArrayAdapter<>(getContext()
                 , android.R.layout.simple_spinner_dropdown_item

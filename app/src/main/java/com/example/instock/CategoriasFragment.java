@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.instock.Adapter.CategoriasAdaptador;
 import com.example.instock.BD.Base;
+import com.example.instock.BD.CategoriasManagerDB;
 import com.example.instock.interfaces.RecyclerViewClickInterface;
 import com.example.instock.models.ListCategorias;
 import com.example.instock.models.ModalDialogValues;
@@ -67,82 +68,50 @@ public class CategoriasFragment extends Fragment implements RecyclerViewClickInt
         btnAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //EditText cat = (EditText) getView().findViewById(R.id.edtCategoria);
-                /*
-                List<ListCategorias> categoriasList = new ArrayList<>();
-                categoriasList.add(new ListCategorias(cat.getText().toString()));
-                categoriasAdaptador = new CategoriasAdaptador(categoriasList, getActivity());
-                recyclerCategorias.setAdapter(categoriasAdaptador);*/
-                // Creamos la conexion a la BD
-                Base obj = new Base(getContext());
-                SQLiteDatabase objDB = obj.getWritableDatabase();
 
                 EditText categ = (EditText) getView().findViewById(R.id.edtCategoria);
                 String nuevaCateg = categ.getText().toString();
-                String sintaxisSql = "INSERT INTO Categorias VALUES ("+ null + ", '" +  nuevaCateg +"')";
 
                 if (nuevaCateg.trim().equals("")) {
                     categ.setError("Debe agregar un producto");
                 }
                 else {
-                    objDB.execSQL(sintaxisSql);
-                    Toast.makeText(getContext(), "Se ha agregado categoria", Toast.LENGTH_SHORT).show();
-                    // Limpiamos el EditText
+
+                    CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(getContext());
+
+                    long resultado = categoriasManagerDB.agregarCategoria(nuevaCateg);
+
+                    if(resultado > 0){
+                        Toast.makeText(getContext(), "Se guardó la categoría",
+                                Toast.LENGTH_SHORT).show();
+                    } else if(resultado == -2){
+                        Toast.makeText(getContext(), "Ya existe una categoría con ese nombre",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "No se ha podido guardar la categoría",
+                                Toast.LENGTH_SHORT).show();
+                    }
                     categ.setText("");
                     categ.requestFocus();
                     inicializarElementos();
                 }
-                objDB.close();
             }
         });
     }
 
     private void inicializarElementos() {
 
-        CategoriaList = new ArrayList<>();
+        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(getContext());
+
+        CategoriaList = categoriasManagerDB.getCategorias();
 
         recyclerCategorias = view.findViewById(R.id.rvCategoria);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerCategorias.setLayoutManager(layoutManager);
 
-        // Creamos objeto de la clase Base
-        Base obj = new Base(getContext());
-        SQLiteDatabase objDB = obj.getWritableDatabase();
-
-        // Creamos Cursor
-        Cursor cursor = objDB.rawQuery("SELECT * FROM Categorias",null);
-        cursor.moveToFirst();
-        while (cursor.isAfterLast() == false) {
-            CategoriaList.add(new ListCategorias(
-                    cursor.getInt(cursor.getColumnIndex("idCategoria")),
-                    cursor.getString(cursor.getColumnIndex("categoria"))));
-            cursor.moveToNext();
-        }
-
         categoriasAdaptador = new CategoriasAdaptador(CategoriaList, getActivity(), this);
 
         recyclerCategorias.setAdapter(categoriasAdaptador);
-        objDB.close();
-    }
-
-    private void eliminarCategoria(int position){
-        // Creamos objeto de la clase Base
-        Base obj = new Base(getContext());
-        SQLiteDatabase objDB = obj.getWritableDatabase();
-        // Consultamos a BD y guardamos en ArrayList
-        ArrayList<Integer> array_categID = new ArrayList<Integer>();
-        Cursor cursor = objDB.rawQuery("SELECT * FROM Categorias",null);
-        cursor.moveToFirst();
-        while (cursor.isAfterLast() == false) {
-            array_categID.add(cursor.getInt(cursor.getColumnIndex("idCategoria")));
-            cursor.moveToNext();
-        }
-        String consultaEliminar = "DELETE FROM Categorias WHERE idCategoria = " + array_categID.get(position);
-        objDB.execSQL(consultaEliminar);
-
-        objDB.close();
-
-        inicializarElementos();//Actualizamos el RecylcerView invocando el método de inicializarElementos()
     }
 
     // Objeto EditarCategoria
@@ -180,11 +149,18 @@ public class CategoriasFragment extends Fragment implements RecyclerViewClickInt
                 .setNegativeButton(null, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //Eliminamos el item del RecyclerView
-                CategoriaList.remove(position);
-                categoriasAdaptador.notifyDataSetChanged();
-                eliminarCategoria(position);//Método para eliminar registro de la BD
-                objEditarCategoria.position(position); // Se envia la posición
+
+                CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(getContext());
+
+                int idCategoria = CategoriaList.get(position).getIdCategoria();
+                int resultado = categoriasManagerDB.eliminarCategoria(idCategoria);
+
+                if(resultado > 0){
+                    //Eliminamos el item del RecyclerView
+                    CategoriaList.remove(position);
+                    categoriasAdaptador.notifyDataSetChanged();
+                    inicializarElementos();//Actualizamos el RecylcerView
+                }
             }
         }).setNegativeButtonIcon(drawableNegative).show();
 
