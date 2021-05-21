@@ -30,6 +30,7 @@ public class ClientesManagerDB {
         values.put("sexo", sexo);
         values.put("telefono", telefono);
         values.put("correo", correo);
+        values.put("estadoCliente", 1);
 
         //En la siguiente consulta pasamos el valor "null" para el "Id" ya que este es autoincrementable
         resultado = objDB.insert("Clientes", "idCliente", values);
@@ -61,7 +62,7 @@ public class ClientesManagerDB {
         return  resultado;
     }
 
-    //Método para obtener el listado de productos
+    //Método para obtener el listado de Clientes (únicamente los activos)
     public ArrayList<ListaClientes> obtenerClientes(){
         ListaClientes cliente;
         ArrayList<ListaClientes> clientes = new ArrayList<>();
@@ -70,7 +71,8 @@ public class ClientesManagerDB {
         SQLiteDatabase objDB = obj.getReadableDatabase();
 
         // Creamos Cursor
-        Cursor cursor = objDB.rawQuery("SELECT * FROM Clientes",null);
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Clientes WHERE estadoCliente = ?",
+                new String[]{"1"});
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
             cliente = new ListaClientes(cursor.getString(cursor.getColumnIndex("idCliente")),
@@ -87,7 +89,7 @@ public class ClientesManagerDB {
         return clientes;
     }
 
-    //Método para obtener el listado de productos
+    //Método para obtener el listado de correos de los Clientes
     public ArrayList<String> obtenerCorreosClientes(){
         ArrayList<String> nombresClientes = new ArrayList<>();
 
@@ -95,7 +97,8 @@ public class ClientesManagerDB {
         SQLiteDatabase objDB = obj.getReadableDatabase();
 
         // Creamos Cursor
-        Cursor cursor = objDB.rawQuery("SELECT * FROM Clientes",null);
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Clientes WHERE estadoCliente = ?",
+                new String[]{"1"});
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
             nombresClientes.add(cursor.getString(cursor.getColumnIndex("correo")));
@@ -114,7 +117,8 @@ public class ClientesManagerDB {
         SQLiteDatabase objDB = obj.getReadableDatabase();
 
         // Creamos Cursor
-        Cursor cursor = objDB.rawQuery("SELECT * FROM Clientes WHERE idCliente = ?",new String[]{idCliente});
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Clientes WHERE idCliente = ? AND estadoCliente = ?",
+                new String[]{idCliente, "1"});
 
         if (cursor.moveToFirst()) {
             cliente = new ListaClientes(cursor.getString(cursor.getColumnIndex("idCliente")),
@@ -138,7 +142,8 @@ public class ClientesManagerDB {
         SQLiteDatabase objDB = obj.getReadableDatabase();
 
         // Creamos Cursor
-        Cursor cursor = objDB.rawQuery("SELECT idCliente FROM Clientes WHERE correo = ?",new String[]{correo});
+        Cursor cursor = objDB.rawQuery("SELECT idCliente FROM Clientes WHERE correo = ? AND estadoCliente = ?"
+                ,new String[]{correo, "1"});
 
         if (cursor.moveToFirst()) {
             idCliente = cursor.getInt(cursor.getColumnIndex("idCliente"));
@@ -158,8 +163,11 @@ public class ClientesManagerDB {
         //Verificamos si existe el cliente según su ID
         Cursor cursor = objDB.rawQuery("SELECT * FROM Clientes WHERE idCliente = ?", new String[]{String.valueOf(idCliente)});
         if (cursor.moveToNext()) {
-            //Eliminamos el cliente según el "idCliente"
-            resultado = objDB.delete("Clientes", "idCliente = ?", new String[]{String.valueOf(idCliente)});
+            ContentValues values = new ContentValues();
+            values.put("estadoCliente", 2);
+
+            //Eliminamos el cliente según el "idCliente" (unicamente cambiamos el valor de su estado)
+            resultado = objDB.update("Clientes", values,"idCliente = ?", new String[]{String.valueOf(idCliente)});
         }
 
         objDB.close();

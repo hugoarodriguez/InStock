@@ -282,6 +282,7 @@ public class ModificarClienteFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
 
                         limpiarCampos();
+                        asignarValoresAVistas();
 
                     }
                 }).setNegativeButton(null, new DialogInterface.OnClickListener() {
