@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.example.instock.Adapter.VentasAdaptador;
+import com.example.instock.BD.VentasManagerDB;
 import com.example.instock.models.ListaVentas;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ public class VerVentasFragment extends Fragment {
     List<ListaVentas> VentasList = new ArrayList<>();
     RecyclerView recyclerVentas;
     RadioButton rdbSemana, rdbMes, rdbAnnio;
+    TextView tvTotalVal;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,16 +48,15 @@ public class VerVentasFragment extends Fragment {
 
     public void cargarDatos()
     {
-        VentasList.add(new ListaVentas("01", "Ropa", "Camiseta", "1", "$10.0", "María Gutierrez"));
-        VentasList.add(new ListaVentas("02", "Accesorios", "Collar", "2",  "$5.0", "José Gonzales"));
-        VentasList.add(new ListaVentas("03", "Zapatos", "Botas", "1","$20.0", "Alejandro García"));
-        VentasList.add(new ListaVentas("04", "Ropa", "Vestido","1", "$9.0", "Lucia Molina"));
-        VentasList.add(new ListaVentas("05", "Zapatos", "Sandalias", "1", "$25.0", "Monica Alfaro"));
+        VentasManagerDB ventasManagerDB = new VentasManagerDB(getContext());
+        VentasList = ventasManagerDB.obtenerVentas();
 
         recyclerVentas = getView().findViewById(R.id.recyclerVentas);
         recyclerVentas.setLayoutManager(new LinearLayoutManager(getActivity()));
         ventaAdaptador = new VentasAdaptador(VentasList, getActivity());
         recyclerVentas.setAdapter(ventaAdaptador);
+
+        tvTotalVal.setText("$" + ventasManagerDB.obtenerTotalVentas());
     }
 
     public void enlazarVistas(View v)
@@ -62,6 +64,7 @@ public class VerVentasFragment extends Fragment {
         rdbSemana = v.findViewById(R.id.rdbSemana);
         rdbMes = v.findViewById(R.id.rdbMes);
         rdbAnnio = v.findViewById(R.id.rdbAnnio);
+        tvTotalVal = v.findViewById(R.id.tvTotalVal);
     }
 
 }

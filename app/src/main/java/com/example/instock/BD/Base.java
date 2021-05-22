@@ -68,6 +68,8 @@ public class Base extends SQLiteOpenHelper {
         db.execSQL(query);
         query = "DROP TABLE IF EXISTS Reservas";
         db.execSQL(query);
+        query = "DROP TABLE IF EXISTS Ventas";
+        db.execSQL(query);
         onCreate(db);
     }
 }

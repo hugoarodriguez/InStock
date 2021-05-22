@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.instock.models.ListaVentas;
 import com.example.instock.R;
 
@@ -39,8 +40,9 @@ public class VentasAdaptador extends RecyclerView.Adapter<VentasAdaptador.ViewHo
         holder.tvCateVal.setText(ventasList.get(position).getCategoria());
         holder.tvNomProVal.setText(ventasList.get(position).getNombrePro());
         holder.tvCantProVal.setText(ventasList.get(position).getCantidadPro());
-        holder.tvPrecioProVal.setText(ventasList.get(position).getPrecioPro());
+        holder.tvPrecioProVal.setText("$" + ventasList.get(position).getTotalPago());
         holder.tvClienteProVal.setText(ventasList.get(position).getCliente());
+        Glide.with(context).load(ventasList.get(position).getFotoProd()).into(holder.imgFoto);
 
     }
     @Override

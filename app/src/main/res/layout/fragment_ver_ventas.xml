@@ -100,6 +100,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
+        <TextView
+            android:id="@+id/tvTotalVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/tvLarger"
+            android:textSize="20sp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:text="@string/tvTotal"
+            android:textColor="@color/btnAgregar"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintStart_toEndOf="@id/tvTotal"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

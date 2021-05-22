@@ -1,12 +1,18 @@
 package com.example.instock.models;
 
 public class ListaVentas {
+
+    private String fotoProd;
     private String codigo;
     private String categoria;
     private String nombrePro;
     private String cantidadPro;
-    private String precioPro;
+    private String totalPago;
     private String cliente;
+
+    public String getFotoProd() { return fotoProd; }
+
+    public void setFotoProd(String fotoProd) { this.fotoProd = fotoProd; }
 
     public String getCodigo() {
         return codigo;
@@ -38,12 +44,12 @@ public class ListaVentas {
         this.cantidadPro = cantidadPro;
     }
 
-    public String getPrecioPro() {
-        return precioPro;
+    public String getTotalPago() {
+        return totalPago;
     }
 
-    public void setPrecioPro(String precioPro) {
-        this.precioPro = precioPro;
+    public void setTotalPago(String totalPago) {
+        this.totalPago = totalPago;
     }
 
     public String getCliente() {
@@ -54,14 +60,16 @@ public class ListaVentas {
         this.cliente = cliente;
     }
 
-    public ListaVentas(String codigo, String categoria, String nombrePro, String cantidadPro, String precioPro, String cliente) {
+    public ListaVentas(String codigo, String categoria, String nombrePro, String cantidadPro,
+                       String totalPago, String cliente, String fotoProd) {
 
         this.codigo = codigo;
         this.categoria = categoria;
         this.nombrePro = nombrePro;
         this.cantidadPro = cantidadPro;
-        this.precioPro = precioPro;
+        this.totalPago = totalPago;
         this.cliente = cliente;
+        this.fotoProd = fotoProd;
     }
 
     @Override
@@ -71,8 +79,9 @@ public class ListaVentas {
                 ", categoria='" + categoria + '\'' +
                 ", nombrePro='" + nombrePro + '\'' +
                 ", cantidadPro='" + cantidadPro + '\'' +
-                ", precioPro='" + precioPro + '\'' +
+                ", totalPago='" + totalPago + '\'' +
                 ", cliente='" + cliente + '\'' +
+                ", fotoProd='" + fotoProd + '\'' +
                 '}';
     }
 }

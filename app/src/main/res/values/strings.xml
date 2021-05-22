@@ -66,7 +66,8 @@
     <string name="rdbMes">Mes</string>
     <string name="rdbSemana">Semana</string>
     <string name="rdbAnnio">Año</string>
-    <string name="tvTotal">Total Ventas: $</string>
+    <string name="tvTotalPagado">Total Pagado:</string>
+    <string name="tvTotal">Total Ventas: </string>
 
     <!-- Strings para datos de Producto -->
     <string name="tvCodigo"> Código:</string>
@@ -75,7 +76,7 @@
     <string name="tvProducto">Producto: </string>
     <string name="tvCliente">Cliente:</string>
     <string name="tvPrecio">Precio:</string>
-    <string name="tvTotalPagar">Total a pagar:</string>
+    <string name="tvTotalPagar">Total a Pagar:</string>
     <string name="imgProdu">Imagen del producto</string>
 
     <!-- RecuperarCuenta -->
