@@ -221,9 +221,9 @@ public class AgregarProductosFragment extends Fragment {
                             CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(getContext());
                             int idCatProd = categoriasManagerDB.getIDCategoriaByName(sprCategoria.getSelectedItem().toString());
 
-                            ProductosManagerDB productosManagerDB = new ProductosManagerDB();
+                            ProductosManagerDB productosManagerDB = new ProductosManagerDB(getContext());
                             //Inovcamos el método para agregar el registro a la BD
-                            long resultado = productosManagerDB.agregarProducto(getContext(), nomProd, cantProd,
+                            long resultado = productosManagerDB.agregarProducto(nomProd, cantProd,
                                     precioProd, detalles, urlFoto, idCatProd);
 
                             if(resultado != -1){

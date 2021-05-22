@@ -36,10 +36,11 @@ public class ReservasAdaptador extends RecyclerView.Adapter<ReservasAdaptador.Vi
     @Override
     public void onBindViewHolder(@NonNull ReservasAdaptador.ViewHolder holder, int position) {
         holder.txtProducto.setText(ReservaList.get(position).getNomProducto());
-        holder.txtPrecio.setText("$" + ReservaList.get(position).getPrecio());
+        holder.txtTotalPagar.setText("$" + ReservaList.get(position).getTotalPagar());
         holder.txtCliente.setText(ReservaList.get(position).getCliente());
         Glide.with(context).load(ReservaList.get(position).getFotoProd()).into(holder.imgProdu);
         holder.txtCantidad.setText(ReservaList.get(position).getCantProd());
+        holder.txtFechaEntrega.setText(ReservaList.get(position).getFechaEntrega());
     }
     @Override
     public int getItemCount() {
@@ -50,18 +51,20 @@ public class ReservasAdaptador extends RecyclerView.Adapter<ReservasAdaptador.Vi
 
 
         private ImageView imgProdu;
-        private TextView txtProducto;
-        private TextView txtPrecio;
         private TextView txtCliente;
+        private TextView txtProducto;
         private TextView txtCantidad;
+        private TextView txtFechaEntrega;
+        private TextView txtTotalPagar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgProdu = itemView.findViewById(R.id.imgProdu);
-            txtProducto = itemView.findViewById(R.id.tvProductoVal);
-            txtPrecio = itemView.findViewById(R.id.tvPrecioVal);
             txtCliente = itemView.findViewById(R.id.tvClienteVal);
+            txtProducto = itemView.findViewById(R.id.tvProductoVal);
             txtCantidad = itemView.findViewById(R.id.tvCantidadVal);
+            txtFechaEntrega = itemView.findViewById(R.id.tvFechaEntregaVal);
+            txtTotalPagar = itemView.findViewById(R.id.tvTotalPagarVal);
         }
     }
 }

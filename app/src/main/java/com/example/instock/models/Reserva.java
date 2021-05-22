@@ -2,31 +2,37 @@ package com.example.instock.models;
 
 public class Reserva {
 
-
-    private String NomProducto;
-    private String Precio;
-    private String Cliente;
+    private String IdReserva;
     private String FotoProd;
+    private String Cliente;
+    private String NomProducto;
     private String CantProd;
+    private String FechaEntrega;
+    private String TotalPagar;
 
+    public Reserva(String idReserva, String nomProducto, String totalPagar, String cliente, String fotoProd,
+                   String cantProd, String fechaEntrega) {
 
-    public Reserva(String nomProducto, String precio, String cliente, String fotoProd, String cantProd) {
-
-        NomProducto = nomProducto;
-        Precio = precio;
-        Cliente = cliente;
+        IdReserva = idReserva;
         FotoProd = fotoProd;
+        Cliente = cliente;
+        NomProducto = nomProducto;
         CantProd = cantProd;
+        FechaEntrega = fechaEntrega;
+        TotalPagar = totalPagar;
     }
 
+    public String getIdReserva() { return IdReserva; }
 
-    public String getPrecio() {
-        return Precio;
-    }
+    public void setIdReserva(String idReserva) { IdReserva = idReserva; }
 
-    public void setPrecio(String precio) {
-        Precio = precio;
-    }
+    public String getFotoProd() { return FotoProd; }
+
+    public void setFotoProd(String fotoProd) { FotoProd = fotoProd; }
+
+    public String getCliente() {  return Cliente;  }
+
+    public void setCliente(String cliente) { Cliente = cliente; }
 
     public String getNomProducto() {
         return NomProducto;
@@ -36,27 +42,34 @@ public class Reserva {
         NomProducto = nomProducto;
     }
 
-    public String getCliente() {  return Cliente;  }
-
-    public void setCliente(String cliente) { Cliente = cliente; }
-
-    public void setCantidad(String cliente) {  Cliente = cliente; }
-
-    public String getFotoProd() { return FotoProd; }
-
-    public void setFotoProd(String fotoProd) { FotoProd = fotoProd; }
-
     public String getCantProd() { return CantProd; }
 
     public void setCantProd(String cantProd) { CantProd = cantProd; }
 
+    public String getFechaEntrega() { return FechaEntrega; }
+
+    public void setFechaEntrega(String fechaEntrega) { FechaEntrega = fechaEntrega; }
+
+    public String getTotalPagar() {
+        return TotalPagar;
+    }
+
+    public void setTotalPagar(String precio) {
+        TotalPagar = precio;
+    }
+
+
+
     @Override
     public String toString() {
         return "Reserva{" +
-                "NomProducto='" + NomProducto + '\'' +
-                ", Cliente='" + Cliente + '\'' +
-                ", Precio='" + Precio + '\'' +
+                "IdReserva='" + IdReserva + '\'' +
                 ", FotoProd='" + FotoProd + '\'' +
+                ", Cliente='" + Cliente + '\'' +
+                ", NomProducto='" + NomProducto + '\'' +
+                ", CantProd='" + CantProd + '\'' +
+                ", FechaEntrega='" + FechaEntrega + '\'' +
+                ", TotalPagar='" + TotalPagar + '\'' +
                 '}';
     }
 }

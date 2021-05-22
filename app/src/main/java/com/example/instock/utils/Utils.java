@@ -29,6 +29,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -176,7 +177,7 @@ public class Utils {
     public String millisecondsToYYYYMMDD(long millisecondsDate){
         String stringDate = null;
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-yy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         stringDate = simpleDateFormat.format(new Date(millisecondsDate));
@@ -193,6 +194,22 @@ public class Utils {
 
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         stringDate = simpleDateFormat.format(date);
+
+        return stringDate;
+    }
+
+    //Conviete un campo de tipo Date al formato "dd/MM/yyyy"
+    public String fromYYYYMMDDtoDDMMYYYY(String stringDateOrigin){
+        String stringDate = null;
+
+        try {
+            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = inputFormat.parse(stringDateOrigin);
+            stringDate = outputFormat.format(date);
+        } catch (Exception e){
+
+        }
 
         return stringDate;
     }

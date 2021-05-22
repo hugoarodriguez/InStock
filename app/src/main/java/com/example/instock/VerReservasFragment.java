@@ -128,7 +128,7 @@ public class VerReservasFragment extends Fragment {
             if(swipeDir == 4){
                 //Cancelar reserva
                 recyclerPositionItem = viewHolder.getAdapterPosition();
-                cancelarReserva();
+                cancelarReserva(recyclerPositionItem);
             }
             else if(swipeDir == 8){
                 //Convertir venta en reserva
@@ -139,7 +139,7 @@ public class VerReservasFragment extends Fragment {
     };
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void cancelarReserva(){
+    private void cancelarReserva(int recyclerPositionItem){
         //Asignamos los valores para mostrar el Dialog
         modalDialogValues.modalDialogValues("Cancelar reserva",
                 "¿Estás seguro que deseas cancelar esta reserva?\n\nEl producto de la reserva" +
@@ -150,9 +150,18 @@ public class VerReservasFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                ReservaList.remove(recyclerPositionItem);//Removemos el item segun la posición
-                reservasAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
-                Toast.makeText(getContext(), "Reserva cancelada", Toast.LENGTH_SHORT).show();
+                ReservasManagerDB reservasManagerDB = new ReservasManagerDB(getContext());
+                int idReserva = Integer.parseInt(ReservaList.get(recyclerPositionItem).getIdReserva());
+                int resultado = reservasManagerDB.cancelarReserva(idReserva);
+
+                if(resultado > 0){
+                    ReservaList.remove(recyclerPositionItem);//Removemos el item segun la posición
+                    reservasAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
+                    Toast.makeText(getContext(), "Reserva cancelada", Toast.LENGTH_SHORT).show();
+                } else{
+                    reservasAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
+                    Toast.makeText(getContext(), "No se pudo cancelar la reserva", Toast.LENGTH_SHORT).show();
+                }
 
             }
         }).setNegativeButton(null, new DialogInterface.OnClickListener() {

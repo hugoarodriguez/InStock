@@ -16,7 +16,7 @@
         <ImageView
             android:id="@+id/imgProdu"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:adjustViewBounds="false"
             android:contentDescription="@string/imgProdu"
             android:cropToPadding="false"
@@ -39,7 +39,9 @@
                 <TextView
                     android:id="@+id/tvCliente"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:paddingVertical="2dp"
                     android:textStyle="bold"
                     android:text="@string/tvCliente"
                     android:textColor="#423F3F" />
@@ -47,9 +49,12 @@
                 <TextView
                     android:id="@+id/tvClienteVal"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:paddingVertical="2dp"
                     android:paddingLeft="5dp"
                     android:text=""
+                    style="@style/tvLarger"
                     android:textColor="#423F3F" />
 
             </LinearLayout>
@@ -62,7 +67,9 @@
                 <TextView
                     android:id="@+id/tvProducto"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:paddingVertical="2dp"
                     android:textStyle="bold"
                     android:text="@string/tvProducto"
                     android:textColor="#423F3F" />
@@ -70,9 +77,12 @@
                 <TextView
                     android:id="@+id/tvProductoVal"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:paddingVertical="2dp"
                     android:paddingLeft="5dp"
                     android:text=""
+                    style="@style/tvLarger"
                     android:textColor="#423F3F" />
 
             </LinearLayout>
@@ -85,7 +95,9 @@
                 <TextView
                     android:id="@+id/tvCantidad"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:paddingVertical="2dp"
                     android:textStyle="bold"
                     android:text="@string/tvCantidad"
                     android:textColor="#423F3F" />
@@ -93,9 +105,12 @@
                 <TextView
                     android:id="@+id/tvCantidadVal"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:paddingVertical="2dp"
                     android:paddingLeft="5dp"
                     android:text=""
+                    style="@style/tvLarger"
                     android:textColor="#423F3F" />
 
             </LinearLayout>
@@ -106,19 +121,52 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tvPrecio"
+                    android:id="@+id/tvFechaEntrega"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:paddingVertical="2dp"
+                    android:textStyle="bold"
+                    android:text="@string/tvFechaEntrega"
+                    android:textColor="#423F3F" />
+
+                <TextView
+                    android:id="@+id/tvFechaEntregaVal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:paddingVertical="2dp"
+                    android:paddingLeft="5dp"
+                    android:text=""
+                    style="@style/tvLarger"
+                    android:textColor="#423F3F" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvTotalPagar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:paddingVertical="2dp"
                     android:textStyle="bold"
                     android:text="@string/tvTotalPagar"
                     android:textColor="#423F3F" />
 
                 <TextView
-                    android:id="@+id/tvPrecioVal"
+                    android:id="@+id/tvTotalPagarVal"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:paddingVertical="2dp"
                     android:paddingLeft="5dp"
                     android:text=""
+                    style="@style/tvLarger"
                     android:textColor="#423F3F" />
 
             </LinearLayout>

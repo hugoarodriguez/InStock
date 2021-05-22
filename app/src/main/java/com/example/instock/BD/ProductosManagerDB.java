@@ -14,8 +14,14 @@ import java.util.ArrayList;
 
 public class ProductosManagerDB {
 
+    Context context;
+
+    public ProductosManagerDB(Context context){
+        this.context = context;
+    }
+
     //Métotodo para agregar poductos
-    public long agregarProducto(Context context, String nomProd, int cantProd, double precioProd
+    public long agregarProducto(String nomProd, int cantProd, double precioProd
             , String detalle, String fotoProd, int idCatProd){
 
         long resultado;
@@ -42,7 +48,7 @@ public class ProductosManagerDB {
     }
 
     //Métotodo para modificar poductos
-    public int modificarProducto(Context context, int idProd, String nomProd, int cantProd, double precioProd
+    public int modificarProducto(int idProd, String nomProd, int cantProd, double precioProd
             , String detalle, String fotoProd, int idCatProd){
 
         int resultado;
@@ -67,7 +73,7 @@ public class ProductosManagerDB {
     }
 
     //Método para obtener el listado de Productos (únicamente los activos)
-    public ArrayList<Producto> obtenerProductos(Context context){
+    public ArrayList<Producto> obtenerProductos(){
         CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(context);
         Producto producto;
         ArrayList<Producto> productos = new ArrayList<>();
@@ -97,7 +103,7 @@ public class ProductosManagerDB {
     }
 
     //Método para obtener los datos de un Producto (si está activo)
-    public Producto obtenerProducto(Context context, String idProd){
+    public Producto obtenerProducto(String idProd){
         CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(context);
         Producto producto = null;
 
@@ -121,8 +127,26 @@ public class ProductosManagerDB {
         return producto;
     }
 
+    //Método para obtener la cantidad de existencias de un Producto
+    public int obtenerCantProductoById(int idProd){
+        int cantProducto = 0;
+
+        Base obj = new Base(context);
+        SQLiteDatabase objDB = obj.getReadableDatabase();
+
+        // Creamos Cursor
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Productos WHERE idProd = ? AND estadoProducto = ?",
+                new String[]{String.valueOf(idProd), "1"});
+
+        if (cursor.moveToFirst()) {
+            cantProducto = cursor.getInt(cursor.getColumnIndex("cantProd"));
+        }
+
+        return cantProducto;
+    }
+
     //Método para eliminar un Producto
-    public int eliminarProducto(Context context, int idProd){
+    public int eliminarProducto(int idProd){
         int resultado = 0;
 
         // Creamos objeto de la clase Base

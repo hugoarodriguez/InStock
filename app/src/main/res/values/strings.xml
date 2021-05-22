@@ -56,6 +56,8 @@
     <string name="cliente_hint">Nombre del Cliente</string>
     <string name="cantidad_hint">Cantidad de Producto</string>
     <string name="fecha_entrega_hint">Fecha de Entrega</string>
+    <string name="tvFechaEntrega">Fecha de Entrega:</string>
+    <string name="correo_cliente_hint">E-mail del Cliente</string>
     <string name="btnReservar">Reservar</string>
 
     <!-- Ver Ventas -->
@@ -66,7 +68,7 @@
     <string name="rdbAnnio">Año</string>
     <string name="tvTotal">Total Ventas: $</string>
 
-    <!-- Strings para datos dr Producto -->
+    <!-- Strings para datos de Producto -->
     <string name="tvCodigo"> Código:</string>
     <string name="tvCategoria">Categoría:</string>
     <string name="tvCantidad">Cantidad:</string>

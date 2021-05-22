@@ -68,9 +68,9 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
     private void cargarDatos() {
 
         //Inovcamos el método para consultar los productos
-        ProductosManagerDB productosManagerDB = new ProductosManagerDB();
+        ProductosManagerDB productosManagerDB = new ProductosManagerDB(getContext());
 
-        ProductoList = productosManagerDB.obtenerProductos(getContext());
+        ProductoList = productosManagerDB.obtenerProductos();
 
         RecyclerView recyclerProducto = vista.findViewById(R.id.recyclerProductos);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -161,10 +161,10 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
 
                 int idProd = Integer.parseInt(ProductoList.get(recyclerPositionItem).getIdProd());
 
-                ProductosManagerDB productosManagerDB = new ProductosManagerDB();
+                ProductosManagerDB productosManagerDB = new ProductosManagerDB(getContext());
 
                 //Invocámos el método para eliminar el Producto
-                long resultado = productosManagerDB.eliminarProducto(getContext(), idProd);
+                long resultado = productosManagerDB.eliminarProducto(idProd);
 
                 if(resultado > 0){
                     ProductoList.remove(recyclerPositionItem);//Removemos el item segun la posición

@@ -1,9 +1,6 @@
 package com.example.instock.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -76,7 +72,7 @@ public class ProductoAdaptadpr extends  RecyclerView.Adapter<ProductoAdaptadpr.V
             tvProducto = itemView.findViewById(R.id.tvNombreProductoVal);
             tvCategoria = itemView.findViewById(R.id.tvCategoriaVal);
             tvCantidad = itemView.findViewById(R.id.tvCantidadVal);
-            tvPrecio = itemView.findViewById(R.id.tvPrecioVal);
+            tvPrecio = itemView.findViewById(R.id.tvTotalPagarVal);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

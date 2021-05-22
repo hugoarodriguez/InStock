@@ -1,6 +1,5 @@
 package com.example.instock;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +36,6 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -125,7 +122,7 @@ public class ReservarProductosFragment extends Fragment {
     public void enlazarVistas(View v){
         imgProducto = (ImageView)v.findViewById(R.id.imgProducto);
         tvProductoVal = (TextView)v.findViewById(R.id.tvProductoVal);
-        tvPrecioVal = (TextView)v.findViewById(R.id.tvPrecioVal);
+        tvPrecioVal = (TextView)v.findViewById(R.id.tvTotalPagarVal);
         actvCliente = (AutoCompleteTextView)v.findViewById(R.id.actvCliente);
         etCantidad = (EditText)v.findViewById(R.id.etCantidad);
         etFechaReserva = (EditText)v.findViewById(R.id.etFechaReserva);
@@ -160,9 +157,9 @@ public class ReservarProductosFragment extends Fragment {
     private void asignarValoresAVistas(String idProd){
 
         //Inovcamos el método para consultar los productos
-        ProductosManagerDB productosManagerDB = new ProductosManagerDB();
+        ProductosManagerDB productosManagerDB = new ProductosManagerDB(getContext());
 
-        producto = productosManagerDB.obtenerProducto(getContext(), String.valueOf(idProdParametro));
+        producto = productosManagerDB.obtenerProducto(String.valueOf(idProdParametro));
 
         Glide.with(getContext()).load(producto.getFotoProd()).into(imgProducto);
         tvProductoVal.setText(producto.getNomProducto());
@@ -175,7 +172,7 @@ public class ReservarProductosFragment extends Fragment {
         btnAddCantidad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Evaluar si "cantidad" es igual o mayor que el valor máximo de cantidad extraído de la BD
+
                 if(cantidad < Integer.parseInt(producto.getCantidad())){
                     cantidad++;
                     etCantidad.setText(Integer.toString(cantidad));

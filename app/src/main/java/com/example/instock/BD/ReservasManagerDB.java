@@ -7,8 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.instock.models.ListaClientes;
 import com.example.instock.models.Reserva;
+import com.example.instock.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ReservasManagerDB {
 
@@ -53,6 +55,8 @@ public class ReservasManagerDB {
 
     //Método para obtener el listado de Reservas (únicamente las que poseen estado Reserva)
     public ArrayList<Reserva> obtenerReservas(){
+        Utils utils = new Utils();
+
         Reserva reserva;
         ArrayList<Reserva> reservas = new ArrayList<>();
 
@@ -60,23 +64,82 @@ public class ReservasManagerDB {
         SQLiteDatabase objDB = obj.getReadableDatabase();
 
         // Creamos Cursor
-        String query = "SELECT nombre||' '||apellido as nombreCompleto, nomProd, Reservas.cantProd, totalPagar, fotoProd " +
+        String query = "SELECT idReserva, nombre||' '||apellido as nombreCompleto, nomProd, Reservas.cantProd, " +
+                "totalPagar, fotoProd, fechaEntregaInicial " +
                 "FROM Reservas INNER JOIN Productos ON Productos.idProd = Reservas.idProd " +
                 "INNER JOIN Clientes ON Clientes.idCliente = Reservas.idCliente " +
                 "WHERE estadoReserva = ? ORDER BY DATE(fechaEntregaInicial)";
         Cursor cursor = objDB.rawQuery(query,new String[]{"1"});
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
-            reserva = new Reserva(cursor.getString(cursor.getColumnIndex("nomProd")),
+
+            String fecha = utils.fromYYYYMMDDtoDDMMYYYY(cursor.getString(cursor.getColumnIndex("fechaEntregaInicial")));
+
+            reserva = new Reserva(cursor.getString(cursor.getColumnIndex("idReserva")),
+                    cursor.getString(cursor.getColumnIndex("nomProd")),
                     cursor.getString(cursor.getColumnIndex("totalPagar")),
                     cursor.getString(cursor.getColumnIndex("nombreCompleto")),
                     cursor.getString(cursor.getColumnIndex("fotoProd")),
-                    cursor.getString(cursor.getColumnIndex("cantProd")));
+                    cursor.getString(cursor.getColumnIndex("cantProd")),
+                    fecha);
 
             reservas.add(reserva);
             cursor.moveToNext();
         }
 
         return reservas;
+    }
+
+    public int getIdProdByIdReserva(int idReserva){
+        int idProd = 0;
+
+        Base obj = new Base(context);
+        SQLiteDatabase objDB = obj.getReadableDatabase();
+
+        Cursor cursor = objDB.rawQuery("SELECT idProd FROM Reservas WHERE idReserva = ?",
+                new String[]{String.valueOf(idReserva)});
+        if(cursor.moveToFirst()){
+            idProd = cursor.getInt(cursor.getColumnIndex("idProd"));
+        }
+
+        return idProd;
+    }
+
+    //Método para eliminar una Reserva
+    public int cancelarReserva(int idReserva){
+        int resultado = 0;
+
+        //Obtenemos el "idProd" de la Reserva
+        int idProd = getIdProdByIdReserva(idReserva);
+
+        //Obtenemos la cantidad de producto disponibles para reservar
+        ProductosManagerDB productosManagerDB = new ProductosManagerDB(context);
+        int cantExistencias = productosManagerDB.obtenerCantProductoById(idProd);
+
+        // Creamos objeto de la clase Base
+        Base obj = new Base(context);
+        SQLiteDatabase objDB = obj.getWritableDatabase();
+
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Reservas WHERE idReserva = ? AND estadoReserva = ?",
+                new String[]{String.valueOf(idReserva), "1"});
+        if (cursor.moveToNext()) {
+            int cantReservados = cursor.getInt(cursor.getColumnIndex("cantProd"));
+            cantExistencias = cantExistencias + cantReservados;//Agregamos los productos reservados a las existencias
+
+            //Actualizamos las existencias del producto
+            ContentValues values = new ContentValues();
+            values.put("cantProd", cantExistencias);
+
+            resultado = objDB.update("Productos", values,"idProd = ?", new String[]{String.valueOf(idProd)});
+
+            //Si se actualizaron las existencias del Producto, eliminamos la reserva
+            if(resultado > 0){
+                resultado = objDB.delete("Reservas", "idReserva = ?", new String[]{String.valueOf(idReserva)});
+            }
+        }
+
+        objDB.close();
+
+        return resultado;
     }
 }

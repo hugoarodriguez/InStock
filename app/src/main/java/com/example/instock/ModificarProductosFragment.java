@@ -187,9 +187,9 @@ public class ModificarProductosFragment extends Fragment {
     private void asignarValoresAVistas(String idProd){
 
         //Inovcamos el método para consultar los productos
-        ProductosManagerDB productosManagerDB = new ProductosManagerDB();
+        ProductosManagerDB productosManagerDB = new ProductosManagerDB(getContext());
 
-        producto = productosManagerDB.obtenerProducto(getContext(), String.valueOf(idProdParametro));
+        producto = productosManagerDB.obtenerProducto(String.valueOf(idProdParametro));
 
         Glide.with(getContext()).load(producto.getFotoProd()).into(imgProducto);
         urlFoto = producto.getFotoProd();
@@ -259,9 +259,9 @@ public class ModificarProductosFragment extends Fragment {
                             CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(getContext());
                             int idCatProd = categoriasManagerDB.getIDCategoriaByName(sprCategoria.getSelectedItem().toString());
 
-                            ProductosManagerDB productosManagerDB = new ProductosManagerDB();
+                            ProductosManagerDB productosManagerDB = new ProductosManagerDB(getContext());
                             //Inovcamos el método para modificar el registro a la BD
-                            long resultado = productosManagerDB.modificarProducto(getContext(), idProd,
+                            long resultado = productosManagerDB.modificarProducto(idProd,
                                     nomProd, cantProd, precioProd, detalles, urlFoto, idCatProd);
 
                             if(resultado != -1){
