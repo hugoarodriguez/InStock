@@ -19,7 +19,7 @@ public class ReservasManagerDB {
     }
 
     public long agregarReserva(int idProd, int idCliente, int cantProdActual, int cantProdReservado,
-                               double precioProd){
+                               double precioProd, String fechaEntregaInicial){
         long resultado = 0l;
 
         Base obj = new Base(context);
@@ -29,6 +29,7 @@ public class ReservasManagerDB {
         values.put("idProd", idProd);
         values.put("idCliente", idCliente);
         values.put("cantProd", cantProdReservado);//Cantidad de producto a reservar
+        values.put("fechaEntregaInicial", fechaEntregaInicial);//Fecha en que se debe entregar el producto
         values.put("totalPagar", (precioProd*cantProdReservado));//Total a pagar por el producto
         values.put("estadoReserva", 1);//Indica que aún es una reserva y no se concretó su venta
 
@@ -45,7 +46,6 @@ public class ReservasManagerDB {
                     new String[]{String.valueOf(idProd)});
         }
 
-        //objDB.execSQL(query);
         objDB.close();
 
         return  resultado;
@@ -63,7 +63,7 @@ public class ReservasManagerDB {
         String query = "SELECT nombre||' '||apellido as nombreCompleto, nomProd, Reservas.cantProd, totalPagar, fotoProd " +
                 "FROM Reservas INNER JOIN Productos ON Productos.idProd = Reservas.idProd " +
                 "INNER JOIN Clientes ON Clientes.idCliente = Reservas.idCliente " +
-                "WHERE estadoReserva = ?";
+                "WHERE estadoReserva = ? ORDER BY DATE(fechaEntregaInicial)";
         Cursor cursor = objDB.rawQuery(query,new String[]{"1"});
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {

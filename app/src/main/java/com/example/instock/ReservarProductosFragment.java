@@ -71,6 +71,7 @@ public class ReservarProductosFragment extends Fragment {
     int idCliente = 0;
 
     int cantidad = 1;
+    String fechaEntrega = null;//Variable que almacena la fecha en formato "yyyy-MM-dd", necesario para SQLite
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -224,16 +225,13 @@ public class ReservarProductosFragment extends Fragment {
                         if(dateString.equals(dateStringValidation)){
                             tilFechaReserva.setError("Selecciona una fecha posterior a la actual");
                         } else {
+                            fechaEntrega = utils.millisecondsToYYYYMMDD(selection);
                             etFechaReserva.setText(dateString);
                             tilFechaReserva.setError(null);
                         }
-
                     }
                 });
-
                 picker.show(getParentFragmentManager(), picker.toString());
-
-
             }
         });
     }
@@ -266,8 +264,12 @@ public class ReservarProductosFragment extends Fragment {
                             //TODO: Agregar función para registrar datos en la BD
                             ReservasManagerDB reservasManagerDB = new ReservasManagerDB(getContext());
 
-                            long resultado = reservasManagerDB.agregarReserva(idProdParametro, idCliente,
-                                    Integer.parseInt(producto.getCantidad()), cantidad, Double.parseDouble(producto.getPrecio()));
+                            long resultado = reservasManagerDB.agregarReserva(idProdParametro,
+                                    idCliente,
+                                    Integer.parseInt(producto.getCantidad()),
+                                    cantidad,
+                                    Double.parseDouble(producto.getPrecio()),
+                                    fechaEntrega);
 
                             if(resultado != -1){
                                 Toast.makeText(getContext(), "¡Producto reservado satisfactoriamente!", Toast.LENGTH_SHORT).show();

@@ -172,6 +172,20 @@ public class Utils {
         return stringDate;
     }
 
+    //Convierte millisegundos a formato de fecha "yyyy-MM-yy"
+    public String millisecondsToYYYYMMDD(long millisecondsDate){
+        String stringDate = null;
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-yy");
+
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        stringDate = simpleDateFormat.format(new Date(millisecondsDate));
+
+        return stringDate;
+    }
+
+
+    //Conviete un campo de tipo Date al formato "dd/MM/yyyy"
     public String dateToString(Date date){
         String stringDate = null;
 
