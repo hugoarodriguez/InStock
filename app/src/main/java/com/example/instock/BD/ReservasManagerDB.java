@@ -105,7 +105,39 @@ public class ReservasManagerDB {
         return idProd;
     }
 
-    //Método para eliminar una Reserva
+    //Método para convertir una Reserva en Venta
+    public int convertirReservaEnVenta(int idReserva, String fechaEntregaFinal){
+        int resultado = 0;
+
+        Base obj = new Base(context);
+        SQLiteDatabase objDB = obj.getWritableDatabase();
+
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Reservas WHERE idReserva = ? AND estadoReserva = ?",
+                new String[]{String.valueOf(idReserva), "1"});
+        if(cursor.moveToFirst()){
+            long resultadoInsertVenta = 0;
+
+            //Registramos la Venta
+            ContentValues values = new ContentValues();
+            values.put("idReserva", idReserva);
+            values.put("fechaEntregaFinal", fechaEntregaFinal);
+            resultadoInsertVenta = objDB.insert("Ventas", "idVenta", values);
+
+            //Vetificamos que se haya insertado la Venta
+            if(resultadoInsertVenta > 0){
+                //Establecemos el estado de la Reserva como "2" que significa "Venta"
+                ContentValues valuesUpdate = new ContentValues();
+                valuesUpdate.put("estadoReserva", 2);
+
+                resultado = objDB.update("Reservas", valuesUpdate, "idReserva = ?",
+                        new String[]{String.valueOf(idReserva)});
+            }
+        }
+
+        return resultado;
+    }
+
+    //Método para cancelar una Reserva
     public int cancelarReserva(int idReserva){
         int resultado = 0;
 

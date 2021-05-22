@@ -40,7 +40,8 @@ public class Base extends SQLiteOpenHelper {
 
         //estadoProducto: 1 - Activo, 2 - Eliminado, 3 - Sin stock
         queryProductos = "CREATE TABLE IF NOT EXISTS Productos(idProd INTEGER PRIMARY KEY AUTOINCREMENT, nomProd TEXT, cantProd INTEGER, precioProd REAL, detalle TEXT" +
-                ", fotoProd TEXT, idCatProd INTEGER, estadoProducto INTEGER);";
+                ", fotoProd TEXT, idCatProd INTEGER, estadoProducto INTEGER, " +
+                "FOREIGN KEY(idCatProd) REFERENCES Categorias(idCategoria));";
         db.execSQL(queryProductos);
 
         //estadoReserva: 1 - Reserva, 2 - Venta

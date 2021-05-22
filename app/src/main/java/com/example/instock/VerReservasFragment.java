@@ -23,6 +23,7 @@ import com.example.instock.models.ModalDialogValues;
 import com.example.instock.models.Reserva;
 import com.example.instock.Adapter.ReservasAdaptador;
 import com.example.instock.utils.CreateDialog;
+import com.example.instock.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -133,7 +134,7 @@ public class VerReservasFragment extends Fragment {
             else if(swipeDir == 8){
                 //Convertir venta en reserva
                 recyclerPositionItem = viewHolder.getAdapterPosition();
-                convertirAVenta();
+                convertirAVenta(recyclerPositionItem);
             }
         }
     };
@@ -175,7 +176,7 @@ public class VerReservasFragment extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void convertirAVenta(){
+    private void convertirAVenta(int recyclerPositionItem){
         modalDialogValues.modalDialogValues("Reserva a Venta",
                 "¿Estás seguro que deseas convertir esta reserva en venta?");
 
@@ -184,9 +185,21 @@ public class VerReservasFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                ReservaList.remove(recyclerPositionItem);//Removemos el item segun la posición
-                reservasAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
-                Toast.makeText(getContext(), "La reserva se convirtió en venta", Toast.LENGTH_SHORT).show();
+                ReservasManagerDB reservasManagerDB = new ReservasManagerDB(getContext());
+                int idReserva = Integer.parseInt(ReservaList.get(recyclerPositionItem).getIdReserva());
+                String fechaActual = new Utils().getFechaActual();//Obtenemos la fecha actual
+
+                //Convertimos la Reserva en Venta
+                int resultado = reservasManagerDB.convertirReservaEnVenta(idReserva, fechaActual);
+
+                if(resultado > 0){
+                    ReservaList.remove(recyclerPositionItem);//Removemos el item segun la posición
+                    reservasAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
+                    Toast.makeText(getContext(), "La Reserva se convirtió en Venta", Toast.LENGTH_SHORT).show();
+                } else {
+                    reservasAdaptador.notifyDataSetChanged();//Notoficamos el cambio al Adaptador del RecyclerView
+                    Toast.makeText(getContext(), "No se pudo convertir en Venta", Toast.LENGTH_SHORT).show();
+                }
 
             }
         }).setNegativeButton(null, new DialogInterface.OnClickListener() {

@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -212,5 +213,16 @@ public class Utils {
         }
 
         return stringDate;
+    }
+
+    public String getFechaActual(){
+        String fechaActual = null;
+
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC-6"));//Obtenemos la fecha actual
+        Date currentDate = calendar.getTime();
+        DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        fechaActual = simpleDateFormat.format(currentDate);
+
+        return fechaActual;
     }
 }
