@@ -55,6 +55,7 @@
     <!-- ReservarProductos -->
     <string name="cliente_hint">Nombre del Cliente</string>
     <string name="cantidad_hint">Cantidad de Producto</string>
+    <string name="fecha_entrega_hint">Fecha de Entrega</string>
     <string name="btnReservar">Reservar</string>
 
     <!-- Ver Ventas -->

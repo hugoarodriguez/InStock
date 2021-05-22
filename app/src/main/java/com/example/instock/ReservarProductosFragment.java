@@ -1,5 +1,6 @@
 package com.example.instock;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,13 +28,21 @@ import com.bumptech.glide.Glide;
 import com.example.instock.BD.ClientesManagerDB;
 import com.example.instock.BD.ProductosManagerDB;
 import com.example.instock.BD.ReservasManagerDB;
-import com.example.instock.models.ListaClientes;
 import com.example.instock.models.ModalDialogValues;
 import com.example.instock.models.Producto;
 import com.example.instock.utils.CreateDialog;
+import com.example.instock.utils.Utils;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointForward;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class ReservarProductosFragment extends Fragment {
 
@@ -40,6 +50,7 @@ public class ReservarProductosFragment extends Fragment {
         // Required empty public constructor
     }
 
+    Utils utils = new Utils();
     Producto producto;
 
     //ID del producto recibido por parámetro
@@ -52,8 +63,8 @@ public class ReservarProductosFragment extends Fragment {
     ImageView imgProducto;
     TextView tvProductoVal, tvPrecioVal;
     AutoCompleteTextView actvCliente;
-    EditText edtCantidad;
-    TextInputLayout tilCantidad;
+    EditText etCantidad, etFechaReserva;
+    TextInputLayout tilCantidad, tilFechaReserva;
     ImageButton btnAddCantidad, btnSubCantidad;
     Button  btnReservar, btnCancelar;
 
@@ -84,6 +95,7 @@ public class ReservarProductosFragment extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_reservar_productos, container, false);
         enlazarVistas(vista);
         actvClienteAdapter();
+        etFechaReservaClickListener();
 
         //Invocamos los métodos para sumar/restar valores al "edtCantidad"
         addCantidad();
@@ -114,8 +126,10 @@ public class ReservarProductosFragment extends Fragment {
         tvProductoVal = (TextView)v.findViewById(R.id.tvProductoVal);
         tvPrecioVal = (TextView)v.findViewById(R.id.tvPrecioVal);
         actvCliente = (AutoCompleteTextView)v.findViewById(R.id.actvCliente);
-        edtCantidad = (EditText)v.findViewById(R.id.edtCantidad);
+        etCantidad = (EditText)v.findViewById(R.id.etCantidad);
+        etFechaReserva = (EditText)v.findViewById(R.id.etFechaReserva);
         tilCantidad = (TextInputLayout)v.findViewById(R.id.tilCantidad);
+        tilFechaReserva = (TextInputLayout)v.findViewById(R.id.tilFechaReserva);
         btnAddCantidad = (ImageButton)v.findViewById(R.id.btnAddCantidad);
         btnSubCantidad = (ImageButton)v.findViewById(R.id.btnSubCantidad);
         btnReservar = (Button)v.findViewById(R.id.btnReservar);
@@ -152,43 +166,94 @@ public class ReservarProductosFragment extends Fragment {
         Glide.with(getContext()).load(producto.getFotoProd()).into(imgProducto);
         tvProductoVal.setText(producto.getNomProducto());
         tvPrecioVal.setText("$"+producto.getPrecio());
-        edtCantidad.setText("1");//Colocamos 1 en el valor inicial de la cantidad de producto a reservar
+        etCantidad.setText("1");//Colocamos 1 en el valor inicial de la cantidad de producto a reservar
         cantidad = Integer.parseInt(producto.getCantidad());
     }
 
-    public void addCantidad(){
+    private void addCantidad(){
         btnAddCantidad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO: Evaluar si "cantidad" es igual o mayor que el valor máximo de cantidad extraído de la BD
                 if(cantidad < Integer.parseInt(producto.getCantidad())){
                     cantidad++;
-                    edtCantidad.setText(Integer.toString(cantidad));
+                    etCantidad.setText(Integer.toString(cantidad));
                 }
             }
         });
     }
 
-    public void subCantidad(){
+    private void subCantidad(){
         btnSubCantidad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(cantidad > 1){
                     cantidad--;
-                    edtCantidad.setText(Integer.toString(cantidad));
+                    etCantidad.setText(Integer.toString(cantidad));
                 }
             }
         });
     }
 
-    public void reservar(){
+    //Método para asignar el ClickListener al "etFechaReserva"
+    private void etFechaReservaClickListener(){
+        etFechaReserva.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC-6"));//Obtenemos la fecha actual
+
+                Date currentTime = calendar.getTime();
+
+                System.out.println("Día actual milisegundos: " + calendar.getTime());
+
+                //Establecemos la restricción de escoger una fecha posterior a la actual
+                CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder().
+                        setValidator(DateValidatorPointForward.now());
+
+                MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
+                builder.setTitleText("Fecha de Entrega").setCalendarConstraints(constraintsBuilder.build());
+                MaterialDatePicker<Long> picker = builder.build();
+                picker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
+                    @Override
+                    public void onPositiveButtonClick(Long selection) {
+
+                        String dateString = utils.millisecondsToDDMMYYYY(selection);
+                        String dateStringValidation = utils.dateToString(calendar.getTime());
+
+                        if(dateString.equals(dateStringValidation)){
+                            tilFechaReserva.setError("Selecciona una fecha posterior a la actual");
+                        } else {
+                            etFechaReserva.setText(dateString);
+                            tilFechaReserva.setError(null);
+                        }
+
+                    }
+                });
+
+                picker.show(getParentFragmentManager(), picker.toString());
+
+
+            }
+        });
+    }
+
+    private void reservar(){
 
         btnReservar.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                if(actvCliente.getText().toString().isEmpty()){
-                    actvCliente.setError("Debes seleccionar un Cliente");
+                if(actvCliente.getText().toString().isEmpty()
+                        || etFechaReserva.getText().toString().isEmpty()){
+
+                    if(actvCliente.getText().toString().isEmpty()){
+                        actvCliente.setError("Debes seleccionar un Cliente");
+                    }
+                    if(etFechaReserva.getText().toString().isEmpty()){
+                        tilFechaReserva.setError("Debes seleccionar una fecha");
+                    }
+
                 } else {
                     modalDialogValues.modalDialogValues(getResources().getString(R.string.reservar_title),
                             getResources().getString(R.string.reservar_message));
@@ -258,8 +323,13 @@ public class ReservarProductosFragment extends Fragment {
 
     private void limpiarCampos(){
         cantidad = 1;//TODO: Obtener el valor de "cantidad" de la BD
-        edtCantidad.setText(Integer.toString(cantidad));
+        etCantidad.setText(Integer.toString(cantidad));
+        tilCantidad.setError(null);
+        etFechaReserva.setText(null);
+        tilFechaReserva.setError(null);
         actvCliente.setText(null);
         actvCliente.setError(null);
+
+
     }
 }

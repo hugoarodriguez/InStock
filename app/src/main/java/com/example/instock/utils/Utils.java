@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class Utils {
 
@@ -157,5 +158,28 @@ public class Utils {
         }
 
         return r;
+    }
+
+    //Convierte millisegundos a formato de fecha "dd/MM/yyyy"
+    public String millisecondsToDDMMYYYY(long millisecondsDate){
+        String stringDate = null;
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        stringDate = simpleDateFormat.format(new Date(millisecondsDate));
+
+        return stringDate;
+    }
+
+    public String dateToString(Date date){
+        String stringDate = null;
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        stringDate = simpleDateFormat.format(date);
+
+        return stringDate;
     }
 }

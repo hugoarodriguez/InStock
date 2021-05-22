@@ -109,12 +109,12 @@
                 app:errorEnabled="true">
 
                 <EditText
-                    android:id="@+id/edtCantidad"
+                    android:id="@+id/etCantidad"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/white"
                     android:hint="@string/cantidad_hint"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:clickable="false"
                     android:cursorVisible="false"
                     android:focusable="false"
@@ -144,8 +144,35 @@
                 app:backgroundTint="#FF0000"
                 tools:ignore="RtlSymmetry" />
 
-
         </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilFechaReserva"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/fecha_entrega_hint"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/llCantidad"
+            app:errorEnabled="true">
+
+            <EditText
+                android:id="@+id/etFechaReserva"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:inputType="date"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <AutoCompleteTextView
             android:id="@+id/actvCliente"
@@ -160,7 +187,7 @@
             android:layout_marginRight="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/llCantidad"/>
+            app:layout_constraintTop_toBottomOf="@+id/tilFechaReserva"/>
 
         <Button
             android:id="@+id/btnReservar"
