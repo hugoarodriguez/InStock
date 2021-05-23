@@ -13,106 +13,133 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tvBuscarPor"
+            android:id="@+id/tvFiltrarPor"
+            style="@style/tvTitleBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/tvTitleBold"
-            android:layout_marginStart="@dimen/margin_start_left"
-            android:layout_marginLeft="@dimen/margin_start_left"
-            android:layout_marginTop="20dp"
-            android:text="@string/tvBuscarPor"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="301dp"
+            android:layout_marginRight="301dp"
+            android:text="@string/tvFiltrarPor"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvFiltrarPor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/tvTitleBold"
-            android:layout_marginBottom="10dp"
-            android:text="@string/tvFiltrarPor"
-            app:layout_constraintBottom_toTopOf="@+id/spinner2"
-            app:layout_constraintStart_toStartOf="@+id/spinner2" />
-
-        <RadioGroup
-            android:id="@+id/rgOpciones"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="13dp"
-            android:layout_marginRight="13dp"
-            app:layout_constraintEnd_toStartOf="@+id/spinner2"
-            app:layout_constraintStart_toStartOf="@+id/tvBuscarPor"
-            app:layout_constraintTop_toBottomOf="@+id/tvBuscarPor">
-
-            <RadioButton
-                android:id="@+id/rdbSemana"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:text="@string/rdbSemana" />
-
-            <RadioButton
-                android:id="@+id/rdbMes"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:text="@string/rdbMes" />
-
-            <RadioButton
-                android:id="@+id/rdbAnnio"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:text="@string/rdbAnnio" />
-        </RadioGroup>
-
-        <Spinner
-            android:id="@+id/spinner2"
-            android:layout_width="200dp"
-            android:layout_height="63dp"
-            android:layout_marginEnd="@dimen/margin_start_left"
-            android:layout_marginRight="@dimen/margin_start_left"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilDesde"
+            android:layout_width="394dp"
+            android:layout_height="61dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="24dp"
+            android:hint="Desde"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/tilHasta"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/rgOpciones" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvFiltrarPor">
+
+            <EditText
+                android:id="@+id/dtDesde"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:inputType="date" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilHasta"
+            android:layout_width="386dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="16dp"
+            android:hint="Hasta"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerVentas"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilDesde">
+
+            <EditText
+                android:id="@+id/dtHasta"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:inputType="date" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerVentas"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/margin_start_left"
-            android:layout_marginLeft="@dimen/margin_start_left"
-            android:layout_marginEnd="@dimen/margin_start_left"
-            android:layout_marginRight="@dimen/margin_start_left"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_width="407dp"
+            android:layout_height="483dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="25dp"
+            app:layout_constraintBottom_toTopOf="@+id/tvTotal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tvTotal"
-            app:layout_constraintTop_toBottomOf="@+id/rgOpciones" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tvTotal"
+            style="@style/tvTitleBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/tvTitleBold"
             android:layout_marginStart="@dimen/margin_start_left"
             android:layout_marginLeft="@dimen/margin_start_left"
-            android:text="@string/tvTotal"
             android:layout_marginBottom="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:text="@string/tvTotal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tvTotalVal"
+            style="@style/tvLarger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/tvLarger"
-            android:textSize="20sp"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/tvTotal"
             android:textColor="@color/btnAgregar"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintStart_toEndOf="@id/tvTotal"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvTotal" />
+
+        <Button
+            android:id="@+id/btnFiltrar"
+            android:layout_width="238dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="22dp"
+            android:layout_marginLeft="22dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
+
+            android:text="Filtrar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvFiltrarPor"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
