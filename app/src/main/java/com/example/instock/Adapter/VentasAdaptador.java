@@ -36,7 +36,7 @@ public class VentasAdaptador extends RecyclerView.Adapter<VentasAdaptador.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull VentasAdaptador.ViewHolder holder, int position) {
-        holder.tvCodVal.setText(ventasList.get(position).getCodigo());
+        holder.tvFechaEntregadoVal.setText(ventasList.get(position).getFechaEntregado());
         holder.tvCateVal.setText(ventasList.get(position).getCategoria());
         holder.tvNomProVal.setText(ventasList.get(position).getNombrePro());
         holder.tvCantProVal.setText(ventasList.get(position).getCantidadPro());
@@ -52,7 +52,7 @@ public class VentasAdaptador extends RecyclerView.Adapter<VentasAdaptador.ViewHo
     public  static class ViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView imgFoto;
-        private TextView tvCodVal;
+        private TextView tvFechaEntregadoVal;
         private TextView tvCateVal;
         private TextView tvNomProVal;
         private TextView tvCantProVal;
@@ -62,7 +62,7 @@ public class VentasAdaptador extends RecyclerView.Adapter<VentasAdaptador.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgFoto = itemView.findViewById(R.id.imgProd);
-            tvCodVal = itemView.findViewById(R.id.tvCodVal);
+            tvFechaEntregadoVal = itemView.findViewById(R.id.tvFechaEntregadoVal);
             tvCateVal = itemView.findViewById(R.id.tvCateVal);
             tvNomProVal = itemView.findViewById(R.id.tvNomProVal);
             tvCantProVal = itemView.findViewById(R.id.tvCantProVal);

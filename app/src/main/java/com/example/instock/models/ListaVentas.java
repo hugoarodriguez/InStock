@@ -9,6 +9,7 @@ public class ListaVentas {
     private String cantidadPro;
     private String totalPago;
     private String cliente;
+    private String fechaEntregado;
 
     public String getFotoProd() { return fotoProd; }
 
@@ -60,8 +61,12 @@ public class ListaVentas {
         this.cliente = cliente;
     }
 
+    public String getFechaEntregado() { return fechaEntregado; }
+
+    public void setFechaEntregado(String fechaEntregado) { this.fechaEntregado = fechaEntregado; }
+
     public ListaVentas(String codigo, String categoria, String nombrePro, String cantidadPro,
-                       String totalPago, String cliente, String fotoProd) {
+                       String totalPago, String cliente, String fotoProd, String fechaEntregado) {
 
         this.codigo = codigo;
         this.categoria = categoria;
@@ -70,6 +75,7 @@ public class ListaVentas {
         this.totalPago = totalPago;
         this.cliente = cliente;
         this.fotoProd = fotoProd;
+        this.fechaEntregado = fechaEntregado;
     }
 
     @Override
@@ -82,6 +88,7 @@ public class ListaVentas {
                 ", totalPago='" + totalPago + '\'' +
                 ", cliente='" + cliente + '\'' +
                 ", fotoProd='" + fotoProd + '\'' +
+                ", fechaEntregado='" + fechaEntregado + '\'' +
                 '}';
     }
 }

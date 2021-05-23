@@ -70,7 +70,8 @@
     <string name="tvTotal">Total Ventas: </string>
 
     <!-- Strings para datos de Producto -->
-    <string name="tvCodigo"> Código:</string>
+    <string name="tvFechaEntregado">Fecha Entregado:</string>
+    <string name="tvCodigo">Código:</string>
     <string name="tvCategoria">Categoría:</string>
     <string name="tvCantidad">Cantidad:</string>
     <string name="tvProducto">Producto: </string>
