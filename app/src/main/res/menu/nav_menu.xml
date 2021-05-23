@@ -6,6 +6,21 @@
         android:icon="@drawable/ic_outline_home_24"
         />
 
+    <item android:id="@+id/opc_categorias"
+        android:title="@string/menu_categorias"
+        android:icon="@drawable/ic_outline_categories_24"
+        />
+
+    <item android:id="@+id/opc_agg_clientes"
+        android:title="@string/menu_agg_clientes"
+        android:icon="@drawable/ic_outline_add_customers_24"
+        />
+
+    <item android:id="@+id/opc_clientes"
+        android:title="@string/menu_clientes"
+        android:icon="@drawable/ic_outline_customers_24"
+        />
+
     <item android:id="@+id/opc_agg_productos"
         android:title="@string/menu_agg_productos"
         android:icon="@drawable/ic_outline_add_box_24"
@@ -13,32 +28,17 @@
 
     <item android:id="@+id/opc_productos"
         android:title="@string/menu_productos"
-        android:icon="@drawable/ic_outline_add_box_24"
-        />
-
-    <item android:id="@+id/opc_ventas"
-        android:title="@string/menu_ventas"
-        android:icon="@drawable/ic_outline_add_box_24"
+        android:icon="@drawable/ic_outline_products_24"
         />
 
     <item android:id="@+id/opc_reservas"
         android:title="@string/menu_reservas"
-        android:icon="@drawable/ic_outline_add_box_24"
+        android:icon="@drawable/ic_outline_reservations_24"
         />
 
-    <item android:id="@+id/opc_categorias"
-        android:title="@string/menu_categorias"
-        android:icon="@drawable/ic_outline_add_box_24"
-        />
-
-    <item android:id="@+id/opc_agg_clientes"
-        android:title="@string/menu_agg_clientes"
-        android:icon="@drawable/ic_outline_add_box_24"
-        />
-
-    <item android:id="@+id/opc_clientes"
-        android:title="@string/menu_clientes"
-        android:icon="@drawable/ic_outline_people_alt_24"
+    <item android:id="@+id/opc_ventas"
+        android:title="@string/menu_ventas"
+        android:icon="@drawable/ic_outline_sales_24"
         />
 
     <item android:id="@+id/opc_cerrar_sesion"
