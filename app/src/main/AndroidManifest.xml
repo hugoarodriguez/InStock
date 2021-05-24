@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.instock">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
@@ -16,7 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.InStock2"
-        tools:targetApi="q">
+        tools:targetApi="q"
+        android:name="androidx.multidex.MultiDexApplication" >
+
         <activity android:name=".CambiarPassword" android:screenOrientation="portrait"/>
         <!-- <<<<<<< Updated upstream -->
         <activity android:name=".RecuperarCuenta" android:screenOrientation="portrait"/>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "682751968660",
+    "project_id": "instock-e0d6f",
+    "storage_bucket": "instock-e0d6f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682751968660:android:64f6d3869c6774004e3b81",
+        "android_client_info": {
+          "package_name": "com.example.instock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682751968660-ej8usfkl52isevfcpn3ur12svo4f26bu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmcpAPzMhhe1YKS8KCmDd1TKmBdS8Wkzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682751968660-ej8usfkl52isevfcpn3ur12svo4f26bu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

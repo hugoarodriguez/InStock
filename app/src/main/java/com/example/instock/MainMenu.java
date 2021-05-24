@@ -38,6 +38,7 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
     Toolbar toolbar;
     NavigationView navigationView;
 
+
     Fragment fAgregarProductos, fInicio,fProductos, fVerVentas, fVerReservas, fAgregarCliente,
             fCategorias, fClientes;
     FragmentTransaction transaction;

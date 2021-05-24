@@ -33,6 +33,8 @@
     <string name="registrate">Registrate</string>
     <string name="registrarme">Registrarme</string>
     <string name="nombre_empresa">Nombre de tu empresa/negocio</string>
+    <string name="invalid_mail">Ingrese un email valido</string>
+    <string name="invalid_password">Ingrese una contraseña mayor a 6 digitos</string>
 
     <!--Global -->
     <string name="confirmar_password">Confirmar contraseña</string>
