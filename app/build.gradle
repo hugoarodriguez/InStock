@@ -45,6 +45,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:7.1.1'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.basgeekball:awesome-validation:4.3'
+    implementation 'com.google.firebase:firebase-database:19.7.0'
 
     implementation "androidx.multidex:multidex:2.0.1"
 

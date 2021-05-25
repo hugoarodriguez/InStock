@@ -12,14 +12,20 @@ import androidx.fragment.app.FragmentTransaction;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.instock.models.ModalDialogValues;
+import com.example.instock.models.Usuario;
 import com.example.instock.utils.NoticeDialogFragment;
 import com.example.instock.utils.Utils;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
@@ -84,8 +90,18 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
         fClientes = new VerClientesFragment();
 
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, fInicio).commit();
+
         //Instanciamos el NavigationView
         navigationView = (NavigationView)findViewById(R.id.nav_view);
+
+        //Accedemos al headerView
+        View headerView = navigationView.getHeaderView(0);
+
+        //Asignamos el correo del usuario al "tvUserEmail"
+        TextView tvUserEmail = (TextView)headerView.findViewById(R.id.tvUserEmail);
+        Usuario usuario = Usuario.getInstance();
+        tvUserEmail.setText(usuario.getCorreoUsuario());
+
         //Invocamos el método que enlaza la navegación de los fragments con los items del menú
         navegacionDeFragments();
     }
@@ -251,7 +267,17 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         if(dialogOptionDisplay == 1){
-            finish();//Cerrar sesión
+
+            //Cerramos la sesión si la respuesta del usuario fue "Si"
+            AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Intent intent = new Intent(MainMenu.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+
         } else if(dialogOptionDisplay == 2){
             getSupportFragmentManager().popBackStackImmediate();//Cerramos el Fragment
             utils.displayHamburger(drawerLayout, getSupportActionBar(), toolbar);

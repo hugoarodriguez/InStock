@@ -1,24 +1,30 @@
 package com.example.instock;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.instock.models.Usuario;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 
 import java.util.Arrays;
 import java.util.List;
@@ -65,6 +71,29 @@ public class MainActivity extends AppCompatActivity {
 
     }// Fin onCreate
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull String name, @NonNull Context context, @NonNull AttributeSet attrs) {
+
+        mAutH = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAutH.getCurrentUser();
+
+        //Si currentUser es diferente de null indica que hay una sesión iniciada
+        if(currentUser != null){
+            String userEmail = currentUser.getEmail();
+
+            Usuario usuario = Usuario.getInstance();
+            usuario.setCorreoUsuario(userEmail);
+
+            Intent intent = new Intent(MainActivity.this, MainMenu.class);
+            startActivity(intent);
+            finish();
+        }
+
+
+        return super.onCreateView(name, context, attrs);
+    }
+
     private void logInUser()
     {
         mAutH.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -72,6 +101,12 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
+                    FirebaseUser currentUser = mAutH.getCurrentUser();
+                    String userEmail = currentUser.getEmail();
+
+                    Usuario usuario = Usuario.getInstance();
+                    usuario.setCorreoUsuario(userEmail);
+
                     Intent intent = new Intent(MainActivity.this, MainMenu.class);
                     startActivity(intent);
                     finish();

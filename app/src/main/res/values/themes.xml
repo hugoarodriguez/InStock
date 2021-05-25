@@ -56,4 +56,11 @@
         <item name="spinBars">true</item>
         <item name="color">@android:color/white</item>
     </style>
+
+    <!-- Estilo personalidazo para el hamburger (ícono del Menú lateral) -->
+    <style name="Theme.Principal" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="android:windowBackground">@drawable/splash_screen_background</item>
+
+    </style>
 </resources>
