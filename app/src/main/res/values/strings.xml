@@ -1,21 +1,26 @@
 <resources>
 
     <!-- MainActivity(Login) -->
+    <array name="genero">
+        <item>Seleccione un genero</item>
+        <item>Masculino</item>
+        <item>Femenino</item>
+    </array>
     <string name="app_name">InStock</string>
     <string name="iniciar_sesion">Iniciar Sesión</string>
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
     <string name="recuperar_cuenta"><u>¿Has olvidado tu contraseña?</u></string>
-    <string name="sin_cuenta">¿No tienes cuenta?</string>
 
     <!-- Strings para drawer menu -->
+    <string name="sin_cuenta">¿No tienes cuenta?</string>
     <string name="drawer_open">Menu Abierto</string>
-    <string name="drawer_close">Menu Cerrado</string>
 
     <!-- nav_header -->
-    <string name="registrate_u"><u>Registrate</u></string>
+    <string name="drawer_close">Menu Cerrado</string>
 
     <!-- nav_menu -->
+    <string name="registrate_u"><u>Registrate</u></string>
     <string name="user_icon">User image</string>
     <string name="menu_inicio">Inicio</string>
     <string name="menu_agg_productos">Agregar Productos</string>
@@ -26,17 +31,25 @@
     <string name="menu_agg_clientes">Agregar Clientes</string>
     <string name="menu_clientes">Clientes</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="menu_cerrar_sesion">Cerrar Sesión</string>
+    <string name="menu_acerca_de"><u>Acerca de</u></string>
 
     <!-- CrearCuenta -->
+    <string name="menu_cerrar_sesion">Cerrar Sesión</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="registrate">Registrate</string>
     <string name="registrarme">Registrarme</string>
     <string name="nombre_empresa">Nombre de tu empresa/negocio</string>
     <string name="invalid_mail">Ingrese un email valido</string>
-    <string name="invalid_password">Ingrese una contraseña mayor a 6 digitos</string>
+
+    <!-- Acerca de -->
+    <string name="tvEncabezado">Esta aplicación fue desarrollada por: </string>
+    <string name="tvEnunciado">Esta Aplicación fue desarrollada por:</string>
+    <string name="tvDesarrolladorVal"></string>
+    <string name="tvDevCarnetVal"></string>
+    <string name="imgDev">Dev image</string>
 
     <!--Global -->
+    <string name="invalid_password">Ingrese una contraseña mayor a 6 digitos</string>
     <string name="confirmar_password">Confirmar contraseña</string>
     <string name="nombres">Nombres</string>
     <string name="apellidos">Apellidos</string>
@@ -49,29 +62,29 @@
     <string name="imageViewText">Imagen</string>
     <string name="nombre_ejemplo">Nombre Apellido</string>
     <string name="correo_ejemplo">micorreo@mail.com</string>
-    <string name="saludo">¡Hola User!\nBienvenido a InStock</string>
 
     <!-- AgregarCliente -->
-    <string name="ingCategoria">Ingrese categoría</string>
+    <string name="saludo">¡Hola User!\nBienvenido a InStock</string>
 
     <!-- ReservarProductos -->
+    <string name="ingCategoria">Ingrese categoría</string>
     <string name="cliente_hint">Nombre del Cliente</string>
     <string name="cantidad_hint">Cantidad de Producto</string>
     <string name="fecha_entrega_hint">Fecha de Entrega</string>
     <string name="tvFechaEntrega">Fecha de Entrega:</string>
     <string name="correo_cliente_hint">E-mail del Cliente</string>
-    <string name="btnReservar">Reservar</string>
 
     <!-- Ver Ventas -->
+    <string name="btnReservar">Reservar</string>
     <string name="tvBuscarPor">Buscar por:</string>
     <string name="tvFiltrarPor">Filtrar por:</string>
     <string name="rdbMes">Mes</string>
     <string name="rdbSemana">Semana</string>
     <string name="rdbAnnio">Año</string>
     <string name="tvTotalPagado">Total Pagado:</string>
-    <string name="tvTotal">Total Ventas: </string>
 
     <!-- Strings para datos de Producto -->
+    <string name="tvTotal">Total Ventas: </string>
     <string name="tvFechaEntregado">Fecha Entregado:</string>
     <string name="tvCodigo">Código:</string>
     <string name="tvCategoria">Categoría:</string>
@@ -80,70 +93,65 @@
     <string name="tvCliente">Cliente:</string>
     <string name="tvPrecio">Precio:</string>
     <string name="tvTotalPagar">Total a Pagar:</string>
-    <string name="imgProdu">Imagen del producto</string>
 
     <!-- RecuperarCuenta -->
+    <string name="imgProdu">Imagen del producto</string>
     <string name="recuperar_cuenta_titulo">Recuperar tu cuenta</string>
     <string name="indicacion1_rc">Favor indicar su email.\nUn código para recuperar su cuenta será enviado a su correo electrónico.</string>
     <string name="indicacion2_rc">Ingresa el código de seguridad enviado a tu correo electrónico</string>
     <string name="ingresa_codigo">Ingresa el código</string>
     <string name="btnEnviar">Enviar</string>
-    <string name="btnComprobar">Comprobar</string>
 
     <!-- CambiarPassword -->
+    <string name="btnComprobar">Comprobar</string>
     <string name="cambia_password">Cambia tu contraseña</string>
     <string name="nueva_password">Contraseña nueva</string>
-    <string name="repita_password">Repita la nueva contraseña</string>
 
     <!-- ActualizarPassword -->
+    <string name="repita_password">Repita la nueva contraseña</string>
     <string name="anterior_password">Contraseña anterior</string>
-    <string name="logo">Logo</string>
 
     <!-- String de primer valor de Spinner de Categorías -->
-    <string name="spr_categoria_first_value">Seleccione Categoría</string>
+    <string name="logo">Logo</string>
 
     <!-- String de primer valor de Spinner de Sexos -->
-    <string name="spr_sexo_first_value">Seleccione un genero</string>
+    <string name="spr_categoria_first_value">Seleccione Categoría</string>
 
     <!-- ========================= Strings para mensajes de DIALOGS ========================= -->
 
     <!-- Strings para mensaje de BackButton -->
+    <string name="spr_sexo_first_value">Seleccione un genero</string>
     <string name="back_button_title1">¿Salir sin guardar?</string>
-    <string name="back_button_message1">Se descartarán todos los cambios que no hayas guardado</string>
 
+    <string name="back_button_message1">Se descartarán todos los cambios que no hayas guardado</string>
     <string name="back_button_title2">Volver</string>
-    <string name="back_button_message2">No has finalizado la reserva\n\n¿Estás seguro que deseas volver?</string>
 
     <!-- Strings para mensaje de Cerrar Sesión -->
+    <string name="back_button_message2">No has finalizado la reserva\n\n¿Estás seguro que deseas volver?</string>
     <string name="cerrar_sesion_title">Cerrar Sesión</string>
-    <string name="cerrar_sesion_message">¿Estás seguro que deseas cerrar sesión?</string>
 
     <!-- Strings para mensaje de Eliminar Producto -->
+    <string name="cerrar_sesion_message">¿Estás seguro que deseas cerrar sesión?</string>
     <string name="eliminar_producto_title">Eliminar Producto</string>
-    <string name="eliminar_producto_message">¿Estás seguro que deseas eliminar este producto?</string>
 
     <!-- Strings para mensaje de redirección a ModificarProducto -->
+    <string name="eliminar_producto_message">¿Estás seguro que deseas eliminar este producto?</string>
     <string name="go_to_modificar_producto_title">Modificar Producto</string>
-    <string name="go_to_modificar_producto_message">¿Quieres modificar este producto?</string>
 
     <!-- Strings para mensaje de confirmación de ModificarProducto -->
+    <string name="go_to_modificar_producto_message">¿Quieres modificar este producto?</string>
     <string name="modificar_producto_title">Modificar Producto</string>
-    <string name="modificar_producto_message">¿Estás seguro que quieres modificar este producto?</string>
 
     <!-- Strings para mensaje de redirección a ReservarProducto -->
+    <string name="modificar_producto_message">¿Estás seguro que quieres modificar este producto?</string>
     <string name="go_to_reservas_title">Reservar Producto</string>
-    <string name="go_to_reservas_message">¿Quieres reservar este producto?\n\nSe cargará un formulario para hacerlo.</string>
 
     <!-- Strings para mensaje de confirmación de ReservarProducto -->
+    <string name="go_to_reservas_message">¿Quieres reservar este producto?\n\nSe cargará un formulario para hacerlo.</string>
     <string name="reservas_title">Reservar Producto</string>
-    <string name="reservas_message">¿Estás seguro que quieres reservar este producto?</string>
 
     <!-- Array para SPINNER de AgregarClienteFragment -->
-    <array name="genero">
-        <item>Seleccione un genero</item>
-        <item>Masculino</item>
-        <item>Femenino</item>
-    </array>
+    <string name="reservas_message">¿Estás seguro que quieres reservar este producto?</string>
     <!-- Strings para mensaje de btnCancelar -->
     <string name="cancelar_title">Cancelar</string>
     <string name="cancelar_message">Los datos del formulario se reestablecerán a sus valores iniciales ¿Estás seguro?</string>

@@ -64,10 +64,10 @@ public class VentasAdaptador extends RecyclerView.Adapter<VentasAdaptador.ViewHo
             imgFoto = itemView.findViewById(R.id.imgProd);
             tvFechaEntregadoVal = itemView.findViewById(R.id.tvFechaEntregadoVal);
             tvCateVal = itemView.findViewById(R.id.tvCateVal);
-            tvNomProVal = itemView.findViewById(R.id.tvNomProVal);
+            tvNomProVal = itemView.findViewById(R.id.tvDevCarnetVal);
             tvCantProVal = itemView.findViewById(R.id.tvCantProVal);
             tvPrecioProVal = itemView.findViewById(R.id.tvPrecioProVal);
-            tvClienteProVal = itemView.findViewById(R.id.tvClienteProVal);
+            tvClienteProVal = itemView.findViewById(R.id.tvDesarrolladorVal);
         }
     }
 }

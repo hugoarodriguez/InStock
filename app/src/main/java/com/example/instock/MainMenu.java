@@ -46,7 +46,7 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
 
 
     Fragment fAgregarProductos, fInicio,fProductos, fVerVentas, fVerReservas, fAgregarCliente,
-            fCategorias, fClientes;
+            fCategorias, fClientes, fAcercaDe;
     FragmentTransaction transaction;
 
     Utils utils = new Utils();
@@ -88,7 +88,7 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
         fCategorias = new CategoriasFragment();
         fProductos = new ConsultaProductosFragment() ;
         fClientes = new VerClientesFragment();
-
+        fAcercaDe = new AcercaDe();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, fInicio).commit();
 
         //Instanciamos el NavigationView
@@ -190,6 +190,14 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
                 case R.id.opc_clientes:
                     utils.changeActionBarTitle("Ver Clientes", getSupportActionBar());
                     transaction.replace(R.id.fragment_container_view, fClientes);
+                    transaction.addToBackStack(null);
+                    drawerLayout.closeDrawers();
+                    transaction.commit();
+                    break;
+
+                case R.id.opc_acerca_de:
+                    utils.changeActionBarTitle("Acerca De", getSupportActionBar());
+                    transaction.replace(R.id.fragment_container_view, fAcercaDe);
                     transaction.addToBackStack(null);
                     drawerLayout.closeDrawers();
                     transaction.commit();
