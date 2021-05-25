@@ -15,9 +15,12 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.instock.BD.ProductosManagerDB;
@@ -27,6 +30,7 @@ import com.example.instock.models.ModalDialogValues;
 import com.example.instock.models.Producto;
 import com.example.instock.Adapter.ProductoAdaptadpr;
 import com.example.instock.utils.CreateDialog;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 
@@ -39,6 +43,8 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
     RecyclerView recyclerProducto;
     ProductoAdaptadpr productoAdaptador;
     ArrayList<Producto> ProductoList;
+    EditText edtNomProducto;
+    TextInputLayout tilNomProducto;
 
     //Variable que almacena la posición del item al que se le hizo "swipe"
     private int  recyclerPositionItem;
@@ -52,9 +58,10 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
                              Bundle savedInstanceState) {
 
         vista = inflater.inflate(R.layout.fragment_consulta_productos, container, false);
-
-        //Agregado
         cargarDatos();
+        tilNomProducto = (TextInputLayout)vista.findViewById(R.id.tilNomProducto);
+        edtNomProducto = (EditText)vista.findViewById(R.id.edtNomProducto);
+        edtChangedListener();
         return vista;
     }
 
@@ -83,6 +90,53 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
         productoAdaptador = new ProductoAdaptadpr( ProductoList, getActivity(), this);
 
         recyclerProducto.setAdapter(productoAdaptador);
+    }
+
+    //Método para listar los productos según el valor escrito en edtNomProducto
+    private void cargarDatosLike(String nomProducto) {
+
+        //Inovcamos el método para consultar los productos
+        ProductosManagerDB productosManagerDB = new ProductosManagerDB(getContext());
+
+        ProductoList = productosManagerDB.obtenerProductosLike(nomProducto);
+
+        RecyclerView recyclerProducto = vista.findViewById(R.id.recyclerProductos);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerProducto.setLayoutManager(layoutManager);
+
+        //Enlazamos el simpleItemTouchCallback con el recyclerProducto
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerProducto);
+
+        productoAdaptador = new ProductoAdaptadpr( ProductoList, getActivity(), this);
+
+        recyclerProducto.setAdapter(productoAdaptador);
+    }
+
+    //Método para enlazar los editText con el ChangedListener
+    private void edtChangedListener(){
+
+        edtNomProducto.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() > 1){
+                    cargarDatosLike(s.toString());
+                }
+                else{
+                    cargarDatos();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     //Objeto de tipo ItemTouchHelper que permite realizar el swipe

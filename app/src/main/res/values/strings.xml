@@ -54,6 +54,9 @@
     <!-- AgregarCliente -->
     <string name="ingCategoria">Ingrese categoría</string>
 
+    <!-- ConsultarProductos -->
+    <string name="producto_hint">Nombre del Producto</string>
+
     <!-- ReservarProductos -->
     <string name="cliente_hint">Nombre del Cliente</string>
     <string name="cantidad_hint">Cantidad de Producto</string>

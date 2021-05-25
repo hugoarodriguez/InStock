@@ -102,6 +102,37 @@ public class ProductosManagerDB {
         return productos;
     }
 
+    //Método para obtener el listado de Productos (únicamente los activos)
+    public ArrayList<Producto> obtenerProductosLike(String nomProd){
+        CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(context);
+        Producto producto;
+        ArrayList<Producto> productos = new ArrayList<>();
+        Utils utils = new Utils();
+
+        Base obj = new Base(context);
+        SQLiteDatabase objDB = obj.getReadableDatabase();
+
+        // Creamos Cursor
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Productos WHERE estadoProducto = ? " +
+                        "AND nomProd LIKE ?",
+                new String[]{"1", nomProd+"%"});
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+            producto = new Producto((cursor.getString(cursor.getColumnIndex("idProd"))),
+                    (cursor.getString(cursor.getColumnIndex("nomProd"))),
+                    categoriasManagerDB.getNameCategoriaById(cursor.getInt(cursor.getColumnIndex("idCatProd"))),
+                    (cursor.getString(cursor.getColumnIndex("cantProd"))),
+                    (cursor.getString(cursor.getColumnIndex("precioProd"))),
+                    (cursor.getString(cursor.getColumnIndex("fotoProd"))),
+                    (cursor.getString(cursor.getColumnIndex("detalle"))));
+
+            productos.add(producto);
+            cursor.moveToNext();
+        }
+
+        return productos;
+    }
+
     //Método para obtener los datos de un Producto (si está activo)
     public Producto obtenerProducto(String idProd){
         CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(context);
