@@ -89,7 +89,7 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24);
 
-<<<<<<< HEAD
+
         //Instancia de los fragments
         fAgregarProductos = new AgregarProductosFragment();
         fInicio = new InicioFragment();
@@ -100,11 +100,11 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
         fProductos = new ConsultaProductosFragment() ;
         fClientes = new VerClientesFragment();
         fAcercaDe = new AcercaDe();
-=======
+
         instanciarFragments();//Instancia de los fragments
 
         //Mostramos el FragmentInicio en nuestro contenedor
->>>>>>> c348a937d34181bcfefbf321a9d98a723ed7a6c6
+
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, fInicio).commit();
 
         //Instanciamos el NavigationView
@@ -344,8 +344,8 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Usuario usuario = snapshot.getValue(Usuario.class);
-                tvUserName.setText(usuario.getNombresUsuario() + " " + usuario.getApellidosUsuario());
-                tvUserEmail.setText(usuario.getCorreoUsuario());
+                //tvUserName.setText(usuario.getNombresUsuario() + " " + usuario.getApellidosUsuario());
+                //tvUserEmail.setText(usuario.getCorreoUsuario());
                 //Asignamos los valores al textView de FragmentInicio
                 try{
                     Bundle datos = new Bundle();
