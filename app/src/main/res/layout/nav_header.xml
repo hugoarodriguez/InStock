@@ -40,7 +40,7 @@
                 android:layout_height="32dp"
                 android:text="@string/nombre_ejemplo"
                 android:onClick="actualizarPassword"
-                style="@style/tvAsLink2"
+                style="@style/tvAsLink3"
                 android:textSize="20sp" />
 
             <TextView
@@ -48,6 +48,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="21dp"
                 android:text="@string/correo_ejemplo"
+                style="@style/tvLarger"
+                android:textColor="@color/black"
                 android:textSize="16sp"/>
         </LinearLayout>
 

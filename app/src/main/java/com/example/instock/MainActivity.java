@@ -80,10 +80,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Si currentUser es diferente de null indica que hay una sesión iniciada
         if(currentUser != null){
-            String userEmail = currentUser.getEmail();
-
-            Usuario usuario = Usuario.getInstance();
-            usuario.setCorreoUsuario(userEmail);
 
             Intent intent = new Intent(MainActivity.this, MainMenu.class);
             startActivity(intent);
