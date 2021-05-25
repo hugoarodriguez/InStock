@@ -130,6 +130,10 @@
     <string name="back_button_message2">No has finalizado la reserva\n\n¿Estás seguro que deseas volver?</string>
     <string name="cerrar_sesion_title">Cerrar Sesión</string>
 
+    <!-- Strings para mensaje de confirmación de ActualizarPassword -->
+    <string name="actualizar_password_title">Actualizar Contraseña</string>
+    <string name="actualizar_password_message">¿Estás seguro que quieres actualizar tu contraseña?</string>
+
     <!-- Strings para mensaje de Eliminar Producto -->
     <string name="cerrar_sesion_message">¿Estás seguro que deseas cerrar sesión?</string>
     <string name="eliminar_producto_title">Eliminar Producto</string>

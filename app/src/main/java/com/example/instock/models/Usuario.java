@@ -19,7 +19,9 @@ public class Usuario {
     }
 
     private String correoUsuario;
-    private String nombreUsuario;
+    private String nombresUsuario;
+    private String apellidosUsuario;
+    private String nombreEmpresa;
 
     public String getCorreoUsuario() {
         return correoUsuario;
@@ -29,17 +31,28 @@ public class Usuario {
         this.correoUsuario = correoUsuario;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public String getNombresUsuario() {
+        return nombresUsuario;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setNombresUsuario(String nombresUsuario) {
+        this.nombresUsuario = nombresUsuario;
     }
 
-    public Usuario(String correoUsuario, String nombreUsuario){
+    public String getApellidosUsuario() { return apellidosUsuario; }
+
+    public void setApellidosUsuario(String apellidosUsuario) { this.apellidosUsuario = apellidosUsuario; }
+
+    public String getNombreEmpresa() { return nombreEmpresa; }
+
+    public void setNombreEmpresa(String nombreEmpresa) { this.nombreEmpresa = nombreEmpresa; }
+
+    public Usuario(String correoUsuario, String nombresUsuario, String apellidosUsuario,
+                   String nombreEmpresa){
         this.correoUsuario = correoUsuario;
-        this.nombreUsuario = nombreUsuario;
+        this.nombresUsuario = nombresUsuario;
+        this.apellidosUsuario = apellidosUsuario;
+        this.nombreEmpresa = nombreEmpresa;
     }
 
     @NonNull
@@ -47,7 +60,9 @@ public class Usuario {
     public String toString() {
         return "Usuario{" +
                 "correoUsuario='" + correoUsuario + '\'' +
-                ", nombreUsuario='" + nombreUsuario + '\'' +
+                ", nombreUsuario='" + nombresUsuario + '\'' +
+                ", apellidosUsuario='" + apellidosUsuario + '\'' +
+                ", nombreEmpresa='" + nombreEmpresa + '\'' +
                 '}';
     }
 }

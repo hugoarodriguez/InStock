@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.instock.firebasemanager.FirebaseManager;
 import com.example.instock.models.ModalDialogValues;
 import com.example.instock.models.Usuario;
 import com.example.instock.utils.NoticeDialogFragment;
@@ -27,6 +28,15 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.NoticeDialogListener {
 
@@ -79,6 +89,7 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24);
 
+<<<<<<< HEAD
         //Instancia de los fragments
         fAgregarProductos = new AgregarProductosFragment();
         fInicio = new InicioFragment();
@@ -89,34 +100,48 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
         fProductos = new ConsultaProductosFragment() ;
         fClientes = new VerClientesFragment();
         fAcercaDe = new AcercaDe();
+=======
+        instanciarFragments();//Instancia de los fragments
+
+        //Mostramos el FragmentInicio en nuestro contenedor
+>>>>>>> c348a937d34181bcfefbf321a9d98a723ed7a6c6
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, fInicio).commit();
 
         //Instanciamos el NavigationView
         navigationView = (NavigationView)findViewById(R.id.nav_view);
 
-        //Accedemos al headerView
-        View headerView = navigationView.getHeaderView(0);
-
-        //Asignamos el correo del usuario al "tvUserEmail"
-        TextView tvUserEmail = (TextView)headerView.findViewById(R.id.tvUserEmail);
-        Usuario usuario = Usuario.getInstance();
-        tvUserEmail.setText(usuario.getCorreoUsuario());
+        loadUserProfile(navigationView);//Cargamos los datos del perfil del usuario
 
         //Invocamos el método que enlaza la navegación de los fragments con los items del menú
         navegacionDeFragments();
     }
 
+    private void instanciarFragments(){
+        fAgregarProductos = new AgregarProductosFragment();
+        fInicio = new InicioFragment();
+        fVerVentas = new VerVentasFragment();
+        fVerReservas = new VerReservasFragment();
+        fAgregarCliente = new AgregarClienteFragment();
+        fCategorias = new CategoriasFragment();
+        fProductos = new ConsultaProductosFragment() ;
+        fClientes = new VerClientesFragment();
+    }
+
     //Método para actualizar contraseña
-    //Se ejecuta al hacer click en el tvUserName del NavHeader
-    public void actualizarPassword(View v){
-        utils.changeActionBarTitle("Actualizar Contraseña", getSupportActionBar());
-        Fragment fActualizarPassword = new ActualizarPasswordFragment();
-        transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container_view, fActualizarPassword);
-        transaction.addToBackStack(null);
-        drawerLayout.closeDrawers();
-        transaction.commit();
-        drawerLayout.closeDrawers();
+    private void actualizarPassword(TextView tvUserName){
+        tvUserName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                utils.changeActionBarTitle("Actualizar Contraseña", getSupportActionBar());
+                Fragment fActualizarPassword = new ActualizarPasswordFragment();
+                transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container_view, fActualizarPassword);
+                transaction.addToBackStack(null);
+                drawerLayout.closeDrawers();
+                transaction.commit();
+                drawerLayout.closeDrawers();
+            }
+        });
     }
 
     @Override
@@ -294,6 +319,50 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
-        //Toast.makeText(this, "Negative", Toast.LENGTH_SHORT).show();
+
+    }
+
+    //Método que carga los datos del perfil del Usuario
+    private void loadUserProfile(NavigationView navigationView){
+        //Accedemos al headerView
+        View headerView = navigationView.getHeaderView(0);
+        //Obtenemos los TextView correspondientes al NavHeader
+        TextView tvUserName = (TextView)headerView.findViewById(R.id.tvUserName);
+        TextView tvUserEmail = (TextView)headerView.findViewById(R.id.tvUserEmail);
+
+        actualizarPassword(tvUserName);
+        //Obtenemos los datos almacenados en Firebase
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = currentUser.getUid();
+
+        //Solicitamos los datos
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String url = "https://instock-e0d6f-default-rtdb.firebaseio.com/users/" + userId;
+        DatabaseReference ref = database.getReferenceFromUrl(url);
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Usuario usuario = snapshot.getValue(Usuario.class);
+                tvUserName.setText(usuario.getNombresUsuario() + " " + usuario.getApellidosUsuario());
+                tvUserEmail.setText(usuario.getCorreoUsuario());
+                //Asignamos los valores al textView de FragmentInicio
+                try{
+                    Bundle datos = new Bundle();
+                    datos.putString("nombreUsuario", usuario.getNombresUsuario());
+                    fInicio.setArguments(datos);
+                    View viewFragmentInicio = fInicio.getView();
+                    TextView tvSaludo = (TextView)viewFragmentInicio.findViewById(R.id.tvSaludo);
+                    tvSaludo.setText("¡Hola " + usuario.getNombresUsuario() + "!\nBienvenido a InStock");
+                } catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

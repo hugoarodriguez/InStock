@@ -14,6 +14,16 @@
         <item name="android:textColor">@color/mi_selector</item>
     </style>
 
+    <!-- Efecto 2 al hacer click en un TextView -->
+    <style name="tvAsLink3">
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:textColor">@color/mi_selector</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
     <!-- Estilo para TextView utilizado para títulos -->
     <style name="tvTitleBold">
         <item name="android:textSize">20sp</item>
@@ -26,5 +36,10 @@
     <style name="tvLarger">
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="tvLarger2">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
     </style>
 </resources>

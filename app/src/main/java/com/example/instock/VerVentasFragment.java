@@ -94,7 +94,12 @@ public class VerVentasFragment extends Fragment {
         ventaAdaptador = new VentasAdaptador(VentasList, getActivity());
         recyclerVentas.setAdapter(ventaAdaptador);
 
-        tvTotalVal.setText("$" + ventasManagerDB.obtenerTotalVentas(fechaDesde, fechaHasta));
+        if(ventasManagerDB.obtenerTotalVentas(fechaDesde, fechaHasta) == null){
+            tvTotalVal.setText("$0.00");
+        } else {
+            tvTotalVal.setText("$" + ventasManagerDB.obtenerTotalVentas(fechaDesde, fechaHasta));
+        }
+
     }
 
     //dtDesdeClick();
