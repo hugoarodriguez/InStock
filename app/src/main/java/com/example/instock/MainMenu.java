@@ -326,12 +326,16 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
                 tvUserName.setText(usuario.getNombresUsuario() + " " + usuario.getApellidosUsuario());
                 tvUserEmail.setText(usuario.getCorreoUsuario());
                 //Asignamos los valores al textView de FragmentInicio
-                Bundle datos = new Bundle();
-                datos.putString("nombreUsuario", usuario.getNombresUsuario());
-                fInicio.setArguments(datos);
-                View viewFragmentInicio = fInicio.getView();
-                TextView tvSaludo = (TextView)viewFragmentInicio.findViewById(R.id.tvSaludo);
-                tvSaludo.setText("¡Hola " + usuario.getNombresUsuario() + "!\nBienvenido a InStock");
+                try{
+                    Bundle datos = new Bundle();
+                    datos.putString("nombreUsuario", usuario.getNombresUsuario());
+                    fInicio.setArguments(datos);
+                    View viewFragmentInicio = fInicio.getView();
+                    TextView tvSaludo = (TextView)viewFragmentInicio.findViewById(R.id.tvSaludo);
+                    tvSaludo.setText("¡Hola " + usuario.getNombresUsuario() + "!\nBienvenido a InStock");
+                } catch (Exception e){
+
+                }
             }
 
             @Override

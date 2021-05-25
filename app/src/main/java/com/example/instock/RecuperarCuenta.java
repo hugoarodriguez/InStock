@@ -9,7 +9,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -58,7 +57,7 @@ public class RecuperarCuenta extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         mail = findViewById(R.id.etEmail);
-        recuperar = findViewById(R.id.btnComprobar);
+        recuperar = findViewById(R.id.btnConfirmar);
         progress = new ProgressDialog(this);
 
         getRecuperar();

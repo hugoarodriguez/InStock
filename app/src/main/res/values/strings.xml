@@ -118,6 +118,10 @@
     <string name="cerrar_sesion_title">Cerrar Sesión</string>
     <string name="cerrar_sesion_message">¿Estás seguro que deseas cerrar sesión?</string>
 
+    <!-- Strings para mensaje de confirmación de ActualizarPassword -->
+    <string name="actualizar_password_title">Actualizar Contraseña</string>
+    <string name="actualizar_password_message">¿Estás seguro que quieres actualizar tu contraseña?</string>
+
     <!-- Strings para mensaje de Eliminar Producto -->
     <string name="eliminar_producto_title">Eliminar Producto</string>
     <string name="eliminar_producto_message">¿Estás seguro que deseas eliminar este producto?</string>
