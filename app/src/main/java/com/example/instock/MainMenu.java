@@ -56,7 +56,7 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
 
 
     Fragment fAgregarProductos, fInicio,fProductos, fVerVentas, fVerReservas, fAgregarCliente,
-            fCategorias, fClientes;
+            fCategorias, fClientes, fAcercaDe;
     FragmentTransaction transaction;
 
     Utils utils = new Utils();
@@ -89,9 +89,22 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24);
 
+
+        //Instancia de los fragments
+        fAgregarProductos = new AgregarProductosFragment();
+        fInicio = new InicioFragment();
+        fVerVentas = new VerVentasFragment();
+        fVerReservas = new VerReservasFragment();
+        fAgregarCliente = new AgregarClienteFragment();
+        fCategorias = new CategoriasFragment();
+        fProductos = new ConsultaProductosFragment() ;
+        fClientes = new VerClientesFragment();
+        fAcercaDe = new AcercaDe();
+
         instanciarFragments();//Instancia de los fragments
 
         //Mostramos el FragmentInicio en nuestro contenedor
+
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, fInicio).commit();
 
         //Instanciamos el NavigationView
@@ -202,6 +215,14 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
                 case R.id.opc_clientes:
                     utils.changeActionBarTitle("Ver Clientes", getSupportActionBar());
                     transaction.replace(R.id.fragment_container_view, fClientes);
+                    transaction.addToBackStack(null);
+                    drawerLayout.closeDrawers();
+                    transaction.commit();
+                    break;
+
+                case R.id.opc_acerca_de:
+                    utils.changeActionBarTitle("Acerca De", getSupportActionBar());
+                    transaction.replace(R.id.fragment_container_view, fAcercaDe);
                     transaction.addToBackStack(null);
                     drawerLayout.closeDrawers();
                     transaction.commit();
@@ -323,8 +344,8 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Usuario usuario = snapshot.getValue(Usuario.class);
-                tvUserName.setText(usuario.getNombresUsuario() + " " + usuario.getApellidosUsuario());
-                tvUserEmail.setText(usuario.getCorreoUsuario());
+                //tvUserName.setText(usuario.getNombresUsuario() + " " + usuario.getApellidosUsuario());
+                //tvUserEmail.setText(usuario.getCorreoUsuario());
                 //Asignamos los valores al textView de FragmentInicio
                 try{
                     Bundle datos = new Bundle();
