@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.instock.R;
+import com.example.instock.firebasemanager.FirebaseManager;
 import com.example.instock.models.ListCategorias;
 import com.example.instock.models.Producto;
 import com.example.instock.utils.Utils;
@@ -15,9 +16,13 @@ import java.util.ArrayList;
 public class ProductosManagerDB {
 
     Context context;
+    String userID;
 
     public ProductosManagerDB(Context context){
         this.context = context;
+        FirebaseManager firebaseManager = new FirebaseManager();
+        //Obtenemos el id del Usuario que se ha registrado
+        userID = firebaseManager.getCurrentUserId();
     }
 
     //Métotodo para agregar poductos
@@ -37,6 +42,7 @@ public class ProductosManagerDB {
         values.put("fotoProd", fotoProd);
         values.put("idCatProd", idCatProd);
         values.put("estadoProducto", 1);//Producto Activo
+        values.put("userID", userID);
 
         //En la siguiente consulta pasamos el valor "null" para el "Id" ya que este es autoincrementable
         resultado = objDB.insert("Productos", "idProd", values);
@@ -83,8 +89,8 @@ public class ProductosManagerDB {
         SQLiteDatabase objDB = obj.getReadableDatabase();
 
         // Creamos Cursor
-        Cursor cursor = objDB.rawQuery("SELECT * FROM Productos WHERE estadoProducto = ?",
-                new String[]{"1"});
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Productos WHERE estadoProducto = ? AND userID = ?",
+                new String[]{"1", userID});
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
             producto = new Producto((cursor.getString(cursor.getColumnIndex("idProd"))),
@@ -114,8 +120,8 @@ public class ProductosManagerDB {
 
         // Creamos Cursor
         Cursor cursor = objDB.rawQuery("SELECT * FROM Productos WHERE estadoProducto = ? " +
-                        "AND nomProd LIKE ?",
-                new String[]{"1", nomProd+"%"});
+                        "AND nomProd LIKE ? AND userID = ?",
+                new String[]{"1", nomProd+"%", userID});
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
             producto = new Producto((cursor.getString(cursor.getColumnIndex("idProd"))),

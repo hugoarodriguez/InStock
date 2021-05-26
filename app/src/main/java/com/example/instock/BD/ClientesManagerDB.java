@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.instock.firebasemanager.FirebaseManager;
 import com.example.instock.models.ListaClientes;
 import com.example.instock.models.Producto;
 
@@ -13,9 +14,13 @@ import java.util.ArrayList;
 public class ClientesManagerDB {
 
     private Context context;
+    String userID;
 
     public ClientesManagerDB(Context context){
         this.context = context;
+        FirebaseManager firebaseManager = new FirebaseManager();
+        //Obtenemos el id del Usuario que se ha registrado
+        userID = firebaseManager.getCurrentUserId();
     }
 
     public long agregarCliente(String nombre, String apellido, String sexo, String telefono, String correo){
@@ -31,6 +36,7 @@ public class ClientesManagerDB {
         values.put("telefono", telefono);
         values.put("correo", correo);
         values.put("estadoCliente", 1);
+        values.put("userID", userID);
 
         //En la siguiente consulta pasamos el valor "null" para el "Id" ya que este es autoincrementable
         resultado = objDB.insert("Clientes", "idCliente", values);
@@ -71,8 +77,8 @@ public class ClientesManagerDB {
         SQLiteDatabase objDB = obj.getReadableDatabase();
 
         // Creamos Cursor
-        Cursor cursor = objDB.rawQuery("SELECT * FROM Clientes WHERE estadoCliente = ?",
-                new String[]{"1"});
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Clientes WHERE estadoCliente = ? AND userID = ?",
+                new String[]{"1", userID});
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
             cliente = new ListaClientes(cursor.getString(cursor.getColumnIndex("idCliente")),
@@ -99,8 +105,8 @@ public class ClientesManagerDB {
 
         // Creamos Cursor
         Cursor cursor = objDB.rawQuery("SELECT * FROM Clientes WHERE estadoCliente = ? " +
-                        "AND correo LIKE ?",
-                new String[]{"1", correo+"%"});
+                        "AND correo LIKE ? AND userID = ?",
+                new String[]{"1", correo+"%", userID});
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
             cliente = new ListaClientes(cursor.getString(cursor.getColumnIndex("idCliente")),
@@ -125,8 +131,8 @@ public class ClientesManagerDB {
         SQLiteDatabase objDB = obj.getReadableDatabase();
 
         // Creamos Cursor
-        Cursor cursor = objDB.rawQuery("SELECT * FROM Clientes WHERE estadoCliente = ?",
-                new String[]{"1"});
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Clientes WHERE estadoCliente = ? AND userID = ?",
+                new String[]{"1", userID});
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
             nombresClientes.add(cursor.getString(cursor.getColumnIndex("correo")));
@@ -170,8 +176,9 @@ public class ClientesManagerDB {
         SQLiteDatabase objDB = obj.getReadableDatabase();
 
         // Creamos Cursor
-        Cursor cursor = objDB.rawQuery("SELECT idCliente FROM Clientes WHERE correo = ? AND estadoCliente = ?"
-                ,new String[]{correo, "1"});
+        Cursor cursor = objDB.rawQuery("SELECT idCliente FROM Clientes WHERE correo = ? AND estadoCliente = ? " +
+                        "AND userID = ?"
+                ,new String[]{correo, "1", userID});
 
         if (cursor.moveToFirst()) {
             idCliente = cursor.getInt(cursor.getColumnIndex("idCliente"));

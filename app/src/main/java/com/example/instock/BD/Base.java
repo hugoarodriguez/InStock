@@ -27,34 +27,40 @@ public class Base extends SQLiteOpenHelper {
     // Metodo onCreate para crear la Base de datos
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String queryCategorias = null, queryClientes = null, queryProductos = null,
-                queryReservas = null, queryVentas = null;
+        String query = null;
 
         //estadoCategoria: 1 - Activa, 2 - Eliminada
-        queryCategorias = "CREATE TABLE IF NOT EXISTS Categorias(idCategoria INTEGER PRIMARY KEY AUTOINCREMENT, categoria TEXT, estadoCategoria INTEGER);";
-        db.execSQL(queryCategorias);
+        query = "CREATE TABLE IF NOT EXISTS Categorias(idCategoria INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "categoria TEXT, estadoCategoria INTEGER, userID TEXT);";
+        db.execSQL(query);
 
         //estadoCliente: 1 - Activo, 2 - Eliminado
-        queryClientes = "CREATE TABLE IF NOT EXISTS Clientes(idCliente INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, apellido TEXT, sexo TEXT, telefono TEXT, correo TEXT, estadoCliente INTEGER);";
-        db.execSQL(queryClientes);
+        query = "CREATE TABLE IF NOT EXISTS Clientes(idCliente INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "nombre TEXT, apellido TEXT, sexo TEXT, telefono TEXT, correo TEXT, estadoCliente INTEGER, " +
+                "userID TEXT);";
+        db.execSQL(query);
 
         //estadoProducto: 1 - Activo, 2 - Eliminado, 3 - Sin stock
-        queryProductos = "CREATE TABLE IF NOT EXISTS Productos(idProd INTEGER PRIMARY KEY AUTOINCREMENT, nomProd TEXT, cantProd INTEGER, precioProd REAL, detalle TEXT" +
-                ", fotoProd TEXT, idCatProd INTEGER, estadoProducto INTEGER, " +
+        query = "CREATE TABLE IF NOT EXISTS Productos(idProd INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "nomProd TEXT, cantProd INTEGER, precioProd REAL, detalle TEXT" +
+                ", fotoProd TEXT, idCatProd INTEGER, estadoProducto INTEGER, userID TEXT, " +
                 "FOREIGN KEY(idCatProd) REFERENCES Categorias(idCategoria));";
-        db.execSQL(queryProductos);
+        db.execSQL(query);
 
         //estadoReserva: 1 - Reserva, 2 - Venta
-        queryReservas = "CREATE TABLE IF NOT EXISTS " +
-                "Reservas(idReserva INTEGER PRIMARY KEY AUTOINCREMENT, idProd INTEGER, idCliente INTEGER, cantProd INTEGER, fechaEntregaInicial TEXT, totalPagar Real, estadoReserva INTEGER," +
+        query = "CREATE TABLE IF NOT EXISTS " +
+                "Reservas(idReserva INTEGER PRIMARY KEY AUTOINCREMENT, idProd INTEGER, idCliente INTEGER, " +
+                "cantProd INTEGER, fechaEntregaInicial TEXT, totalPagar Real, estadoReserva INTEGER, " +
+                "userID TEXT, " +
                 "FOREIGN KEY(idProd) REFERENCES Productos(idProd)," +
                 "FOREIGN KEY(idCliente) REFERENCES Clientes(idCliente));";
-        db.execSQL(queryReservas);
+        db.execSQL(query);
 
-        queryVentas = "CREATE TABLE IF NOT EXISTS " +
-                "Ventas(idVenta INTEGER PRIMARY KEY AUTOINCREMENT, idReserva INTEGER, fechaEntregaFinal TEXT," +
+        query = "CREATE TABLE IF NOT EXISTS " +
+                "Ventas(idVenta INTEGER PRIMARY KEY AUTOINCREMENT, idReserva INTEGER, " +
+                "fechaEntregaFinal TEXT, userID TEXT, " +
                 "FOREIGN KEY(idReserva) REFERENCES Reservas(idReserva));";
-        db.execSQL(queryVentas);
+        db.execSQL(query);
     }
 
     @Override

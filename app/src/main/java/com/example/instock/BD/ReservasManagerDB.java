@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.instock.firebasemanager.FirebaseManager;
 import com.example.instock.models.ListaClientes;
 import com.example.instock.models.Reserva;
 import com.example.instock.utils.Utils;
@@ -15,9 +16,13 @@ import java.util.Date;
 public class ReservasManagerDB {
 
     Context context;
+    String userID;
 
     public ReservasManagerDB(Context context){
         this.context = context;
+        FirebaseManager firebaseManager = new FirebaseManager();
+        //Obtenemos el id del Usuario que se ha registrado
+        userID = firebaseManager.getCurrentUserId();
     }
 
     public long agregarReserva(int idProd, int idCliente, int cantProdActual, int cantProdReservado,
@@ -34,6 +39,7 @@ public class ReservasManagerDB {
         values.put("fechaEntregaInicial", fechaEntregaInicial);//Fecha en que se debe entregar el producto
         values.put("totalPagar", (precioProd*cantProdReservado));//Total a pagar por el producto
         values.put("estadoReserva", 1);//Indica que aún es una reserva y no se concretó su venta
+        values.put("userID", userID);//Indica que aún es una reserva y no se concretó su venta
 
         //En la siguiente consulta pasamos el valor "null" para el "Id" ya que este es autoincrementable
         resultado = objDB.insert("Reservas", "idReserva", values);
@@ -68,8 +74,8 @@ public class ReservasManagerDB {
                 "totalPagar, fotoProd, fechaEntregaInicial " +
                 "FROM Reservas INNER JOIN Productos ON Productos.idProd = Reservas.idProd " +
                 "INNER JOIN Clientes ON Clientes.idCliente = Reservas.idCliente " +
-                "WHERE estadoReserva = ? ORDER BY DATE(fechaEntregaInicial)";
-        Cursor cursor = objDB.rawQuery(query,new String[]{"1"});
+                "WHERE estadoReserva = ? AND userID = ? ORDER BY DATE(fechaEntregaInicial)";
+        Cursor cursor = objDB.rawQuery(query,new String[]{"1", userID});
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
 
@@ -105,8 +111,8 @@ public class ReservasManagerDB {
                 "totalPagar, fotoProd, fechaEntregaInicial " +
                 "FROM Reservas INNER JOIN Productos ON Productos.idProd = Reservas.idProd " +
                 "INNER JOIN Clientes ON Clientes.idCliente = Reservas.idCliente " +
-                "WHERE estadoReserva = ? AND Clientes.correo LIKE ? ORDER BY DATE(fechaEntregaInicial)";
-        Cursor cursor = objDB.rawQuery(query,new String[]{"1", correo+"%"});
+                "WHERE estadoReserva = ? AND Clientes.correo LIKE ? AND Reservas.userID = ? ORDER BY DATE(fechaEntregaInicial)";
+        Cursor cursor = objDB.rawQuery(query,new String[]{"1", correo+"%", userID});
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
 
@@ -158,6 +164,7 @@ public class ReservasManagerDB {
             ContentValues values = new ContentValues();
             values.put("idReserva", idReserva);
             values.put("fechaEntregaFinal", fechaEntregaFinal);
+            values.put("userID", userID);
             resultadoInsertVenta = objDB.insert("Ventas", "idVenta", values);
 
             //Vetificamos que se haya insertado la Venta

@@ -8,6 +8,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +21,7 @@ import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.example.instock.firebasemanager.FirebaseManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -31,6 +34,7 @@ public class CrearCuenta extends AppCompatActivity {
     EditText etCorreo;
     EditText etPassword;
     EditText etConfirmarPass;
+    TextInputLayout tilCPassword;
     Button btnRegistrar;
     AwesomeValidation awesomeValidation;
     FirebaseAuth firebaseAuth;
@@ -78,39 +82,77 @@ public class CrearCuenta extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         etConfirmarPass = findViewById(R.id.etCPassword);
         btnRegistrar = findViewById(R.id.btnLogIn);
+        tilCPassword = findViewById(R.id.tilCPassword);
+        edtChangedListener(etConfirmarPass, tilCPassword);
 
+        crearCuenta();
+
+    }
+
+    private void crearCuenta(){
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String mail = etCorreo.getText().toString().trim();
                 String pass = etPassword.getText().toString().trim();
+                String confirmPass = etConfirmarPass.getText().toString().trim();
                 String nombres = etNombres.getText().toString().trim();
                 String apellidos = etApellidos.getText().toString().trim();
                 String empresa = etEmpresa.getText().toString().trim();
 
                 if (awesomeValidation.validate()) {
-                    firebaseAuth.createUserWithEmailAndPassword(mail, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
 
-                                String userID = task.getResult().getUser().getUid();
+                    if(pass == confirmPass){
+                        firebaseAuth.createUserWithEmailAndPassword(mail, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
 
-                                FirebaseManager firebaseManager = new FirebaseManager();
-                                //Registramos los datos del usuario en Firebase
-                                firebaseManager.writeNewUser(userID, mail, nombres, apellidos, empresa);
+                                    String userID = task.getResult().getUser().getUid();
 
-                                Toast.makeText(CrearCuenta.this, "Usuario creado con exito", Toast.LENGTH_SHORT).show();
-                                finish();
-                            } else {
-                                String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
-                                dameToastdeError(errorCode);
+                                    FirebaseManager firebaseManager = new FirebaseManager();
+                                    //Registramos los datos del usuario en Firebase
+                                    firebaseManager.writeNewUser(userID, mail, nombres, apellidos, empresa);
+
+                                    Toast.makeText(CrearCuenta.this, "Usuario creado con exito", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                } else {
+                                    String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
+                                    dameToastdeError(errorCode);
+                                }
                             }
-                        }
-                    });
+                        });
+                    } else {
+                        tilCPassword.setError("Las contraseñas deben coincidir");
+                        etConfirmarPass.requestFocus();
+                    }
+
                 } else {
                     Toast.makeText(CrearCuenta.this, "Completa todos los datos", Toast.LENGTH_SHORT).show();
                 }
+
+            }
+        });
+    }
+
+    //Método para enlazar los editText con el ChangedListener
+    private void edtChangedListener(EditText editText, TextInputLayout til){
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() > 0){
+                    til.setError(null);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
 
             }
         });

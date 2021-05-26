@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.instock.firebasemanager.FirebaseManager;
 import com.example.instock.models.ListaVentas;
 import com.example.instock.models.Reserva;
 import com.example.instock.utils.Utils;
@@ -13,8 +14,14 @@ import java.util.ArrayList;
 public class VentasManagerDB {
 
     Context context;
+    String userID;
 
-    public VentasManagerDB(Context context){ this.context = context; }
+    public VentasManagerDB(Context context){
+        this.context = context;
+        FirebaseManager firebaseManager = new FirebaseManager();
+        //Obtenemos el id del Usuario que se ha registrado
+        userID = firebaseManager.getCurrentUserId();
+    }
 
     //Método para obtener el listado de Reservas (únicamente las que poseen estado Reserva)
     public ArrayList<ListaVentas> obtenerVentas(String Desde, String Hasta){
@@ -35,18 +42,18 @@ public class VentasManagerDB {
                     "FROM Ventas INNER JOIN Reservas ON Reservas.idReserva = Ventas.idReserva " +
                     "INNER JOIN Productos ON Productos.idProd = Reservas.idProd " +
                     "INNER JOIN Categorias ON Categorias.idCategoria = Productos.idCatProd " +
-                    "INNER JOIN Clientes ON Clientes.idCliente = Reservas.idCliente ORDER by Ventas.idVenta DESC";
+                    "INNER JOIN Clientes ON Clientes.idCliente = Reservas.idCliente WHERE Reservas.userID = ? ORDER by Ventas.idVenta DESC";
         } else {
             query = "SELECT idVenta, Clientes.nombre||' '||Clientes.apellido as nombreCompletoCliente, Categorias.categoria, Productos.nomProd, " +
                     "Reservas.cantProd, Reservas.totalPagar, Productos.fotoProd, Ventas.fechaEntregaFinal " +
                     "FROM Ventas INNER JOIN Reservas ON Reservas.idReserva = Ventas.idReserva " +
                     "INNER JOIN Productos ON Productos.idProd = Reservas.idProd " +
                     "INNER JOIN Categorias ON Categorias.idCategoria = Productos.idCatProd " +
-                    "INNER JOIN Clientes ON Clientes.idCliente = Reservas.idCliente where Ventas.fechaEntregaFinal  " +
-                    "BETWEEN '"+Desde+"' AND '"+Hasta+"'";
+                    "INNER JOIN Clientes ON Clientes.idCliente = Reservas.idCliente WHERE Ventas.fechaEntregaFinal  " +
+                    "BETWEEN '"+Desde+"' AND '"+Hasta+"' AND Reservas.userID = ?";
         }
 
-        Cursor cursor = objDB.rawQuery(query, null);
+        Cursor cursor = objDB.rawQuery(query, new String[]{userID});
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
 
@@ -80,18 +87,19 @@ public class VentasManagerDB {
         // Creamos Cursor
         if (Desde.isEmpty() && Hasta.isEmpty()) {
             query = "SELECT SUM(Reservas.totalPagar) as totalVentas " +
-                    "FROM Ventas INNER JOIN Reservas ON Reservas.idReserva = Ventas.idReserva";
+                    "FROM Ventas INNER JOIN Reservas ON Reservas.idReserva = Ventas.idReserva " +
+                    "WHERE Reservas.userID = ?";
         }
         else
         {
             query = "SELECT SUM(Reservas.totalPagar) as totalVentas " +
-                    "FROM Ventas INNER JOIN Reservas ON Reservas.idReserva = Ventas.idReserva where Ventas.fechaEntregaFinal  " +
-                    "BETWEEN '"+Desde+"' AND '"+Hasta+"'";
+                    "FROM Ventas INNER JOIN Reservas ON Reservas.idReserva = Ventas.idReserva WHERE Ventas.fechaEntregaFinal  " +
+                    "BETWEEN '"+Desde+"' AND '"+Hasta+"' AND Reservas.userID = ?";
              System.out.println("La fecha es: " + Desde);
              System.out.println("La fecha es: " + Hasta);
         }
 
-        Cursor cursor = objDB.rawQuery(query, null);
+        Cursor cursor = objDB.rawQuery(query, new String[]{userID});
         if (cursor.moveToFirst()) {
             totalVentas = cursor.getString(cursor.getColumnIndex("totalVentas"));
         }

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.instock.R;
+import com.example.instock.firebasemanager.FirebaseManager;
 import com.example.instock.models.ListCategorias;
 
 import java.util.ArrayList;
@@ -13,24 +14,31 @@ import java.util.ArrayList;
 public class CategoriasManagerDB {
 
     private Context context;
+    String userID;
 
     public CategoriasManagerDB(Context context){
         this.context = context;
+
+        FirebaseManager firebaseManager = new FirebaseManager();
+        //Obtenemos el id del Usuario que se ha registrado
+        userID = firebaseManager.getCurrentUserId();
     }
 
     public long agregarCategoria(String nomCategoria){
         long resultado = 0;
-
         // Creamos objeto de la clase Base
         Base obj = new Base(context);
         SQLiteDatabase objDB = obj.getWritableDatabase();
 
         //Verificamos que no haya una categoría existente con el mismo nombre
-        Cursor cursor = objDB.rawQuery("SELECT * FROM Categorias WHERE categoria = ? AND estadoCategoria = ?", new String[]{nomCategoria.trim().toUpperCase(), "1"});
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Categorias WHERE categoria = ? AND estadoCategoria = ?" +
+                        " AND userID = ?",
+                new String[]{nomCategoria.trim().toUpperCase(), "1", userID});
         if (!cursor.moveToNext()) {
             ContentValues values = new ContentValues();
             values.put("categoria", nomCategoria.trim().toUpperCase());//El valor "2" en el campo "estadoCategoria" indica "Eliminada"
             values.put("estadoCategoria", 1);//El valor "2" en el campo "estadoCategoria" indica "Eliminada"
+            values.put("userID", userID);//El valor "2" en el campo "estadoCategoria" indica "Eliminada"
 
             //Establecemos como "eliminada" la categoría según su ID
             resultado = objDB.insert("Categorias", "idCategoria", values);
@@ -76,7 +84,9 @@ public class CategoriasManagerDB {
         SQLiteDatabase objDB = obj.getWritableDatabase();
 
         // Creamos Cursor
-        Cursor cursor = objDB.rawQuery("SELECT * FROM Categorias WHERE estadoCategoria = ?",new String[]{"1"});
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Categorias WHERE estadoCategoria = ?" +
+                        " AND userID = ?",
+                new String[]{"1", userID});
         cursor.moveToFirst();
         int index = 0;
         while (cursor.isAfterLast() == false) {
@@ -102,7 +112,9 @@ public class CategoriasManagerDB {
         SQLiteDatabase objDB = obj.getWritableDatabase();
 
         // Creamos Cursor
-        Cursor cursor = objDB.rawQuery("SELECT * FROM Categorias WHERE estadoCategoria = ?",new String[]{"1"});
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Categorias WHERE estadoCategoria = ?" +
+                        " AND userID = ?",
+                new String[]{"1", userID});
         cursor.moveToFirst();
         int index = 0;
         while (cursor.isAfterLast() == false) {
@@ -124,8 +136,9 @@ public class CategoriasManagerDB {
         Base obj = new Base(context);
         SQLiteDatabase objDB = obj.getReadableDatabase();
 
-        Cursor cursor = objDB.rawQuery("SELECT idCategoria FROM Categorias WHERE categoria =?"
-                , new String[]{categoria});
+        Cursor cursor = objDB.rawQuery("SELECT idCategoria FROM Categorias WHERE categoria = ? " +
+                        "AND userID = ?"
+                , new String[]{categoria, userID});
 
         if(cursor.moveToNext()){
             idCategoria = cursor.getInt(cursor.getColumnIndex("idCategoria"));

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -211,6 +212,11 @@ public class VerReservasFragment extends Fragment {
                 reservasAdaptador.notifyDataSetChanged();
 
             }
+        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                reservasAdaptador.notifyDataSetChanged();
+            }
         }).show();
     }
 
@@ -247,6 +253,11 @@ public class VerReservasFragment extends Fragment {
 
                 reservasAdaptador.notifyDataSetChanged();
 
+            }
+        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                reservasAdaptador.notifyDataSetChanged();
             }
         }).show();
     }

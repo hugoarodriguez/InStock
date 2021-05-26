@@ -227,6 +227,11 @@ public class VerClientesFragment extends Fragment {
                 clienteAdaptador.notifyDataSetChanged();
 
             }
+        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                clienteAdaptador.notifyDataSetChanged();
+            }
         }).show();
     }
 
@@ -259,10 +264,13 @@ public class VerClientesFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-
-
                 clienteAdaptador.notifyDataSetChanged();
 
+            }
+        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                clienteAdaptador.notifyDataSetChanged();
             }
         }).show();
     }

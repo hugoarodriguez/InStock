@@ -243,6 +243,11 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
                 productoAdaptador.notifyDataSetChanged();
 
             }
+        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                productoAdaptador.notifyDataSetChanged();
+            }
         }).show();
     }
 
@@ -278,6 +283,11 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
                 productoAdaptador.notifyDataSetChanged();
 
             }
+        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                productoAdaptador.notifyDataSetChanged();
+            }
         }).show();
     }
 
@@ -309,6 +319,11 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
             public void onClick(DialogInterface dialog, int which) {
                 //Nada
             }
+        }).setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                productoAdaptador.notifyDataSetChanged();
+            }
         }).show();
     }
 
@@ -333,7 +348,12 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
 
                 }
             }).setNegativeButtonIcon(null)
-                    .show();
+                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            productoAdaptador.notifyDataSetChanged();
+                        }
+                    }).show();
         }
 
     }
