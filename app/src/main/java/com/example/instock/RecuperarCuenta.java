@@ -9,6 +9,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -17,9 +19,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class RecuperarCuenta extends AppCompatActivity {
+    private TextInputLayout tilEmail;
     private EditText mail;
     private Button recuperar;
     private ProgressDialog progress;
@@ -57,11 +61,36 @@ public class RecuperarCuenta extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         mail = findViewById(R.id.etEmail);
+        tilEmail = findViewById(R.id.tilEmail);
         recuperar = findViewById(R.id.btnConfirmar);
         progress = new ProgressDialog(this);
+        edtChangedListener();
 
         getRecuperar();
 
+    }
+
+    //Método para enlazar los editText con el ChangedListener
+    private void edtChangedListener(){
+
+        mail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() > 0){
+                    tilEmail.setError(null);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void getRecuperar() {
@@ -77,8 +106,7 @@ public class RecuperarCuenta extends AppCompatActivity {
                     getEnviarCorreo();
                 } else
                 {
-                    Toast.makeText(getApplicationContext(), "El correo no se pudo envirar",
-                            Toast.LENGTH_SHORT).show();
+                    tilEmail.setError("Escribe tu correo electrónico");
                 }
             }
         });
@@ -93,8 +121,8 @@ public class RecuperarCuenta extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful())
                 {
-                    Toast.makeText(getApplicationContext(), "Por favor revisar su correo para recuperar cuenta",
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Por favor revisa tu correo para recuperar cuenta",
+                            Toast.LENGTH_LONG).show();
                     Intent i = new Intent(RecuperarCuenta.this, MainActivity.class);
                     startActivity(i);
                     finish();
