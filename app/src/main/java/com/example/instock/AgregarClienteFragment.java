@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public class AgregarClienteFragment extends Fragment {
         enlazarVistas();
         edtChangeListenerAll();
         agregarCliente();
+        cancelar();
     }
 
     @Override
@@ -120,9 +122,6 @@ public class AgregarClienteFragment extends Fragment {
                 if(s.length() > 0){
                     til.setError(null);
                 }
-                else{
-                    til.setError(getText(R.string.campo_requerido));
-                }
             }
 
             @Override
@@ -146,7 +145,7 @@ public class AgregarClienteFragment extends Fragment {
                 if (nomb.trim().equals("")
                         || ape.trim().equals("")
                         || tel.trim().equals("")
-                        || corr.trim().equals("")
+                        || corr.trim().equals("") || ! corr.matches(Patterns.EMAIL_ADDRESS.toString())
                         || posGenero == 0) {
 
                     if(nomb.trim().equals("")){
@@ -158,8 +157,12 @@ public class AgregarClienteFragment extends Fragment {
                     if(tel.trim().equals("")){
                         tilTelefono.setError(getText(R.string.campo_requerido));
                     }
-                    if(corr.trim().equals("")){
+                    if(corr.trim().equals("") || !corr.matches(Patterns.EMAIL_ADDRESS.toString())){
                         tilCorreo.setError(getText(R.string.campo_requerido));
+
+                        if(! corr.matches(Patterns.EMAIL_ADDRESS.toString())){
+                            tilCorreo.setError(getText(R.string.invalid_mail));
+                        }
                     }
                     if(posGenero == 0){
                         Toast.makeText(getContext(), "Debes seleccionar un género",

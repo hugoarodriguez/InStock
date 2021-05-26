@@ -69,6 +69,8 @@
     <!-- ConsultarProductos -->
     <string name="producto_hint">Nombre del Producto</string>
 
+    <string name="null_value"></string>
+
     <!-- ReservarProductos -->
     <string name="ingCategoria">Ingrese categoría</string>
     <string name="cliente_hint">Nombre del Cliente</string>
