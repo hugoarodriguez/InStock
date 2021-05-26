@@ -11,6 +11,8 @@
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
     <string name="recuperar_cuenta"><u>¿Has olvidado tu contraseña?</u></string>
+    <string name="invalid_login_email">Ingrese su correo electrónico</string>
+    <string name="invalid_login_password">Ingrese su contraseña</string>
 
     <!-- Strings para drawer menu -->
     <string name="sin_cuenta">¿No tienes cuenta?</string>

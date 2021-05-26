@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.example.instock.models.Usuario;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,9 +37,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAutH;
     FirebaseAuth.AuthStateListener mAuthListener;
     private Button logIn;
-    private EditText edtMail;
-    private EditText edtPassword;
-
+    private EditText edtMail, edtPassword;
+    private TextInputLayout tilEmail, tilPassword;
     private String email = "";
     private String password = "";
 
@@ -50,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
         edtMail = findViewById(R.id.etEmail);
         edtPassword = findViewById(R.id.etPassword);
+        tilEmail = findViewById(R.id.tilEmail);
+        tilPassword = findViewById(R.id.tilPassword);
+        edtChangeListenerAll();
         logIn = findViewById(R.id.btnLogIn);
 
         logIn.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +69,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(MainActivity.this, "Complete los campos", Toast.LENGTH_SHORT).show();
+                    if(email.isEmpty()){
+                        tilEmail.setError(getText(R.string.invalid_login_email));
+                    }
+                    if(password.isEmpty()){
+                        tilPassword.setError(getText(R.string.invalid_login_password));
+                    }
                 }
             }
         });
@@ -85,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-
 
         return super.onCreateView(name, context, attrs);
     }
@@ -109,18 +118,45 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(MainActivity.this, "No se pudo iniciar sesión, compruebe los datos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "No se pudo iniciar sesión, compruebe sus datos", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    //Método para enlazar los editText con el ChangedListener
+    private void edtChangedListener(EditText editText, TextInputLayout til){
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() > 0){
+                    til.setError(null);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    //Método que activa la escucha del onChange de los EditText
+    private void edtChangeListenerAll(){
+        edtChangedListener(edtMail, tilEmail);
+        edtChangedListener(edtPassword, tilPassword);
     }
 
     public void crearCuenta(View v) {
         Intent intent = new Intent(this, CrearCuenta.class);
         startActivity(intent);
     }
-
-
 
     public void recuperarCuenta(View v){
         Intent intent = new Intent(this, RecuperarCuenta.class);
