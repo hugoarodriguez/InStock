@@ -34,7 +34,7 @@ public class CrearCuenta extends AppCompatActivity {
     EditText etCorreo;
     EditText etPassword;
     EditText etConfirmarPass;
-    TextInputLayout tilCPassword;
+    TextInputLayout tilNombres, tilApellidos, tilNombreEmpresa, tilEmail, tilPassword, tilCPassword;
     Button btnRegistrar;
     AwesomeValidation awesomeValidation;
     FirebaseAuth firebaseAuth;
@@ -71,9 +71,6 @@ public class CrearCuenta extends AppCompatActivity {
         });
 
         firebaseAuth = FirebaseAuth.getInstance();
-        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-        awesomeValidation.addValidation(this, R.id.etEmail, Patterns.EMAIL_ADDRESS, R.string.invalid_mail);
-        awesomeValidation.addValidation(this, R.id.etPassword, ".{6,}", R.string.invalid_password);
 
         etNombres = findViewById(R.id.etNombres);
         etApellidos = findViewById(R.id.etApellidos);
@@ -82,8 +79,22 @@ public class CrearCuenta extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         etConfirmarPass = findViewById(R.id.etCPassword);
         btnRegistrar = findViewById(R.id.btnLogIn);
+        tilNombres = findViewById(R.id.tilNombres);
+        tilApellidos = findViewById(R.id.tilApellidos);
+        tilNombreEmpresa = findViewById(R.id.tilNombreEmpresa);
+        tilEmail = findViewById(R.id.tilEmail);
+        tilPassword = findViewById(R.id.tilPassword);
         tilCPassword = findViewById(R.id.tilCPassword);
-        edtChangedListener(etConfirmarPass, tilCPassword);
+        edtChangeListenerAll();
+
+        awesomeValidation = new AwesomeValidation(ValidationStyle.TEXT_INPUT_LAYOUT);
+        awesomeValidation.addValidation(this, R.id.tilNombres, ".{1,}", R.string.invalid_name);
+        awesomeValidation.addValidation(this, R.id.tilApellidos, ".{1,}", R.string.invalid_lastname);
+        awesomeValidation.addValidation(this, R.id.tilNombreEmpresa, ".{1,}", R.string.invalid_company_name);
+        awesomeValidation.addValidation(this, R.id.tilEmail, Patterns.EMAIL_ADDRESS, R.string.invalid_mail);
+        String regexPassword = "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d]).{6,}";
+        awesomeValidation.addValidation(this, R.id.tilPassword, regexPassword, R.string.invalid_password);
+        awesomeValidation.addValidation(this, R.id.tilCPassword, R.id.tilPassword, R.string.invalid_confirmation_password);
 
         crearCuenta();
 
@@ -101,34 +112,25 @@ public class CrearCuenta extends AppCompatActivity {
                 String empresa = etEmpresa.getText().toString().trim();
 
                 if (awesomeValidation.validate()) {
+                    firebaseAuth.createUserWithEmailAndPassword(mail, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
 
-                    if(pass == confirmPass){
-                        firebaseAuth.createUserWithEmailAndPassword(mail, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
+                                String userID = task.getResult().getUser().getUid();
 
-                                    String userID = task.getResult().getUser().getUid();
+                                FirebaseManager firebaseManager = new FirebaseManager();
+                                //Registramos los datos del usuario en Firebase
+                                firebaseManager.writeNewUser(userID, mail, nombres, apellidos, empresa);
 
-                                    FirebaseManager firebaseManager = new FirebaseManager();
-                                    //Registramos los datos del usuario en Firebase
-                                    firebaseManager.writeNewUser(userID, mail, nombres, apellidos, empresa);
-
-                                    Toast.makeText(CrearCuenta.this, "Usuario creado con exito", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                } else {
-                                    String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
-                                    dameToastdeError(errorCode);
-                                }
+                                Toast.makeText(CrearCuenta.this, "Usuario creado con exito", Toast.LENGTH_SHORT).show();
+                                finish();
+                            } else {
+                                String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
+                                dameToastdeError(errorCode);
                             }
-                        });
-                    } else {
-                        tilCPassword.setError("Las contraseñas deben coincidir");
-                        etConfirmarPass.requestFocus();
-                    }
-
-                } else {
-                    Toast.makeText(CrearCuenta.this, "Completa todos los datos", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
 
             }
@@ -158,6 +160,16 @@ public class CrearCuenta extends AppCompatActivity {
         });
     }
 
+    //Método que activa la escucha del onChange de los EditText
+    private void edtChangeListenerAll(){
+        edtChangedListener(etNombres, tilNombres);
+        edtChangedListener(etApellidos, tilApellidos);
+        edtChangedListener(etEmpresa, tilNombreEmpresa);
+        edtChangedListener(etCorreo, tilEmail);
+        edtChangedListener(etPassword, tilPassword);
+        edtChangedListener(etConfirmarPass, tilCPassword);
+    }
+
     private void dameToastdeError(String error) {
 
         switch (error) {
@@ -176,19 +188,19 @@ public class CrearCuenta extends AppCompatActivity {
 
             case "ERROR_INVALID_EMAIL":
                 Toast.makeText(CrearCuenta.this, "La dirección de correo electrónico está mal formateada.", Toast.LENGTH_LONG).show();
-                etCorreo.setError("La dirección de correo electrónico está mal formateada.");
+                tilEmail.setError("La dirección de correo electrónico está mal formateada.");
                 etCorreo.requestFocus();
                 break;
 
             case "ERROR_WRONG_PASSWORD":
                 Toast.makeText(CrearCuenta.this, "La contraseña no es válida o el usuario no tiene contraseña.", Toast.LENGTH_LONG).show();
-                etPassword.setError("la contraseña es incorrecta ");
+                tilPassword.setError("la contraseña es incorrecta ");
                 etPassword.requestFocus();
                 etPassword.setText("");
                 break;
 
             case "ERROR_USER_MISMATCH":
-                Toast.makeText(CrearCuenta.this, "Las credenciales proporcionadas no corresponden al usuario que inició sesión anteriormente..", Toast.LENGTH_LONG).show();
+                Toast.makeText(CrearCuenta.this, "Las credenciales proporcionadas no corresponden al usuario que inició sesión anteriormente.", Toast.LENGTH_LONG).show();
                 break;
 
             case "ERROR_REQUIRES_RECENT_LOGIN":
@@ -200,8 +212,8 @@ public class CrearCuenta extends AppCompatActivity {
                 break;
 
             case "ERROR_EMAIL_ALREADY_IN_USE":
-                Toast.makeText(CrearCuenta.this, "La dirección de correo electrónico ya está siendo utilizada por otra cuenta..   ", Toast.LENGTH_LONG).show();
-                etCorreo.setError("La dirección de correo electrónico ya está siendo utilizada por otra cuenta.");
+                Toast.makeText(CrearCuenta.this, "La dirección de correo electrónico ya está siendo utilizada por otra cuenta.", Toast.LENGTH_LONG).show();
+                tilEmail.setError("La dirección de correo electrónico ya está siendo utilizada por otra cuenta.");
                 etCorreo.requestFocus();
                 break;
 
@@ -210,7 +222,7 @@ public class CrearCuenta extends AppCompatActivity {
                 break;
 
             case "ERROR_USER_DISABLED":
-                Toast.makeText(CrearCuenta.this, "La cuenta de usuario ha sido inhabilitada por un administrador..", Toast.LENGTH_LONG).show();
+                Toast.makeText(CrearCuenta.this, "La cuenta de usuario ha sido inhabilitada por un administrador.", Toast.LENGTH_LONG).show();
                 break;
 
             case "ERROR_USER_TOKEN_EXPIRED":
@@ -230,8 +242,8 @@ public class CrearCuenta extends AppCompatActivity {
                 break;
 
             case "ERROR_WEAK_PASSWORD":
-                Toast.makeText(CrearCuenta.this, "La contraseña proporcionada no es válida..", Toast.LENGTH_LONG).show();
-                etPassword.setError("La contraseña no es válida, debe tener al menos 6 caracteres");
+                Toast.makeText(CrearCuenta.this, "La contraseña proporcionada no es válida.", Toast.LENGTH_LONG).show();
+                tilPassword.setError("La contraseña no es válida, debe tener al menos 6 caracteres");
                 etPassword.requestFocus();
                 break;
 

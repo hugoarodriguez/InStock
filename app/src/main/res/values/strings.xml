@@ -39,6 +39,9 @@
     <string name="registrate">Registrate</string>
     <string name="registrarme">Registrarme</string>
     <string name="nombre_empresa">Nombre de tu empresa/negocio</string>
+    <string name="invalid_name">Escribe tu nombre(s)</string>
+    <string name="invalid_lastname">Escribe tu apellido(s)</string>
+    <string name="invalid_company_name">Nombre de tu empresa/negocio</string>
     <string name="invalid_mail">Ingrese un email valido</string>
 
     <!-- Acerca de -->
@@ -48,7 +51,8 @@
     <string name="imgDev">Dev image</string>
 
     <!--Global -->
-    <string name="invalid_password">Ingrese una contraseña mayor a 6 digitos</string>
+    <string name="invalid_password">La contraseña debe contener 6 o más digitos, una minuscula, una mayúscula y un número</string>
+    <string name="invalid_confirmation_password">Las contraseñas deben coincidir</string>
     <string name="confirmar_password">Confirmar contraseña</string>
     <string name="nombres">Nombres</string>
     <string name="apellidos">Apellidos</string>
