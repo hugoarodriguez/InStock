@@ -89,6 +89,34 @@ public class ClientesManagerDB {
         return clientes;
     }
 
+    //Método para obtener el listado de Clientes (únicamente los activos)
+    public ArrayList<ListaClientes> obtenerClientesLike(String correo){
+        ListaClientes cliente;
+        ArrayList<ListaClientes> clientes = new ArrayList<>();
+
+        Base obj = new Base(context);
+        SQLiteDatabase objDB = obj.getReadableDatabase();
+
+        // Creamos Cursor
+        Cursor cursor = objDB.rawQuery("SELECT * FROM Clientes WHERE estadoCliente = ? " +
+                        "AND correo LIKE ?",
+                new String[]{"1", correo+"%"});
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+            cliente = new ListaClientes(cursor.getString(cursor.getColumnIndex("idCliente")),
+                    cursor.getString(cursor.getColumnIndex("nombre")) + " "
+                            + cursor.getString(cursor.getColumnIndex("apellido")),
+                    cursor.getString(cursor.getColumnIndex("telefono")),
+                    cursor.getString(cursor.getColumnIndex("correo")),
+                    cursor.getString(cursor.getColumnIndex("sexo")));
+
+            clientes.add(cliente);
+            cursor.moveToNext();
+        }
+
+        return clientes;
+    }
+
     //Método para obtener el listado de correos de los Clientes
     public ArrayList<String> obtenerCorreosClientes(){
         ArrayList<String> nombresClientes = new ArrayList<>();

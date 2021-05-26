@@ -68,7 +68,13 @@ public class ConsultaProductosFragment extends Fragment implements RecyclerViewC
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
 
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        edtNomProducto.setText(null);
+        cargarDatos();
+        super.onViewStateRestored(savedInstanceState);
     }
 
     //Método para listar los productos con sus respectivas imágenes/fotos

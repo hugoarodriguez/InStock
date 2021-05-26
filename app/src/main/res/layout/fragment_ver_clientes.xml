@@ -7,7 +7,7 @@
     tools:context=".VerClientesFragment">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilBuscarNombre"
+        android:id="@+id/tilBuscarCorreo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -17,14 +17,15 @@
         android:ems="10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent"
+        app:endIconMode="clear_text">
 
         <EditText
-            android:id="@+id/edtBuscarNombre"
+            android:id="@+id/edtBuscarCorreo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="textPersonName"
-            android:hint="Nombre"
+            android:inputType="textEmailAddress"
+            android:hint="@string/correo_cliente_hint"
             android:background="@color/white"/>
 
     </com.google.android.material.textfield.TextInputLayout>

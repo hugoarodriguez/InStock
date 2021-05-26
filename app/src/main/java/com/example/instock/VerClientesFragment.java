@@ -15,9 +15,12 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.instock.Adapter.ClientesAdaptador;
@@ -25,12 +28,17 @@ import com.example.instock.BD.ClientesManagerDB;
 import com.example.instock.models.ListaClientes;
 import com.example.instock.models.ModalDialogValues;
 import com.example.instock.utils.CreateDialog;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class VerClientesFragment extends Fragment {
+    private View view;
+
+    TextInputLayout tilBuscarCorreo;
+    EditText edtBuscarCorreo;
 
     ClientesAdaptador clienteAdaptador;
     List<ListaClientes> ClientesList = new ArrayList<>();
@@ -47,17 +55,24 @@ public class VerClientesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_ver_clientes, container, false);
-        ;
-        //Enlazamos el simpleItemTouchCallback con el recyclerProducto
-
+        view = inflater.inflate(R.layout.fragment_ver_clientes, container, false);
+        cargarDatos();
+        tilBuscarCorreo = (TextInputLayout)view.findViewById(R.id.tilBuscarCorreo);
+        edtBuscarCorreo = (EditText)view.findViewById(R.id.edtBuscarCorreo);
+        edtChangedListener();
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        edtBuscarCorreo.setText(null);
         cargarDatos();
+        super.onViewStateRestored(savedInstanceState);
     }
 
     private void cargarDatos() {
@@ -66,7 +81,7 @@ public class VerClientesFragment extends Fragment {
 
         ClientesList = clientesManagerDB.obtenerClientes();
 
-        recyclerCliente = getView().findViewById(R.id.recyclerClientes);
+        recyclerCliente = view.findViewById(R.id.recyclerClientes);
         recyclerCliente.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
@@ -74,6 +89,48 @@ public class VerClientesFragment extends Fragment {
 
         clienteAdaptador = new ClientesAdaptador(ClientesList, getActivity());
         recyclerCliente.setAdapter(clienteAdaptador);
+    }
+
+    private void cargarDatosLike(String correo) {
+
+        ClientesManagerDB clientesManagerDB = new ClientesManagerDB(getContext());
+
+        ClientesList = clientesManagerDB.obtenerClientesLike(correo);
+
+        recyclerCliente = view.findViewById(R.id.recyclerClientes);
+        recyclerCliente.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerCliente);
+
+        clienteAdaptador = new ClientesAdaptador(ClientesList, getActivity());
+        recyclerCliente.setAdapter(clienteAdaptador);
+    }
+
+    //Método para enlazar los editText con el ChangedListener
+    private void edtChangedListener(){
+
+        edtBuscarCorreo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() > 1){
+                    cargarDatosLike(s.toString());
+                }
+                else{
+                    cargarDatos();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     //Objeto de tipo ItemTouchHelper que permite realizar el swipe
