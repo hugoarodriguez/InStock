@@ -38,7 +38,7 @@ tools:context=".CategoriasFragment">
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/ingCategoria"
-            android:inputType="textPersonName"
+            android:inputType="textCapWords"
             android:background="@color/white" />
 
     </com.google.android.material.textfield.TextInputLayout>

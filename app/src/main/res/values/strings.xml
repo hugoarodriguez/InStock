@@ -73,6 +73,8 @@
     <string name="ingCategoria">Ingrese categoría</string>
     <string name="cliente_hint">Nombre del Cliente</string>
     <string name="cantidad_hint">Cantidad de Producto</string>
+    <string name="precio_hint">Precio del Producto</string>
+    <string name="detalles_adicionales_hint">Detalles Adicionales</string>
     <string name="fecha_entrega_hint">Fecha de Entrega</string>
     <string name="tvFechaEntrega">Fecha de Entrega:</string>
     <string name="correo_cliente_hint">E-mail del Cliente</string>

@@ -144,9 +144,6 @@ public class AgregarProductosFragment extends Fragment {
                 if(s.length() > 0){
                     til.setError(null);
                 }
-                else{
-                    til.setError(mensajeAlerta);
-                }
             }
 
             @Override

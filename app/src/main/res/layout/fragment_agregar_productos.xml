@@ -41,8 +41,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
-                android:hint="Nombre de Producto"
-                android:inputType="textPersonName" />
+                android:hint="@string/producto_hint"
+                android:inputType="textCapWords" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -66,7 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
-                android:hint="Cantidad de Productos"
+                android:hint="@string/cantidad_hint"
                 android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -105,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
-                android:hint="Precio de Producto"
+                android:hint="@string/precio_hint"
                 android:inputType="numberDecimal" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -130,8 +130,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
-                android:hint="Detalles Adicionales"
-                android:inputType="textPersonName" />
+                android:hint="@string/detalles_adicionales_hint"
+                android:inputType="textCapWords" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -139,7 +139,7 @@
             android:id="@+id/btnAgregar"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:text="Agregar"
+            android:text="@string/btnAgregar"
             app:backgroundTint="#44B846"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
@@ -155,7 +155,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="51dp"
             android:layout_marginLeft="51dp"
-            android:text="Cancelar"
+            android:text="@string/btnCancelar"
             app:backgroundTint="#FF0000"
             app:layout_constraintBaseline_toBaselineOf="@+id/btnAgregar"
             app:layout_constraintEnd_toEndOf="parent"
