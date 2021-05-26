@@ -89,23 +89,8 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24);
 
-
-        //Instancia de los fragments
-        fAgregarProductos = new AgregarProductosFragment();
-        fInicio = new InicioFragment();
-        fVerVentas = new VerVentasFragment();
-        fVerReservas = new VerReservasFragment();
-        fAgregarCliente = new AgregarClienteFragment();
-        fCategorias = new CategoriasFragment();
-        fProductos = new ConsultaProductosFragment() ;
-        fClientes = new VerClientesFragment();
-        fAcercaDe = new AcercaDe();
-
         instanciarFragments();//Instancia de los fragments
 
-        //Mostramos el FragmentInicio en nuestro contenedor
-
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, fInicio).commit();
 
         //Instanciamos el NavigationView
         navigationView = (NavigationView)findViewById(R.id.nav_view);
@@ -114,6 +99,8 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
 
         //Invocamos el método que enlaza la navegación de los fragments con los items del menú
         navegacionDeFragments();
+        //Mostramos el FragmentInicio en nuestro contenedor
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, fInicio).commit();
     }
 
     private void instanciarFragments(){
@@ -125,6 +112,7 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
         fCategorias = new CategoriasFragment();
         fProductos = new ConsultaProductosFragment() ;
         fClientes = new VerClientesFragment();
+        fAcercaDe = new AcercaDe();
     }
 
     //Método para actualizar contraseña
@@ -344,19 +332,23 @@ public class MainMenu extends AppCompatActivity implements NoticeDialogFragment.
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Usuario usuario = snapshot.getValue(Usuario.class);
-                //tvUserName.setText(usuario.getNombresUsuario() + " " + usuario.getApellidosUsuario());
-                //tvUserEmail.setText(usuario.getCorreoUsuario());
-                //Asignamos los valores al textView de FragmentInicio
-                try{
-                    Bundle datos = new Bundle();
-                    datos.putString("nombreUsuario", usuario.getNombresUsuario());
-                    fInicio.setArguments(datos);
-                    View viewFragmentInicio = fInicio.getView();
-                    TextView tvSaludo = (TextView)viewFragmentInicio.findViewById(R.id.tvSaludo);
-                    tvSaludo.setText("¡Hola " + usuario.getNombresUsuario() + "!\nBienvenido a InStock");
-                } catch (Exception e){
 
+                if(usuario != null){
+                    tvUserName.setText(String.format("%s %s", usuario.getNombresUsuario(), usuario.getApellidosUsuario()));
+                    tvUserEmail.setText(usuario.getCorreoUsuario());
+                    //Asignamos los valores al textView de FragmentInicio
+                    try{
+                        Bundle datos = new Bundle();
+                        datos.putString("nombreUsuario", usuario.getNombresUsuario());
+                        fInicio.setArguments(datos);
+                        View viewFragmentInicio = fInicio.getView();
+                        TextView tvSaludo = (TextView)viewFragmentInicio.findViewById(R.id.tvSaludo);
+                        tvSaludo.setText(String.format("¡Hola %s!\nBienvenido a InStock", usuario.getNombresUsuario()));
+                    } catch (Exception e){
+
+                    }
                 }
+
             }
 
             @Override

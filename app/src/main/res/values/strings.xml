@@ -42,8 +42,7 @@
     <string name="invalid_mail">Ingrese un email valido</string>
 
     <!-- Acerca de -->
-    <string name="tvEncabezado">Esta aplicación fue desarrollada por: </string>
-    <string name="tvEnunciado">Esta Aplicación fue desarrollada por:</string>
+    <string name="tvEnunciado">InStock fue desarrollada por:</string>
     <string name="tvDesarrolladorVal"></string>
     <string name="tvDevCarnetVal"></string>
     <string name="imgDev">Dev image</string>

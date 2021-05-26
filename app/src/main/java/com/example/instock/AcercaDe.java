@@ -43,18 +43,17 @@ public class AcercaDe extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         vista = inflater.inflate(R.layout.fragment_acerca_de, container, false);
+        cargarDatos();
         return vista;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        cargarDatos();
     }
 
     public void cargarDatos()
     {
-        devList = new ArrayList<>();
         devList = new ArrayList<>();
         devList.add(new ListaDesarrolladores("#edcae6","Alvarado Henríquez, Sofía Michelle", "25-3152-2017"));
         devList.add(new ListaDesarrolladores("#cadeed","Hernández Campos, Samuel Enrique", "25-3836-2017"));
@@ -62,7 +61,7 @@ public class AcercaDe extends Fragment {
         devList.add(new ListaDesarrolladores("#eaedca","Rodríguez Cruz, Hugo Alexander", "25-0663-2017"));
         devList.add(new ListaDesarrolladores("#eddcca","Rodríquez Sigüenza, Amilton Abraham", "25-0259-2017"));
 
-        recyclerDev = getView().findViewById(R.id.rcDev);
+        recyclerDev = vista.findViewById(R.id.rcDev);
         recyclerDev.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         devAdaptador = new DesarrolladorAdapter(devList, getActivity());

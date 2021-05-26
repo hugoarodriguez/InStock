@@ -9,71 +9,46 @@
     app:cardUseCompatPadding="true">
 
     <LinearLayout
-        android:layout_width="399dp"
-        android:layout_height="125dp"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imgDev"
-            android:layout_width="94dp"
+            android:layout_width="@dimen/image_view_width1"
             android:layout_height="match_parent"
-            android:contentDescription="@string/imgDev"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/ic_baseline_perm_identity_24"
-            tools:ignore="VectorDrawableCompat" />
+            android:src="@drawable/ic_baseline_perm_identity_24" />
 
         <LinearLayout
-            android:layout_width="305dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingStart="10dp"
-            android:paddingLeft="10dp">
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp">
 
-            <LinearLayout
-                android:layout_width="294dp"
-                android:layout_height="67dp"
+
+            <TextView
+                android:id="@+id/tvDesarrolladorVal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center_vertical"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                style="@style/tvLarger2"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:text="Hola"/>
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/tvDesarrolladorVal"
-                    style="@style/tvLarger2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="5dp"
-                    android:paddingLeft="5dp"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="295dp"
-                android:layout_height="38dp"
+            <TextView
+                android:id="@+id/tvDevCarnetVal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center_vertical"
                 android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvDevCarnetVal"
-                    style="@style/tvLarger"
-                    android:layout_width="294dp"
-                    android:layout_height="match_parent"
-                    android:paddingStart="5dp"
-                    android:paddingLeft="5dp"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
+                style="@style/tvLarger"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:text="Hola" />
         </LinearLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>
