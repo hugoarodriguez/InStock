@@ -7,15 +7,19 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.instock.BD.ReservasManagerDB;
@@ -24,12 +28,16 @@ import com.example.instock.models.Reserva;
 import com.example.instock.Adapter.ReservasAdaptador;
 import com.example.instock.utils.CreateDialog;
 import com.example.instock.utils.Utils;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 
 public class VerReservasFragment extends Fragment {
 
-    View vista;
+    private View vista;
+
+    TextInputLayout tilBuscarCorreo;
+    EditText edtBuscarCorreo;
 
     RecyclerView recyclerReservas;
     ReservasAdaptador reservasAdaptador;
@@ -52,22 +60,27 @@ public class VerReservasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         vista = inflater.inflate(R.layout.fragment_ver_reservas, container, false);
-
-        //Agregado
-        ReservaList = new ArrayList<>();
-
-        cargarDatos();
-
+        cargarDatosLike("");
+        tilBuscarCorreo = (TextInputLayout)vista.findViewById(R.id.tilBuscarCorreo);
+        edtBuscarCorreo = (EditText)vista.findViewById(R.id.edtBuscarCorreo);
+        edtChangedListener();
         return vista;
     }
 
-    private void cargarDatos() {
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        edtBuscarCorreo.setText(null);
+        cargarDatosLike("");
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    private void cargarDatosLike(String correo) {
 
         ReservasManagerDB reservasManagerDB = new ReservasManagerDB(getContext());
 
-        ReservaList = reservasManagerDB.obtenerReservas();
+        ReservaList = reservasManagerDB.obtenerReservasLike(correo);
 
-        RecyclerView recyclerReservas = vista.findViewById(R.id.recyclerReservas);
+        recyclerReservas = vista.findViewById(R.id.recyclerReservas);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerReservas.setLayoutManager(layoutManager);
 
@@ -78,6 +91,32 @@ public class VerReservasFragment extends Fragment {
         reservasAdaptador = new ReservasAdaptador (ReservaList, getActivity());
 
         recyclerReservas.setAdapter(reservasAdaptador);
+    }
+
+    //Método para enlazar los editText con el ChangedListener
+    private void edtChangedListener(){
+
+        edtBuscarCorreo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() > 1){
+                    cargarDatosLike(s.toString());
+                }
+                else{
+                    cargarDatosLike("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     //Objeto de tipo ItemTouchHelper que permite realizar el swipe

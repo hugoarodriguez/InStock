@@ -8,6 +8,29 @@
     android:orientation="vertical"
     tools:context=".VerReservasFragment">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilBuscarCorreo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:ems="10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:endIconMode="clear_text">
+
+        <EditText
+            android:id="@+id/edtBuscarCorreo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textEmailAddress"
+            android:hint="@string/correo_cliente_hint"
+            android:background="@color/white"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerReservas"

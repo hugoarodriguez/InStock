@@ -90,6 +90,43 @@ public class ReservasManagerDB {
         return reservas;
     }
 
+    //Método para obtener el listado de Reservas (únicamente las que poseen estado Reserva)
+    public ArrayList<Reserva> obtenerReservasLike(String correo){
+        Utils utils = new Utils();
+
+        Reserva reserva;
+        ArrayList<Reserva> reservas = new ArrayList<>();
+
+        Base obj = new Base(context);
+        SQLiteDatabase objDB = obj.getReadableDatabase();
+
+        // Creamos Cursor
+        String query = "SELECT idReserva, Clientes.correo, nomProd, Reservas.cantProd, " +
+                "totalPagar, fotoProd, fechaEntregaInicial " +
+                "FROM Reservas INNER JOIN Productos ON Productos.idProd = Reservas.idProd " +
+                "INNER JOIN Clientes ON Clientes.idCliente = Reservas.idCliente " +
+                "WHERE estadoReserva = ? AND Clientes.correo LIKE ? ORDER BY DATE(fechaEntregaInicial)";
+        Cursor cursor = objDB.rawQuery(query,new String[]{"1", correo+"%"});
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+
+            String fecha = utils.fromYYYYMMDDtoDDMMYYYY(cursor.getString(cursor.getColumnIndex("fechaEntregaInicial")));
+
+            reserva = new Reserva(cursor.getString(cursor.getColumnIndex("idReserva")),
+                    cursor.getString(cursor.getColumnIndex("nomProd")),
+                    cursor.getString(cursor.getColumnIndex("totalPagar")),
+                    cursor.getString(cursor.getColumnIndex("correo")),
+                    cursor.getString(cursor.getColumnIndex("fotoProd")),
+                    cursor.getString(cursor.getColumnIndex("cantProd")),
+                    fecha);
+
+            reservas.add(reserva);
+            cursor.moveToNext();
+        }
+
+        return reservas;
+    }
+
     public int getIdProdByIdReserva(int idReserva){
         int idProd = 0;
 

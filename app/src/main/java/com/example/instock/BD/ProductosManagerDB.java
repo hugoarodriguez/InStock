@@ -102,7 +102,7 @@ public class ProductosManagerDB {
         return productos;
     }
 
-    //Método para obtener el listado de Productos (únicamente los activos)
+    //Método para obtener el listado de Productos según su nombre
     public ArrayList<Producto> obtenerProductosLike(String nomProd){
         CategoriasManagerDB categoriasManagerDB = new CategoriasManagerDB(context);
         Producto producto;

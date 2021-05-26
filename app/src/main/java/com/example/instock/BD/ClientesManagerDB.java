@@ -89,7 +89,7 @@ public class ClientesManagerDB {
         return clientes;
     }
 
-    //Método para obtener el listado de Clientes (únicamente los activos)
+    //Método para obtener el listado de Clientes según correo
     public ArrayList<ListaClientes> obtenerClientesLike(String correo){
         ListaClientes cliente;
         ArrayList<ListaClientes> clientes = new ArrayList<>();
