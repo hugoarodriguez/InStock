@@ -28,6 +28,9 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class ActualizarPasswordFragment extends Fragment {
 
@@ -37,6 +40,9 @@ public class ActualizarPasswordFragment extends Fragment {
 
     CreateDialog createDialog = new CreateDialog();
     ModalDialogValues modalDialogValues = ModalDialogValues.getInstance();
+    String regexPassword = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{6,}$";
+    Pattern pattern = Pattern.compile(regexPassword);
+    Matcher matcher;
 
     public ActualizarPasswordFragment() {
         // Required empty public constructor
@@ -115,14 +121,15 @@ public class ActualizarPasswordFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (etPasswordA.getText().toString().equals("")
-                        || etPasswordN.getText().toString().equals("")
+                        || etPasswordN.getText().toString().equals("") || !etPasswordN.getText().toString().matches(regexPassword)
                         || etPasswordC.getText().toString().equals("")) {
 
                     if (etPasswordA.getText().toString().equals("")) {
                         tilAnterior.setError(getText(R.string.campo_requerido));
                     }
-                    if (etPasswordN.getText().toString().equals("")) {
-                        tilNueva.setError(getText(R.string.campo_requerido));
+                    if (etPasswordN.getText().toString().equals("")
+                            || !etPasswordN.getText().toString().matches(regexPassword)) {
+                        tilNueva.setError(getText(R.string.invalid_password));
                     }
                     if (etPasswordC.getText().toString().equals("")) {
                         tilNuevaC.setError(getText(R.string.campo_requerido));
@@ -131,7 +138,7 @@ public class ActualizarPasswordFragment extends Fragment {
 
                     //Verificamos si las contraseñas ingresadas coinciden
                     if(!etPasswordN.getText().toString().equals(etPasswordC.getText().toString())){
-                        tilNuevaC.setError("Las contraseñas deben coincidir");
+                        tilNuevaC.setError(getText(R.string.invalid_confirmation_password));
                         return;
                     }
 
