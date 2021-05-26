@@ -36,6 +36,7 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -199,9 +200,7 @@ public class ReservarProductosFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC-6"));//Obtenemos la fecha actual
-
-                Date currentTime = calendar.getTime();
+                Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT-06:00"));//Obtenemos la fecha actual
 
                 System.out.println("Día actual milisegundos: " + calendar.getTime());
 
@@ -220,6 +219,7 @@ public class ReservarProductosFragment extends Fragment {
                         String dateStringValidation = utils.dateToString(calendar.getTime());
 
                         if(dateString.equals(dateStringValidation)){
+                            etFechaReserva.setText(null);
                             tilFechaReserva.setError("Selecciona una fecha posterior a la actual");
                         } else {
                             fechaEntrega = utils.millisecondsToYYYYMMDD(selection);

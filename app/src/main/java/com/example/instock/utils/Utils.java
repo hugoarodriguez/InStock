@@ -180,7 +180,7 @@ public class Utils {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC-6"));
         stringDate = simpleDateFormat.format(new Date(millisecondsDate));
 
         return stringDate;
