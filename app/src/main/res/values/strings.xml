@@ -1,11 +1,6 @@
 <resources>
 
     <!-- MainActivity(Login) -->
-    <array name="genero">
-        <item>Seleccione un genero</item>
-        <item>Masculino</item>
-        <item>Femenino</item>
-    </array>
     <string name="app_name">InStock</string>
     <string name="iniciar_sesion">Iniciar Sesión</string>
     <string name="email">Correo electrónico</string>
@@ -133,37 +128,47 @@
 
     <string name="back_button_message1">Se descartarán todos los cambios que no hayas guardado</string>
     <string name="back_button_title2">Volver</string>
+    <string name="back_button_message2">No has finalizado la reserva\n\n¿Estás seguro que deseas volver?</string>
 
     <!-- Strings para mensaje de Cerrar Sesión -->
-    <string name="back_button_message2">No has finalizado la reserva\n\n¿Estás seguro que deseas volver?</string>
     <string name="cerrar_sesion_title">Cerrar Sesión</string>
+    <string name="cerrar_sesion_message">¿Estás seguro que deseas cerrar sesión?</string>
 
     <!-- Strings para mensaje de confirmación de ActualizarPassword -->
     <string name="actualizar_password_title">Actualizar Contraseña</string>
     <string name="actualizar_password_message">¿Estás seguro que quieres actualizar tu contraseña?</string>
 
+    <!-- Strings para mensaje de confirmación de ModificarCliente -->
+    <string name="modificar_cliente_title">Modificar Cliente</string>
+    <string name="modificar_cliente_message">¿Estás seguro que quieres modificar este cliente?</string>
+
     <!-- Strings para mensaje de Eliminar Producto -->
-    <string name="cerrar_sesion_message">¿Estás seguro que deseas cerrar sesión?</string>
     <string name="eliminar_producto_title">Eliminar Producto</string>
+    <string name="eliminar_producto_message">¿Estás seguro que deseas eliminar este producto?</string>
 
     <!-- Strings para mensaje de redirección a ModificarProducto -->
-    <string name="eliminar_producto_message">¿Estás seguro que deseas eliminar este producto?</string>
     <string name="go_to_modificar_producto_title">Modificar Producto</string>
+    <string name="go_to_modificar_producto_message">¿Quieres modificar este producto?</string>
 
     <!-- Strings para mensaje de confirmación de ModificarProducto -->
-    <string name="go_to_modificar_producto_message">¿Quieres modificar este producto?</string>
     <string name="modificar_producto_title">Modificar Producto</string>
+    <string name="modificar_producto_message">¿Estás seguro que quieres modificar este producto?</string>
 
     <!-- Strings para mensaje de redirección a ReservarProducto -->
-    <string name="modificar_producto_message">¿Estás seguro que quieres modificar este producto?</string>
     <string name="go_to_reservas_title">Reservar Producto</string>
+    <string name="go_to_reservas_message">¿Quieres reservar este producto?\n\nSe cargará un formulario para hacerlo.</string>
 
     <!-- Strings para mensaje de confirmación de ReservarProducto -->
-    <string name="go_to_reservas_message">¿Quieres reservar este producto?\n\nSe cargará un formulario para hacerlo.</string>
     <string name="reservas_title">Reservar Producto</string>
+    <string name="reservas_message">¿Estás seguro que quieres reservar este producto?</string>
 
     <!-- Array para SPINNER de AgregarClienteFragment -->
-    <string name="reservas_message">¿Estás seguro que quieres reservar este producto?</string>
+    <array name="genero">
+        <item>Seleccione un genero</item>
+        <item>Masculino</item>
+        <item>Femenino</item>
+    </array>
+
     <!-- Strings para mensaje de btnCancelar -->
     <string name="cancelar_title">Cancelar</string>
     <string name="cancelar_message">Los datos del formulario se reestablecerán a sus valores iniciales ¿Estás seguro?</string>

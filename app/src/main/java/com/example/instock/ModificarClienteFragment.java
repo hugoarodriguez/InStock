@@ -223,8 +223,8 @@ public class ModificarClienteFragment extends Fragment {
                 } else {
 
                     //Asignamos los valores para mostrar el Dialog
-                    modalDialogValues.modalDialogValues(getResources().getString(R.string.modificar_producto_title),
-                            getResources().getString(R.string.modificar_producto_message));
+                    modalDialogValues.modalDialogValues(getResources().getString(R.string.modificar_cliente_title),
+                            getResources().getString(R.string.modificar_cliente_message));
 
                     //Invocamos el dialog() y sobreescribimos sus metodos setPositiveButton y setNegativeButton
                     createDialog.dialog(getContext()).setPositiveButton(null, new DialogInterface.OnClickListener() {
