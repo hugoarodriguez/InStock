@@ -28,9 +28,6 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 
 public class ActualizarPasswordFragment extends Fragment {
 
@@ -41,8 +38,6 @@ public class ActualizarPasswordFragment extends Fragment {
     CreateDialog createDialog = new CreateDialog();
     ModalDialogValues modalDialogValues = ModalDialogValues.getInstance();
     String regexPassword = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{6,}$";
-    Pattern pattern = Pattern.compile(regexPassword);
-    Matcher matcher;
 
     public ActualizarPasswordFragment() {
         // Required empty public constructor
