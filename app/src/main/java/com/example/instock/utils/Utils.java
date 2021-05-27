@@ -193,7 +193,7 @@ public class Utils {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT-06:00"));
         stringDate = simpleDateFormat.format(date);
 
         return stringDate;
